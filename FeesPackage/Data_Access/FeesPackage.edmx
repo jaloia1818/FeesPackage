@@ -1,0 +1,1895 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FeesPackageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ReferralwithClient">
+          <Key>
+            <PropertyRef Name="Referral_Name" />
+          </Key>
+          <Property Name="Referral_Name" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="Referral_Firm" Type="nvarchar" MaxLength="35" />
+          <Property Name="Referral_Tax_ID" Type="nvarchar" MaxLength="15" />
+          <Property Name="Referral_Credit_Atty" Type="nvarchar" MaxLength="4" />
+        </EntityType>
+        <EntityType Name="TBL PAYMENTS">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="Inputter_Name" Type="nvarchar" MaxLength="3" />
+          <Property Name="Deposit_Indicator" Type="int" />
+          <Property Name="Posted_Indicator" Type="bit" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl PMTS with Comment">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Date_Payment" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Date_Payment" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="Item_Comment" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblAttorney">
+          <Key>
+            <PropertyRef Name="Atty-Initials" />
+          </Key>
+          <Property Name="Atty-Initials" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="Atty-Name" Type="nvarchar" MaxLength="35" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.tblAttorneyCombos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblAttorneyCombos">
+          <Key>
+            <PropertyRef Name="SSMA_TimeStamp" />
+          </Key>
+          <Property Name="Deposit_Options" Type="float" />
+          <Property Name="Attorney_Combinations" Type="nvarchar" MaxLength="10" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAttyDesc">
+          <Key>
+            <PropertyRef Name="Combo_Indicator" />
+          </Key>
+          <Property Name="Combo_Indicator" Type="float" Nullable="false" />
+          <Property Name="Combo_Description" Type="nvarchar" MaxLength="20" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblC&amp;R">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Reference_Number" Type="int" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" />
+          <Property Name="C_RDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="tblClaim">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="nvarchar" MaxLength="35" />
+          <Property Name="Claim_Date" Type="datetime2" Precision="0" />
+          <Property Name="Attorney_Breakdown" Type="float" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblClient">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Employer_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Escrow_%" Type="float" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Handling_%" Type="float" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Credit_%" Type="float" />
+          <Property Name="Is_County" Type="bit" />
+          <Property Name="County" Type="nvarchar" MaxLength="5" />
+          <Property Name="Accident_Desc" Type="nvarchar(max)" />
+          <Property Name="Selection_Control" Type="smallint" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblClientReferral">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Referral_Atty" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="Client_Referral_%" Type="float" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCounty">
+          <Key>
+            <PropertyRef Name="County" />
+          </Key>
+          <Property Name="County" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="County_Desc" Type="nvarchar" MaxLength="30" />
+          <Property Name="County_Value" Type="smallint" />
+        </EntityType>
+        <EntityType Name="tblInsurance">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ins_Co_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ins_Contact" Type="varchar" MaxLength="35" />
+        </EntityType>
+        <EntityType Name="tblPayments">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="Inputter_Name" Type="nvarchar" MaxLength="3" />
+          <Property Name="Deposit_Indicator" Type="int" />
+          <Property Name="Posted_Indicator" Type="bit" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblReferral">
+          <Key>
+            <PropertyRef Name="Referral_Name" />
+          </Key>
+          <Property Name="Referral_Name" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="Referral_Firm" Type="nvarchar" MaxLength="35" />
+          <Property Name="Referral_Tax_ID" Type="nvarchar" MaxLength="15" />
+          <Property Name="Referral_Credit_Atty" Type="nvarchar" MaxLength="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.Banks(H) Martin (C) Pd thru date' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Banks(H) Martin (C) Pd thru date">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryAttorneyListing' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryAttorneyListing">
+          <Key>
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Client_Referral_Atty" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="Referral_Firm" Type="nvarchar" MaxLength="35" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Client_Referral_%" Type="float" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaim Without Matching tblPayments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaim Without Matching tblPayments">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="tblClaim_Reference_Number" Type="int" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="tblClaim_Reference_Number$2" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaimInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaimInfo">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Ins_Co_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Attorney_Breakdown" Type="float" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaimPaymentTotal' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaimPaymentTotal">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SumOfAmount" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaims>30Days' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaims&gt;30Days">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaxOfInput_Date" Type="datetime2" Precision="0" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Reference_Number" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaims>30Days2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaims&gt;30Days2">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaxOfInput_Date" Type="datetime2" Precision="0" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaimsDormant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaimsDormant">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaxOfInput_Date" Type="datetime2" Precision="0" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Reference_Number" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaimsDormant2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaimsDormant2">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="MaxOfInput_Date" Type="datetime2" Precision="0" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Amount" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaimTotals' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaimTotals">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="nvarchar" MaxLength="35" />
+          <Property Name="Claim_Date" Type="datetime2" Precision="0" />
+          <Property Name="SumOfAmount" Type="money" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClientClaimList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClientClaimList">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Handling_%" Type="float" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Credit_%" Type="float" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="nvarchar" MaxLength="35" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClientClaimListteststatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClientClaimListteststatus">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Handling_%" Type="float" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Credit_%" Type="float" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="nvarchar" MaxLength="35" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClientClaimListtstatuswith referal Query' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClientClaimListtstatuswith referal Query">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Handling_%" Type="float" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Credit_%" Type="float" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
+          <Property Name="Client_Referral_Atty" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="Client_Referral_%" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClientList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClientList">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Handling_%" Type="float" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Credit_%" Type="float" />
+          <Property Name="County" Type="nvarchar" MaxLength="5" />
+          <Property Name="Escrow_%" Type="float" />
+          <Property Name="Client_Referral_Atty" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="Client_Referral_%" Type="float" />
+          <Property Name="C_RDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryDailyTotals' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryDailyTotals">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Payment_Date" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="Deposit_Indicator" Type="int" />
+          <Property Name="Escrow_%" Type="float" />
+          <Property Name="Payment_Date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryDeposit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryDeposit">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+            <PropertyRef Name="Handling_Atty" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryMonthlyIncome- AJS Weeklies' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryMonthlyIncome- AJS Weeklies">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="Expr1" Type="float" />
+          <Property Name="Expr2" Type="float" />
+          <Property Name="Expr4" Type="nvarchar" MaxLength="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryMonthlyIncome- AJS Weeklies- no posted yet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryMonthlyIncome- AJS Weeklies- no posted yet">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="Expr1" Type="float" />
+          <Property Name="Expr2" Type="float" />
+          <Property Name="Expr4" Type="nvarchar" MaxLength="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryPaymentsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryPaymentsView">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+            <PropertyRef Name="SSMA_TimeStamp" />
+          </Key>
+          <Property Name="tblPayments_Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="tblPayments_Posted_Indicator" Type="bit" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Input_Date" Type="datetime2" Precision="0" />
+          <Property Name="Inputter_Name" Type="nvarchar" MaxLength="3" />
+          <Property Name="Deposit_Indicator" Type="int" />
+          <Property Name="Posted_Indicator" Type="bit" />
+          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryShowAllClients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryShowAllClients">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qrySpecialSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qrySpecialSearch">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.Query-Hand/Credit Atty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Query-Hand/Credit Atty">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+          </Key>
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Expr4" Type="nvarchar" MaxLength="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.tblClient Query- PL HANDLING' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblClient Query- PL HANDLING">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClientReferral' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblClient Without Matching tblClientReferral">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Employer_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Escrow_%" Type="float" />
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Handling_%" Type="float" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
+          <Property Name="Credit_%" Type="float" />
+          <Property Name="Is_County" Type="bit" />
+          <Property Name="County" Type="nvarchar" MaxLength="5" />
+          <Property Name="Accident_Desc" Type="nvarchar(max)" />
+          <Property Name="Selection_Control" Type="smallint" />
+        </EntityType>
+        <Association Name="tblAttorneyCombos$[N:\APPS\FEES\old_mdb]_Reference7">
+          <End Role="tblAttyDesc" Type="Self.tblAttyDesc" Multiplicity="0..1" />
+          <End Role="tblAttorneyCombos" Type="Self.tblAttorneyCombos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAttyDesc">
+              <PropertyRef Name="Combo_Indicator" />
+            </Principal>
+            <Dependent Role="tblAttorneyCombos">
+              <PropertyRef Name="Deposit_Options" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FeesPackageModelStoreContainer">
+          <EntitySet Name="ReferralwithClient" EntityType="Self.ReferralwithClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL PAYMENTS" EntityType="Self.TBL PAYMENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl PMTS with Comment" EntityType="Self.tbl PMTS with Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAttorney" EntityType="Self.tblAttorney" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAttyDesc" EntityType="Self.tblAttyDesc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblC&amp;R" EntityType="Self.tblC&amp;R" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblClaim" EntityType="Self.tblClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblClient" EntityType="Self.tblClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblClientReferral" EntityType="Self.tblClientReferral" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCounty" EntityType="Self.tblCounty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInsurance" EntityType="Self.tblInsurance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPayments" EntityType="Self.tblPayments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblReferral" EntityType="Self.tblReferral" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombos" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblAttorneyCombos].[Deposit_Options] AS [Deposit_Options], 
+    [tblAttorneyCombos].[Attorney_Combinations] AS [Attorney_Combinations], 
+    [tblAttorneyCombos].[SSMA_TimeStamp] AS [SSMA_TimeStamp]
+    FROM [dbo].[tblAttorneyCombos] AS [tblAttorneyCombos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Banks(H) Martin (C) Pd thru date" EntityType="Self.Banks(H) Martin (C) Pd thru date" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Banks(H) Martin (C) Pd thru date].[Handling_Atty] AS [Handling_Atty], 
+    [Banks(H) Martin (C) Pd thru date].[Credit_Atty] AS [Credit_Atty], 
+    [Banks(H) Martin (C) Pd thru date].[Status_Code] AS [Status_Code], 
+    [Banks(H) Martin (C) Pd thru date].[Reference_Number] AS [Reference_Number], 
+    [Banks(H) Martin (C) Pd thru date].[Client_Name] AS [Client_Name]
+    FROM [dbo].[Banks(H) Martin (C) Pd thru date] AS [Banks(H) Martin (C) Pd thru date]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryAttorneyListing" EntityType="Self.qryAttorneyListing" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryAttorneyListing].[Client_Referral_Atty] AS [Client_Referral_Atty], 
+    [qryAttorneyListing].[Referral_Firm] AS [Referral_Firm], 
+    [qryAttorneyListing].[Client_Name] AS [Client_Name], 
+    [qryAttorneyListing].[Client_Referral_%] AS [Client_Referral_%], 
+    [qryAttorneyListing].[Credit_Atty] AS [Credit_Atty], 
+    [qryAttorneyListing].[Status_Code] AS [Status_Code]
+    FROM [dbo].[qryAttorneyListing] AS [qryAttorneyListing]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaim Without Matching tblPayments" EntityType="Self.qryClaim Without Matching tblPayments" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaim Without Matching tblPayments].[tblClaim_Reference_Number] AS [tblClaim_Reference_Number], 
+    [qryClaim Without Matching tblPayments].[Claim_Number] AS [Claim_Number], 
+    [qryClaim Without Matching tblPayments].[Payment_Amount] AS [Payment_Amount], 
+    [qryClaim Without Matching tblPayments].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaim Without Matching tblPayments].[tblClaim_Reference_Number$2] AS [tblClaim_Reference_Number$2]
+    FROM [dbo].[qryClaim Without Matching tblPayments] AS [qryClaim Without Matching tblPayments]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaimInfo" EntityType="Self.qryClaimInfo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaimInfo].[Claim_Number] AS [Claim_Number], 
+    [qryClaimInfo].[Client_Name] AS [Client_Name], 
+    [qryClaimInfo].[Ins_Co_Name] AS [Ins_Co_Name], 
+    [qryClaimInfo].[Attorney_Breakdown] AS [Attorney_Breakdown], 
+    [qryClaimInfo].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qryClaimInfo] AS [qryClaimInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaimPaymentTotal" EntityType="Self.qryClaimPaymentTotal" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaimPaymentTotal].[Claim_Number] AS [Claim_Number], 
+    [qryClaimPaymentTotal].[SumOfAmount] AS [SumOfAmount]
+    FROM [dbo].[qryClaimPaymentTotal] AS [qryClaimPaymentTotal]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaims&gt;30Days" EntityType="Self.qryClaims&gt;30Days" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaims&gt;30Days].[Claim_Number] AS [Claim_Number], 
+    [qryClaims&gt;30Days].[MaxOfInput_Date] AS [MaxOfInput_Date], 
+    [qryClaims&gt;30Days].[Payment_Amount] AS [Payment_Amount], 
+    [qryClaims&gt;30Days].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaims&gt;30Days].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qryClaims&gt;30Days] AS [qryClaims&gt;30Days]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaims&gt;30Days2" EntityType="Self.qryClaims&gt;30Days2" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaims&gt;30Days2].[Handling_Atty] AS [Handling_Atty], 
+    [qryClaims&gt;30Days2].[Credit_Atty] AS [Credit_Atty], 
+    [qryClaims&gt;30Days2].[Client_Name] AS [Client_Name], 
+    [qryClaims&gt;30Days2].[Claim_Number] AS [Claim_Number], 
+    [qryClaims&gt;30Days2].[MaxOfInput_Date] AS [MaxOfInput_Date], 
+    [qryClaims&gt;30Days2].[Amount] AS [Amount], 
+    [qryClaims&gt;30Days2].[Payment_Amount] AS [Payment_Amount], 
+    [qryClaims&gt;30Days2].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaims&gt;30Days2].[Period_From] AS [Period_From], 
+    [qryClaims&gt;30Days2].[Period_To] AS [Period_To], 
+    [qryClaims&gt;30Days2].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qryClaims&gt;30Days2] AS [qryClaims&gt;30Days2]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaimsDormant" EntityType="Self.qryClaimsDormant" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaimsDormant].[Claim_Number] AS [Claim_Number], 
+    [qryClaimsDormant].[MaxOfInput_Date] AS [MaxOfInput_Date], 
+    [qryClaimsDormant].[Payment_Amount] AS [Payment_Amount], 
+    [qryClaimsDormant].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaimsDormant].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qryClaimsDormant] AS [qryClaimsDormant]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaimsDormant2" EntityType="Self.qryClaimsDormant2" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaimsDormant2].[Handling_Atty] AS [Handling_Atty], 
+    [qryClaimsDormant2].[Credit_Atty] AS [Credit_Atty], 
+    [qryClaimsDormant2].[Client_Name] AS [Client_Name], 
+    [qryClaimsDormant2].[Amount] AS [Amount], 
+    [qryClaimsDormant2].[Period_From] AS [Period_From], 
+    [qryClaimsDormant2].[Period_To] AS [Period_To], 
+    [qryClaimsDormant2].[Reference_Number] AS [Reference_Number], 
+    [qryClaimsDormant2].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaimsDormant2].[MaxOfInput_Date] AS [MaxOfInput_Date], 
+    [qryClaimsDormant2].[Claim_Number] AS [Claim_Number], 
+    [qryClaimsDormant2].[Payment_Amount] AS [Payment_Amount]
+    FROM [dbo].[qryClaimsDormant2] AS [qryClaimsDormant2]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaimTotals" EntityType="Self.qryClaimTotals" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaimTotals].[Claim_Number] AS [Claim_Number], 
+    [qryClaimTotals].[Insurance_Contact] AS [Insurance_Contact], 
+    [qryClaimTotals].[Claim_Date] AS [Claim_Date], 
+    [qryClaimTotals].[SumOfAmount] AS [SumOfAmount], 
+    [qryClaimTotals].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qryClaimTotals] AS [qryClaimTotals]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClientClaimList" EntityType="Self.qryClientClaimList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClientClaimList].[Reference_Number] AS [Reference_Number], 
+    [qryClientClaimList].[Client_Name] AS [Client_Name], 
+    [qryClientClaimList].[Handling_Atty] AS [Handling_Atty], 
+    [qryClientClaimList].[Handling_%] AS [Handling_%], 
+    [qryClientClaimList].[Credit_Atty] AS [Credit_Atty], 
+    [qryClientClaimList].[Credit_%] AS [Credit_%], 
+    [qryClientClaimList].[Claim_Number] AS [Claim_Number], 
+    [qryClientClaimList].[Insurance_Contact] AS [Insurance_Contact], 
+    [qryClientClaimList].[Payment_Amount] AS [Payment_Amount], 
+    [qryClientClaimList].[Payment_Frequency] AS [Payment_Frequency]
+    FROM [dbo].[qryClientClaimList] AS [qryClientClaimList]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClientClaimListteststatus" EntityType="Self.qryClientClaimListteststatus" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClientClaimListteststatus].[Reference_Number] AS [Reference_Number], 
+    [qryClientClaimListteststatus].[Client_Name] AS [Client_Name], 
+    [qryClientClaimListteststatus].[Handling_Atty] AS [Handling_Atty], 
+    [qryClientClaimListteststatus].[Handling_%] AS [Handling_%], 
+    [qryClientClaimListteststatus].[Credit_Atty] AS [Credit_Atty], 
+    [qryClientClaimListteststatus].[Credit_%] AS [Credit_%], 
+    [qryClientClaimListteststatus].[Claim_Number] AS [Claim_Number], 
+    [qryClientClaimListteststatus].[Insurance_Contact] AS [Insurance_Contact], 
+    [qryClientClaimListteststatus].[Payment_Amount] AS [Payment_Amount], 
+    [qryClientClaimListteststatus].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClientClaimListteststatus].[Status_Code] AS [Status_Code]
+    FROM [dbo].[qryClientClaimListteststatus] AS [qryClientClaimListteststatus]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClientClaimListtstatuswith referal Query" EntityType="Self.qryClientClaimListtstatuswith referal Query" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClientClaimListtstatuswith referal Query].[Reference_Number] AS [Reference_Number], 
+    [qryClientClaimListtstatuswith referal Query].[Client_Name] AS [Client_Name], 
+    [qryClientClaimListtstatuswith referal Query].[Handling_Atty] AS [Handling_Atty], 
+    [qryClientClaimListtstatuswith referal Query].[Handling_%] AS [Handling_%], 
+    [qryClientClaimListtstatuswith referal Query].[Credit_Atty] AS [Credit_Atty], 
+    [qryClientClaimListtstatuswith referal Query].[Credit_%] AS [Credit_%], 
+    [qryClientClaimListtstatuswith referal Query].[Claim_Number] AS [Claim_Number], 
+    [qryClientClaimListtstatuswith referal Query].[Payment_Amount] AS [Payment_Amount], 
+    [qryClientClaimListtstatuswith referal Query].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClientClaimListtstatuswith referal Query].[Status_Code] AS [Status_Code], 
+    [qryClientClaimListtstatuswith referal Query].[Client_Referral_Atty] AS [Client_Referral_Atty], 
+    [qryClientClaimListtstatuswith referal Query].[Client_Referral_%] AS [Client_Referral_%]
+    FROM [dbo].[qryClientClaimListtstatuswith referal Query] AS [qryClientClaimListtstatuswith referal Query]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClientList" EntityType="Self.qryClientList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClientList].[Reference_Number] AS [Reference_Number], 
+    [qryClientList].[Client_Name] AS [Client_Name], 
+    [qryClientList].[Handling_Atty] AS [Handling_Atty], 
+    [qryClientList].[Handling_%] AS [Handling_%], 
+    [qryClientList].[Credit_Atty] AS [Credit_Atty], 
+    [qryClientList].[Credit_%] AS [Credit_%], 
+    [qryClientList].[County] AS [County], 
+    [qryClientList].[Escrow_%] AS [Escrow_%], 
+    [qryClientList].[Client_Referral_Atty] AS [Client_Referral_Atty], 
+    [qryClientList].[Client_Referral_%] AS [Client_Referral_%], 
+    [qryClientList].[C_RDate] AS [C_RDate]
+    FROM [dbo].[qryClientList] AS [qryClientList]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryDailyTotals" EntityType="Self.qryDailyTotals" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryDailyTotals].[Claim_Number] AS [Claim_Number], 
+    [qryDailyTotals].[Client_Name] AS [Client_Name], 
+    [qryDailyTotals].[Credit_Atty] AS [Credit_Atty], 
+    [qryDailyTotals].[Handling_Atty] AS [Handling_Atty], 
+    [qryDailyTotals].[Amount] AS [Amount], 
+    [qryDailyTotals].[Input_Date] AS [Input_Date], 
+    [qryDailyTotals].[Deposit_Indicator] AS [Deposit_Indicator], 
+    [qryDailyTotals].[Escrow_%] AS [Escrow_%], 
+    [qryDailyTotals].[Payment_Date] AS [Payment_Date], 
+    [qryDailyTotals].[Status_Code] AS [Status_Code]
+    FROM [dbo].[qryDailyTotals] AS [qryDailyTotals]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryDeposit" EntityType="Self.qryDeposit" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryDeposit].[Claim_Number] AS [Claim_Number], 
+    [qryDeposit].[Payment_Date] AS [Payment_Date], 
+    [qryDeposit].[Period_From] AS [Period_From], 
+    [qryDeposit].[Period_To] AS [Period_To], 
+    [qryDeposit].[Amount] AS [Amount], 
+    [qryDeposit].[Handling_Atty] AS [Handling_Atty], 
+    [qryDeposit].[Credit_Atty] AS [Credit_Atty]
+    FROM [dbo].[qryDeposit] AS [qryDeposit]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryMonthlyIncome- AJS Weeklies" EntityType="Self.qryMonthlyIncome- AJS Weeklies" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryMonthlyIncome- AJS Weeklies].[Claim_Number] AS [Claim_Number], 
+    [qryMonthlyIncome- AJS Weeklies].[Client_Name] AS [Client_Name], 
+    [qryMonthlyIncome- AJS Weeklies].[Amount] AS [Amount], 
+    [qryMonthlyIncome- AJS Weeklies].[Input_Date] AS [Input_Date], 
+    [qryMonthlyIncome- AJS Weeklies].[Expr1] AS [Expr1], 
+    [qryMonthlyIncome- AJS Weeklies].[Expr2] AS [Expr2], 
+    [qryMonthlyIncome- AJS Weeklies].[Expr4] AS [Expr4]
+    FROM [dbo].[qryMonthlyIncome- AJS Weeklies] AS [qryMonthlyIncome- AJS Weeklies]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryMonthlyIncome- AJS Weeklies- no posted yet" EntityType="Self.qryMonthlyIncome- AJS Weeklies- no posted yet" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryMonthlyIncome- AJS Weeklies- no posted yet].[Claim_Number] AS [Claim_Number], 
+    [qryMonthlyIncome- AJS Weeklies- no posted yet].[Client_Name] AS [Client_Name], 
+    [qryMonthlyIncome- AJS Weeklies- no posted yet].[Amount] AS [Amount], 
+    [qryMonthlyIncome- AJS Weeklies- no posted yet].[Input_Date] AS [Input_Date], 
+    [qryMonthlyIncome- AJS Weeklies- no posted yet].[Expr1] AS [Expr1], 
+    [qryMonthlyIncome- AJS Weeklies- no posted yet].[Expr2] AS [Expr2], 
+    [qryMonthlyIncome- AJS Weeklies- no posted yet].[Expr4] AS [Expr4]
+    FROM [dbo].[qryMonthlyIncome- AJS Weeklies- no posted yet] AS [qryMonthlyIncome- AJS Weeklies- no posted yet]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryPaymentsView" EntityType="Self.qryPaymentsView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryPaymentsView].[tblPayments_Input_Date] AS [tblPayments_Input_Date], 
+    [qryPaymentsView].[tblPayments_Posted_Indicator] AS [tblPayments_Posted_Indicator], 
+    [qryPaymentsView].[Claim_Number] AS [Claim_Number], 
+    [qryPaymentsView].[Payment_Date] AS [Payment_Date], 
+    [qryPaymentsView].[Period_From] AS [Period_From], 
+    [qryPaymentsView].[Period_To] AS [Period_To], 
+    [qryPaymentsView].[Amount] AS [Amount], 
+    [qryPaymentsView].[Input_Date] AS [Input_Date], 
+    [qryPaymentsView].[Inputter_Name] AS [Inputter_Name], 
+    [qryPaymentsView].[Deposit_Indicator] AS [Deposit_Indicator], 
+    [qryPaymentsView].[Posted_Indicator] AS [Posted_Indicator], 
+    [qryPaymentsView].[SSMA_TimeStamp] AS [SSMA_TimeStamp]
+    FROM [dbo].[qryPaymentsView] AS [qryPaymentsView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryShowAllClients" EntityType="Self.qryShowAllClients" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryShowAllClients].[Reference_Number] AS [Reference_Number], 
+    [qryShowAllClients].[Client_Name] AS [Client_Name], 
+    [qryShowAllClients].[Credit_Atty] AS [Credit_Atty], 
+    [qryShowAllClients].[Handling_Atty] AS [Handling_Atty], 
+    [qryShowAllClients].[Claim_Number] AS [Claim_Number]
+    FROM [dbo].[qryShowAllClients] AS [qryShowAllClients]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qrySpecialSearch" EntityType="Self.qrySpecialSearch" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qrySpecialSearch].[Claim_Number] AS [Claim_Number], 
+    [qrySpecialSearch].[Client_Name] AS [Client_Name], 
+    [qrySpecialSearch].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qrySpecialSearch] AS [qrySpecialSearch]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Query-Hand/Credit Atty" EntityType="Self.Query-Hand/Credit Atty" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Query-Hand/Credit Atty].[Handling_Atty] AS [Handling_Atty], 
+    [Query-Hand/Credit Atty].[Credit_Atty] AS [Credit_Atty], 
+    [Query-Hand/Credit Atty].[Expr4] AS [Expr4]
+    FROM [dbo].[Query-Hand/Credit Atty] AS [Query-Hand/Credit Atty]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tblClient Query- PL HANDLING" EntityType="Self.tblClient Query- PL HANDLING" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblClient Query- PL HANDLING].[Reference_Number] AS [Reference_Number], 
+    [tblClient Query- PL HANDLING].[Client_Name] AS [Client_Name], 
+    [tblClient Query- PL HANDLING].[Handling_Atty] AS [Handling_Atty], 
+    [tblClient Query- PL HANDLING].[Credit_Atty] AS [Credit_Atty], 
+    [tblClient Query- PL HANDLING].[Claim_Number] AS [Claim_Number]
+    FROM [dbo].[tblClient Query- PL HANDLING] AS [tblClient Query- PL HANDLING]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tblClient Without Matching tblClientReferral" EntityType="Self.tblClient Without Matching tblClientReferral" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblClient Without Matching tblClientReferral].[Reference_Number] AS [Reference_Number], 
+    [tblClient Without Matching tblClientReferral].[Client_Name] AS [Client_Name], 
+    [tblClient Without Matching tblClientReferral].[Employer_Name] AS [Employer_Name], 
+    [tblClient Without Matching tblClientReferral].[Escrow_%] AS [Escrow_%], 
+    [tblClient Without Matching tblClientReferral].[Handling_Atty] AS [Handling_Atty], 
+    [tblClient Without Matching tblClientReferral].[Handling_%] AS [Handling_%], 
+    [tblClient Without Matching tblClientReferral].[Credit_Atty] AS [Credit_Atty], 
+    [tblClient Without Matching tblClientReferral].[Credit_%] AS [Credit_%], 
+    [tblClient Without Matching tblClientReferral].[Is_County] AS [Is_County], 
+    [tblClient Without Matching tblClientReferral].[County] AS [County], 
+    [tblClient Without Matching tblClientReferral].[Accident_Desc] AS [Accident_Desc], 
+    [tblClient Without Matching tblClientReferral].[Selection_Control] AS [Selection_Control]
+    FROM [dbo].[tblClient Without Matching tblClientReferral] AS [tblClient Without Matching tblClientReferral]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="tblAttorneyCombos$[N:\APPS\FEES\old_mdb]_Reference7" Association="Self.tblAttorneyCombos$[N:\APPS\FEES\old_mdb]_Reference7">
+            <End Role="tblAttyDesc" EntitySet="tblAttyDesc" />
+            <End Role="tblAttorneyCombos" EntitySet="tblAttorneyCombos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FeesPackageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ReferralwithClient">
+          <Key>
+            <PropertyRef Name="Referral_Name" />
+          </Key>
+          <Property Name="Referral_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Referral_Firm" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Referral_Tax_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Referral_Credit_Atty" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TBL_PAYMENT">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Deposit_Indicator" Type="Int32" />
+          <Property Name="Posted_Indicator" Type="Boolean" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="tbl_PMTS_with_Comment">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Date_Payment" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_Payment" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Item_Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblAttorney">
+          <Key>
+            <PropertyRef Name="Atty_Initials" />
+          </Key>
+          <Property Name="Atty_Initials" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Atty_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblAttyDesc">
+          <Key>
+            <PropertyRef Name="Combo_Indicator" />
+          </Key>
+          <Property Name="Combo_Indicator" Type="Double" Nullable="false" />
+          <Property Name="Combo_Description" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="tblAttorneyCombos" Relationship="Self.tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7" FromRole="tblAttyDesc" ToRole="tblAttorneyCombos" />
+        </EntityType>
+        <EntityType Name="tblC_R">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reference_Number" Type="Int32" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="C_RDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tblClaim">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Claim_Date" Type="DateTime" Precision="0" />
+          <Property Name="Attorney_Breakdown" Type="Double" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="tblClient">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Employer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Escrow__" Type="Double" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Handling__" Type="Double" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Credit__" Type="Double" />
+          <Property Name="Is_County" Type="Boolean" />
+          <Property Name="County" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Accident_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Selection_Control" Type="Int16" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="tblClientReferral">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Referral_Atty" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Referral__" Type="Double" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="tblCounty">
+          <Key>
+            <PropertyRef Name="County" />
+          </Key>
+          <Property Name="County" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="County_Desc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="County_Value" Type="Int16" />
+        </EntityType>
+        <EntityType Name="tblPayment">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Deposit_Indicator" Type="Int32" />
+          <Property Name="Posted_Indicator" Type="Boolean" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="tblReferral">
+          <Key>
+            <PropertyRef Name="Referral_Name" />
+          </Key>
+          <Property Name="Referral_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Referral_Firm" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Referral_Tax_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Referral_Credit_Atty" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblAttorneyCombo">
+          <Key>
+            <PropertyRef Name="SSMA_TimeStamp" />
+          </Key>
+          <Property Name="Deposit_Options" Type="Double" />
+          <Property Name="Attorney_Combinations" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="tblAttyDesc" Relationship="Self.tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7" FromRole="tblAttorneyCombos" ToRole="tblAttyDesc" />
+        </EntityType>
+        <EntityType Name="Banks_H__Martin__C__Pd_thru_date">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryAttorneyListing">
+          <Key>
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Client_Referral_Atty" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Referral_Firm" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Client_Referral__" Type="Double" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryClaim_Without_Matching_tblPayment">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="tblClaim_Reference_Number" Type="Int32" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="tblClaim_Reference_Number_2" Type="Int32" />
+        </EntityType>
+        <EntityType Name="qryClaimInfo">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Ins_Co_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Attorney_Breakdown" Type="Double" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="qryClaimPaymentTotal">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SumOfAmount" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="qryClaims_30Days">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaxOfInput_Date" Type="DateTime" Precision="0" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Reference_Number" Type="Int32" />
+        </EntityType>
+        <EntityType Name="qryClaims_30Days2">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaxOfInput_Date" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="qryClaimsDormant">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaxOfInput_Date" Type="DateTime" Precision="0" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Reference_Number" Type="Int32" />
+        </EntityType>
+        <EntityType Name="qryClaimsDormant2">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="MaxOfInput_Date" Type="DateTime" Precision="0" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="qryClaimTotal">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Claim_Date" Type="DateTime" Precision="0" />
+          <Property Name="SumOfAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="qryClientClaimList">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Handling__" Type="Double" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Credit__" Type="Double" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryClientClaimListteststatu">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Handling__" Type="Double" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Credit__" Type="Double" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryClientClaimListtstatuswith_referal_Query">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Handling__" Type="Double" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Credit__" Type="Double" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Client_Referral_Atty" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Referral__" Type="Double" />
+        </EntityType>
+        <EntityType Name="qryClientList">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Client_Referral_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Handling__" Type="Double" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Credit__" Type="Double" />
+          <Property Name="County" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Escrow__" Type="Double" />
+          <Property Name="Client_Referral_Atty" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Referral__" Type="Double" />
+          <Property Name="C_RDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="qryDailyTotal">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Payment_Date" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Deposit_Indicator" Type="Int32" />
+          <Property Name="Escrow__" Type="Double" />
+          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryDeposit">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+            <PropertyRef Name="Handling_Atty" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryMonthlyIncome__AJS_Weeklies">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Expr1" Type="Double" />
+          <Property Name="Expr2" Type="Double" />
+          <Property Name="Expr4" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryMonthlyIncome__AJS_Weeklies__no_posted_yet">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Expr1" Type="Double" />
+          <Property Name="Expr2" Type="Double" />
+          <Property Name="Expr4" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="qryPaymentsView">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+            <PropertyRef Name="SSMA_TimeStamp" />
+          </Key>
+          <Property Name="tblPayments_Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="tblPayments_Posted_Indicator" Type="Boolean" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Deposit_Indicator" Type="Int32" />
+          <Property Name="Posted_Indicator" Type="Boolean" />
+          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="qryShowAllClient">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="qrySpecialSearch">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Query_Hand_Credit_Atty">
+          <Key>
+            <PropertyRef Name="Handling_Atty" />
+          </Key>
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Expr4" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblClient_Query__PL_HANDLING">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblClient_Without_Matching_tblClientReferral">
+          <Key>
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Handling_Atty" />
+          </Key>
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Employer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Escrow__" Type="Double" />
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Handling__" Type="Double" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Credit__" Type="Double" />
+          <Property Name="Is_County" Type="Boolean" />
+          <Property Name="County" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Accident_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Selection_Control" Type="Int16" />
+        </EntityType>
+        <Association Name="tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7">
+          <End Role="tblAttyDesc" Type="Self.tblAttyDesc" Multiplicity="0..1" />
+          <End Role="tblAttorneyCombos" Type="Self.tblAttorneyCombo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAttyDesc">
+              <PropertyRef Name="Combo_Indicator" />
+            </Principal>
+            <Dependent Role="tblAttorneyCombos">
+              <PropertyRef Name="Deposit_Options" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FeesPackageEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ReferralwithClients" EntityType="Self.ReferralwithClient" />
+          <EntitySet Name="TBL_PAYMENTS" EntityType="Self.TBL_PAYMENT" />
+          <EntitySet Name="tbl_PMTS_with_Comments" EntityType="Self.tbl_PMTS_with_Comment" />
+          <EntitySet Name="tblAttorneys" EntityType="Self.tblAttorney" />
+          <EntitySet Name="tblAttyDescs" EntityType="Self.tblAttyDesc" />
+          <EntitySet Name="tblC_R" EntityType="Self.tblC_R" />
+          <EntitySet Name="tblClaims" EntityType="Self.tblClaim" />
+          <EntitySet Name="tblClients" EntityType="Self.tblClient" />
+          <EntitySet Name="tblClientReferrals" EntityType="Self.tblClientReferral" />
+          <EntitySet Name="tblCounties" EntityType="Self.tblCounty" />
+          <EntitySet Name="tblPayments" EntityType="Self.tblPayment" />
+          <EntitySet Name="tblReferrals" EntityType="Self.tblReferral" />
+          <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombo" />
+          <EntitySet Name="Banks_H__Martin__C__Pd_thru_date" EntityType="Self.Banks_H__Martin__C__Pd_thru_date" />
+          <EntitySet Name="qryAttorneyListings" EntityType="Self.qryAttorneyListing" />
+          <EntitySet Name="qryClaim_Without_Matching_tblPayments" EntityType="Self.qryClaim_Without_Matching_tblPayment" />
+          <EntitySet Name="qryClaimInfoes" EntityType="Self.qryClaimInfo" />
+          <EntitySet Name="qryClaimPaymentTotals" EntityType="Self.qryClaimPaymentTotal" />
+          <EntitySet Name="qryClaims_30Days" EntityType="Self.qryClaims_30Days" />
+          <EntitySet Name="qryClaims_30Days2" EntityType="Self.qryClaims_30Days2" />
+          <EntitySet Name="qryClaimsDormants" EntityType="Self.qryClaimsDormant" />
+          <EntitySet Name="qryClaimsDormant2" EntityType="Self.qryClaimsDormant2" />
+          <EntitySet Name="qryClaimTotals" EntityType="Self.qryClaimTotal" />
+          <EntitySet Name="qryClientClaimLists" EntityType="Self.qryClientClaimList" />
+          <EntitySet Name="qryClientClaimListteststatus" EntityType="Self.qryClientClaimListteststatu" />
+          <EntitySet Name="qryClientClaimListtstatuswith_referal_Queries" EntityType="Self.qryClientClaimListtstatuswith_referal_Query" />
+          <EntitySet Name="qryClientLists" EntityType="Self.qryClientList" />
+          <EntitySet Name="qryDailyTotals" EntityType="Self.qryDailyTotal" />
+          <EntitySet Name="qryDeposits" EntityType="Self.qryDeposit" />
+          <EntitySet Name="qryMonthlyIncome__AJS_Weeklies" EntityType="Self.qryMonthlyIncome__AJS_Weeklies" />
+          <EntitySet Name="qryMonthlyIncome__AJS_Weeklies__no_posted_yet" EntityType="Self.qryMonthlyIncome__AJS_Weeklies__no_posted_yet" />
+          <EntitySet Name="qryPaymentsViews" EntityType="Self.qryPaymentsView" />
+          <EntitySet Name="qryShowAllClients" EntityType="Self.qryShowAllClient" />
+          <EntitySet Name="qrySpecialSearches" EntityType="Self.qrySpecialSearch" />
+          <EntitySet Name="Query_Hand_Credit_Atty" EntityType="Self.Query_Hand_Credit_Atty" />
+          <EntitySet Name="tblClient_Query__PL_HANDLING" EntityType="Self.tblClient_Query__PL_HANDLING" />
+          <EntitySet Name="tblClient_Without_Matching_tblClientReferrals" EntityType="Self.tblClient_Without_Matching_tblClientReferral" />
+          <AssociationSet Name="tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7" Association="Self.tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7">
+            <End Role="tblAttyDesc" EntitySet="tblAttyDescs" />
+            <End Role="tblAttorneyCombos" EntitySet="tblAttorneyCombos" />
+          </AssociationSet>
+          <EntitySet Name="tblInsurances" EntityType="FeesPackageModel.tblInsurance" />
+        </EntityContainer>
+        <EntityType Name="tblInsurance">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ins_Co_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ins_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FeesPackageModelStoreContainer" CdmEntityContainer="FeesPackageEntities">
+          <EntitySetMapping Name="ReferralwithClients">
+            <EntityTypeMapping TypeName="FeesPackageModel.ReferralwithClient">
+              <MappingFragment StoreEntitySet="ReferralwithClient">
+                <ScalarProperty Name="Referral_Name" ColumnName="Referral_Name" />
+                <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
+                <ScalarProperty Name="Referral_Tax_ID" ColumnName="Referral_Tax_ID" />
+                <ScalarProperty Name="Referral_Credit_Atty" ColumnName="Referral_Credit_Atty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_PAYMENTS">
+            <EntityTypeMapping TypeName="FeesPackageModel.TBL_PAYMENT">
+              <MappingFragment StoreEntitySet="TBL PAYMENTS">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
+                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
+                <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_PMTS_with_Comments">
+            <EntityTypeMapping TypeName="FeesPackageModel.tbl_PMTS_with_Comment">
+              <MappingFragment StoreEntitySet="tbl PMTS with Comment">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Date_Payment" ColumnName="Date_Payment" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Item_Comment" ColumnName="Item_Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttorneys">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblAttorney">
+              <MappingFragment StoreEntitySet="tblAttorney">
+                <ScalarProperty Name="Atty_Initials" ColumnName="Atty-Initials" />
+                <ScalarProperty Name="Atty_Name" ColumnName="Atty-Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttyDescs">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblAttyDesc">
+              <MappingFragment StoreEntitySet="tblAttyDesc">
+                <ScalarProperty Name="Combo_Indicator" ColumnName="Combo_Indicator" />
+                <ScalarProperty Name="Combo_Description" ColumnName="Combo_Description" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblC_R">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblC_R">
+              <MappingFragment StoreEntitySet="tblC&amp;R">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="C_RDate" ColumnName="C_RDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblClaims">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblClaim">
+              <MappingFragment StoreEntitySet="tblClaim">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Insurance_Contact" ColumnName="Insurance_Contact" />
+                <ScalarProperty Name="Claim_Date" ColumnName="Claim_Date" />
+                <ScalarProperty Name="Attorney_Breakdown" ColumnName="Attorney_Breakdown" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblClients">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblClient">
+              <MappingFragment StoreEntitySet="tblClient">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Employer_Name" ColumnName="Employer_Name" />
+                <ScalarProperty Name="Escrow__" ColumnName="Escrow_%" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
+                <ScalarProperty Name="Is_County" ColumnName="Is_County" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Accident_Desc" ColumnName="Accident_Desc" />
+                <ScalarProperty Name="Selection_Control" ColumnName="Selection_Control" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblClientReferrals">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblClientReferral">
+              <MappingFragment StoreEntitySet="tblClientReferral">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
+                <ScalarProperty Name="Client_Referral__" ColumnName="Client_Referral_%" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCounties">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblCounty">
+              <MappingFragment StoreEntitySet="tblCounty">
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="County_Desc" ColumnName="County_Desc" />
+                <ScalarProperty Name="County_Value" ColumnName="County_Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPayments">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblPayment">
+              <MappingFragment StoreEntitySet="tblPayments">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
+                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
+                <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblReferrals">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblReferral">
+              <MappingFragment StoreEntitySet="tblReferral">
+                <ScalarProperty Name="Referral_Name" ColumnName="Referral_Name" />
+                <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
+                <ScalarProperty Name="Referral_Tax_ID" ColumnName="Referral_Tax_ID" />
+                <ScalarProperty Name="Referral_Credit_Atty" ColumnName="Referral_Credit_Atty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttorneyCombos">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblAttorneyCombo">
+              <MappingFragment StoreEntitySet="tblAttorneyCombos">
+                <ScalarProperty Name="Deposit_Options" ColumnName="Deposit_Options" />
+                <ScalarProperty Name="Attorney_Combinations" ColumnName="Attorney_Combinations" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banks_H__Martin__C__Pd_thru_date">
+            <EntityTypeMapping TypeName="FeesPackageModel.Banks_H__Martin__C__Pd_thru_date">
+              <MappingFragment StoreEntitySet="Banks(H) Martin (C) Pd thru date">
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryAttorneyListings">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryAttorneyListing">
+              <MappingFragment StoreEntitySet="qryAttorneyListing">
+                <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
+                <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Client_Referral__" ColumnName="Client_Referral_%" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaim_Without_Matching_tblPayments">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaim_Without_Matching_tblPayment">
+              <MappingFragment StoreEntitySet="qryClaim Without Matching tblPayments">
+                <ScalarProperty Name="tblClaim_Reference_Number" ColumnName="tblClaim_Reference_Number" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="tblClaim_Reference_Number_2" ColumnName="tblClaim_Reference_Number$2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaimInfoes">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaimInfo">
+              <MappingFragment StoreEntitySet="qryClaimInfo">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Ins_Co_Name" ColumnName="Ins_Co_Name" />
+                <ScalarProperty Name="Attorney_Breakdown" ColumnName="Attorney_Breakdown" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaimPaymentTotals">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaimPaymentTotal">
+              <MappingFragment StoreEntitySet="qryClaimPaymentTotal">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="SumOfAmount" ColumnName="SumOfAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaims_30Days">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaims_30Days">
+              <MappingFragment StoreEntitySet="qryClaims&gt;30Days">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="MaxOfInput_Date" ColumnName="MaxOfInput_Date" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaims_30Days2">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaims_30Days2">
+              <MappingFragment StoreEntitySet="qryClaims&gt;30Days2">
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="MaxOfInput_Date" ColumnName="MaxOfInput_Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaimsDormants">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaimsDormant">
+              <MappingFragment StoreEntitySet="qryClaimsDormant">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="MaxOfInput_Date" ColumnName="MaxOfInput_Date" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaimsDormant2">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaimsDormant2">
+              <MappingFragment StoreEntitySet="qryClaimsDormant2">
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="MaxOfInput_Date" ColumnName="MaxOfInput_Date" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaimTotals">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaimTotal">
+              <MappingFragment StoreEntitySet="qryClaimTotals">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Insurance_Contact" ColumnName="Insurance_Contact" />
+                <ScalarProperty Name="Claim_Date" ColumnName="Claim_Date" />
+                <ScalarProperty Name="SumOfAmount" ColumnName="SumOfAmount" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClientClaimLists">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClientClaimList">
+              <MappingFragment StoreEntitySet="qryClientClaimList">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Insurance_Contact" ColumnName="Insurance_Contact" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClientClaimListteststatus">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClientClaimListteststatu">
+              <MappingFragment StoreEntitySet="qryClientClaimListteststatus">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Insurance_Contact" ColumnName="Insurance_Contact" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClientClaimListtstatuswith_referal_Queries">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClientClaimListtstatuswith_referal_Query">
+              <MappingFragment StoreEntitySet="qryClientClaimListtstatuswith referal Query">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+                <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
+                <ScalarProperty Name="Client_Referral__" ColumnName="Client_Referral_%" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClientLists">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClientList">
+              <MappingFragment StoreEntitySet="qryClientList">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Escrow__" ColumnName="Escrow_%" />
+                <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
+                <ScalarProperty Name="Client_Referral__" ColumnName="Client_Referral_%" />
+                <ScalarProperty Name="C_RDate" ColumnName="C_RDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryDailyTotals">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryDailyTotal">
+              <MappingFragment StoreEntitySet="qryDailyTotals">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
+                <ScalarProperty Name="Escrow__" ColumnName="Escrow_%" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryDeposits">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryDeposit">
+              <MappingFragment StoreEntitySet="qryDeposit">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryMonthlyIncome__AJS_Weeklies">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryMonthlyIncome__AJS_Weeklies">
+              <MappingFragment StoreEntitySet="qryMonthlyIncome- AJS Weeklies">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="Expr4" ColumnName="Expr4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryMonthlyIncome__AJS_Weeklies__no_posted_yet">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryMonthlyIncome__AJS_Weeklies__no_posted_yet">
+              <MappingFragment StoreEntitySet="qryMonthlyIncome- AJS Weeklies- no posted yet">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="Expr4" ColumnName="Expr4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryPaymentsViews">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryPaymentsView">
+              <MappingFragment StoreEntitySet="qryPaymentsView">
+                <ScalarProperty Name="tblPayments_Input_Date" ColumnName="tblPayments_Input_Date" />
+                <ScalarProperty Name="tblPayments_Posted_Indicator" ColumnName="tblPayments_Posted_Indicator" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
+                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
+                <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
+                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryShowAllClients">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryShowAllClient">
+              <MappingFragment StoreEntitySet="qryShowAllClients">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qrySpecialSearches">
+            <EntityTypeMapping TypeName="FeesPackageModel.qrySpecialSearch">
+              <MappingFragment StoreEntitySet="qrySpecialSearch">
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Query_Hand_Credit_Atty">
+            <EntityTypeMapping TypeName="FeesPackageModel.Query_Hand_Credit_Atty">
+              <MappingFragment StoreEntitySet="Query-Hand/Credit Atty">
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Expr4" ColumnName="Expr4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblClient_Query__PL_HANDLING">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblClient_Query__PL_HANDLING">
+              <MappingFragment StoreEntitySet="tblClient Query- PL HANDLING">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblClient_Without_Matching_tblClientReferrals">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblClient_Without_Matching_tblClientReferral">
+              <MappingFragment StoreEntitySet="tblClient Without Matching tblClientReferral">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Employer_Name" ColumnName="Employer_Name" />
+                <ScalarProperty Name="Escrow__" ColumnName="Escrow_%" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
+                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
+                <ScalarProperty Name="Is_County" ColumnName="Is_County" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Accident_Desc" ColumnName="Accident_Desc" />
+                <ScalarProperty Name="Selection_Control" ColumnName="Selection_Control" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInsurances">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblInsurance">
+              <MappingFragment StoreEntitySet="tblInsurance">
+                <ScalarProperty Name="Ins_Contact" ColumnName="Ins_Contact" />
+                <ScalarProperty Name="Ins_Co_Name" ColumnName="Ins_Co_Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

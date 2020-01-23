@@ -1,0 +1,169 @@
+﻿@using FeesPackage.Data_Access;
+@model List<tblInsurance>
+
+@{
+    ViewBag.Title = "tblInsurance";
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        ready();
+    });
+</script>
+
+<div class="span9">
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h3>
+                    <i>@ViewBag.Title</i> Table
+                </h3>
+            </div>
+            <div class="module-body table">
+                <span>Search: </span>
+                <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
+                <button id="addrowbutton" style="float: right">+</button>
+                <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
+                    <div id="jqxgrid"></div>
+                </div>
+            </div>
+        </div>
+        <!--/.module-->
+    </div>
+    <!--/.content-->
+</div>
+<!--/.span9-->
+
+<script>
+    var groups = [];
+
+    function ready() {
+        // prepare the data
+        var data = @Html.Raw(Json.Encode(Model));
+        var inUpdate = false;
+
+        var source =
+        {
+            dataType: "json",
+            updaterow: function (rowid, rowdata, commit) {
+                if (!inUpdate) {
+                    $.post('/masterTables/insuranceinfo', rowdata, function (data, status, jqXHR) {
+                        inUpdate = true;
+                        $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
+                        inUpdate = false;
+                        commit(true);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ': ' + errorThrown);
+                    });
+                }
+            },
+            dataFields: [
+                { name: 'id', type: 'int' },
+                { name: 'Ins_Co_Name', type: 'string' },
+                { name: 'Ins_Contact', type: 'string' }
+            ],
+            id: 'insurance',
+            localdata: data
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) { },
+            loadComplete: function (data) { },
+            beforeLoadComplete: function (records) { },
+            loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
+        });
+        var cellsrenderer_center = function (row, column, value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+        var columnrenderer_center = function (value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+        var generaterow = function (i) {
+            var row = {};
+            row["Ins_Co_Name"] = "";
+            row["Ins_Contact"] = "";
+            return row;
+        }
+        // create new row.
+        $("#addrowbutton").on('click', function () {
+            var datarow = generaterow();
+            $("#jqxgrid").jqxGrid('addrow', null, datarow, 'first');    // add empty row in first position
+            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Ins_Co_Name');   // begin editting newly added row, first column
+        });
+        $("#jqxgrid").jqxGrid(
+        {
+            theme: 'energyblue',
+            width: '100%',
+            height: '50%',
+            autowidth: false,
+            source: dataAdapter,
+            showfilterrow: true,
+            filterable: true,
+            pageable: true,
+            pagesize: 20,
+            groupable: false,
+            editable: true,
+            sortable: true,
+            ready: function () { setup(); },
+            columnsresize: true,
+            columns: [
+                { text: 'id', datafield: 'id', hidden: true },
+                { text: 'Insurance Company Name', datafield: 'Ins_Co_Name', filtertype: 'checkedlist' },
+                { text: 'Insurance Contact', datafield: 'Ins_Contact', filtertype: 'checkedlist' }
+            ]
+        });
+
+        var options = {
+            callback: function (value) {
+                var datafield = "Ins_Co_Name";
+                var searchText = value;
+                var filter_or_operator = 1;
+                var filtervalue = searchText;
+                var filtercondition = 'CONTAINS';
+
+                var filtergroup = new $.jqx.filter();
+                var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+                filtergroup.addfilter(filter_or_operator, filter);
+
+                $("#jqxgrid").jqxGrid('clearfilters');
+                $("#jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
+                $("#jqxgrid").jqxGrid('applyfilters');
+            },
+            wait: 750,
+            highlight: true,
+            allowSubmit: false,
+            captureLength: 2
+        }
+        $("#search").typeWatch(options);
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setup() {
+        $("#jqxgrid").jqxGrid('autoresizecolumns');
+
+        $(window).bind('resize', function () {
+            $("#jqxgrid").jqxGrid(
+            {
+                // set height of grid to available space
+                height: $(window).height() - ($('.navbar').height()
+                                            + $('.module').height()
+                                            + $('.footer').height()
+                                            + 100 // fudge factor for padding/margins
+                                             )
+            });
+        }).trigger('resize');
+    }
+</script>

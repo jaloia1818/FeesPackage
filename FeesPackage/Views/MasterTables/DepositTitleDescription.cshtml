@@ -1,0 +1,46 @@
+﻿@using FeesPackage.Data_Access;
+@model List<tblAttyDesc>
+
+@{
+    ViewBag.Title = "tblAttyDesc";
+}
+
+<div class="span9">
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h3>
+                    <i>@ViewBag.Title</i> Table
+                </h3>
+            </div>
+            <div class="module-body table">
+                <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	display" width="100%">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(modelItem => Model[0].Combo_Indicator)</th>
+                            <th>@Html.DisplayNameFor(modelItem => Model[0].Combo_Description)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (tblAttyDesc model in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => model.Combo_Indicator)</td>
+                                <td>@Html.DisplayFor(modelItem => model.Combo_Description)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>@Html.DisplayNameFor(modelItem => Model[0].Combo_Indicator)</th>
+                            <th>@Html.DisplayNameFor(modelItem => Model[0].Combo_Description)</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!--/.module-->
+    </div>
+    <!--/.content-->
+</div>
+<!--/.span9-->
