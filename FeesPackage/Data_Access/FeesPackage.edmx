@@ -122,8 +122,9 @@ warning 6002: The table/view 'FeesPackage.dbo.tblAttorneyCombos' does not have a
         </EntityType>
         <EntityType Name="tblCounty">
           <Key>
-            <PropertyRef Name="County" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="County" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="County_Desc" Type="nvarchar" MaxLength="30" />
           <Property Name="County_Value" Type="smallint" />
@@ -952,14 +953,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="Client_Referral__" Type="Double" />
           <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
-        <EntityType Name="tblCounty">
-          <Key>
-            <PropertyRef Name="County" />
-          </Key>
-          <Property Name="County" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="County_Desc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="County_Value" Type="Int16" />
-        </EntityType>
         <EntityType Name="tblPayment">
           <Key>
             <PropertyRef Name="Claim_Number" />
@@ -1330,7 +1323,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <EntitySet Name="tblClaims" EntityType="Self.tblClaim" />
           <EntitySet Name="tblClients" EntityType="Self.tblClient" />
           <EntitySet Name="tblClientReferrals" EntityType="Self.tblClientReferral" />
-          <EntitySet Name="tblCounties" EntityType="Self.tblCounty" />
           <EntitySet Name="tblPayments" EntityType="Self.tblPayment" />
           <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombo" />
           <EntitySet Name="Banks_H__Martin__C__Pd_thru_date" EntityType="Self.Banks_H__Martin__C__Pd_thru_date" />
@@ -1363,6 +1355,7 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           </AssociationSet>
           <EntitySet Name="tblInsurances" EntityType="FeesPackageModel.tblInsurance" />
           <EntitySet Name="tblReferrals" EntityType="FeesPackageModel.tblReferral" />
+          <EntitySet Name="tblCounties" EntityType="FeesPackageModel.tblCounty" />
         </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
@@ -1381,6 +1374,15 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="Referral_Firm" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
           <Property Name="Referral_Tax_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Referral_Credit_Atty" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblCounty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="County" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="County_Desc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="County_Value" Type="Int16" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1496,15 +1498,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
                 <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
                 <ScalarProperty Name="Client_Referral__" ColumnName="Client_Referral_%" />
                 <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblCounties">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblCounty">
-              <MappingFragment StoreEntitySet="tblCounty">
-                <ScalarProperty Name="County" ColumnName="County" />
-                <ScalarProperty Name="County_Desc" ColumnName="County_Desc" />
-                <ScalarProperty Name="County_Value" ColumnName="County_Value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1868,6 +1861,16 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
                 <ScalarProperty Name="Referral_Tax_ID" ColumnName="Referral_Tax_ID" />
                 <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
                 <ScalarProperty Name="Referral_Name" ColumnName="Referral_Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCounties">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblCounty">
+              <MappingFragment StoreEntitySet="tblCounty">
+                <ScalarProperty Name="County_Value" ColumnName="County_Value" />
+                <ScalarProperty Name="County_Desc" ColumnName="County_Desc" />
+                <ScalarProperty Name="County" ColumnName="County" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

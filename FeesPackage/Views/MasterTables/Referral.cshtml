@@ -81,15 +81,17 @@
         }
         var generaterow = function (i) {
             var row = {};
-            row["Ins_Co_Name"] = "";
-            row["Ins_Contact"] = "";
+            row["Referral_Name"] = "";
+            row["Referral_Firm"] = "";
+            row["Referral_Tax_ID"] = "";
+            row["Referral_Credit_Atty"] = "";
             return row;
         }
         // create new row.
         $("#addrowbutton").on('click', function () {
             var datarow = generaterow();
-            $("#jqxgrid").jqxGrid('addrow', null, datarow, 'first');    // add empty row in first position
-            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Ins_Co_Name');   // begin editting newly added row, first column
+            $("#jqxgrid").jqxGrid('addrow', null, datarow, 'first');      // add empty row in first position
+            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Referral_Name');   // begin editting newly added row, first column
         });
         $("#jqxgrid").jqxGrid(
         {

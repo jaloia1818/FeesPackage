@@ -39,9 +39,49 @@ namespace FeesPackage.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public HttpStatusCodeResult County(tblCounty model)
+        {
+            try
+            {
+                if (model.id == 0)
+                { // insert
+                    // set new Guid for primary key
+                    int id = db.tblCounties.Max(x => x.id);
+                    model.id = ++id;
+
+                    // Insert into table
+                    db.tblCounties.Add(model);
+                    db.SaveChanges();
+                }
+                else
+                {               // update
+                    // get original record for unedited fields
+                    tblCounty record = db.tblCounties.Where(x => x.id == model.id).Single();
+
+                    // transfer form fields
+                    record.County = model.County;
+                    record.County_Desc = model.County_Desc;
+                    record.County_Value = model.County_Value;
+
+                    // Update record
+                    db.Entry(record).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+            }
+
+            // return Status OK
+            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+        }
+
+        [HttpGet]
         public ActionResult County()
         {
-            List<tblCounty> model = db.tblCounties.ToList();
+            List<tblCounty> model = db.tblCounties.OrderByDescending(x => x.id).ToList();
 
             return View(model);
         }

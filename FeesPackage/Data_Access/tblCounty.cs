@@ -14,6 +14,7 @@ namespace FeesPackage.Data_Access
     
     public partial class tblCounty
     {
+        public int id { get; set; }
         public string County { get; set; }
         public string County_Desc { get; set; }
         public Nullable<short> County_Value { get; set; }
