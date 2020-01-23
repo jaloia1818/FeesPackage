@@ -46,9 +46,50 @@ namespace FeesPackage.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public HttpStatusCodeResult Referral(tblReferral model)
+        {
+            try
+            {
+                if (model.id == 0)
+                { // insert
+                    // set new Guid for primary key
+                    int id = db.tblReferrals.Max(x => x.id);
+                    model.id = ++id;
+
+                    // Insert into table
+                    db.tblReferrals.Add(model);
+                    db.SaveChanges();
+                }
+                else
+                {               // update
+                    // get original record for unedited fields
+                    tblReferral record = db.tblReferrals.Where(x => x.id == model.id).Single();
+
+                    // transfer form fields
+                    record.Referral_Name = model.Referral_Name;
+                    record.Referral_Firm = model.Referral_Firm;
+                    record.Referral_Tax_ID = model.Referral_Tax_ID;
+                    record.Referral_Credit_Atty = model.Referral_Credit_Atty;
+
+                    // Update record
+                    db.Entry(record).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+            }
+
+            // return Status OK
+            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+        }
+
+        [HttpGet]
         public ActionResult Referral()
         {
-            List<tblReferral> model = db.tblReferrals.ToList();
+            List<tblReferral> model = db.tblReferrals.OrderByDescending(x => x.id).ToList();
 
             return View(model);
         }

@@ -14,6 +14,7 @@ namespace FeesPackage.Data_Access
     
     public partial class tblReferral
     {
+        public int id { get; set; }
         public string Referral_Name { get; set; }
         public string Referral_Firm { get; set; }
         public string Referral_Tax_ID { get; set; }

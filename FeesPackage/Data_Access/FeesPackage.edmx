@@ -154,8 +154,9 @@ warning 6002: The table/view 'FeesPackage.dbo.tblAttorneyCombos' does not have a
         </EntityType>
         <EntityType Name="tblReferral">
           <Key>
-            <PropertyRef Name="Referral_Name" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Referral_Name" Type="nvarchar" MaxLength="35" Nullable="false" />
           <Property Name="Referral_Firm" Type="nvarchar" MaxLength="35" />
           <Property Name="Referral_Tax_ID" Type="nvarchar" MaxLength="15" />
@@ -975,15 +976,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="Posted_Indicator" Type="Boolean" />
           <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
-        <EntityType Name="tblReferral">
-          <Key>
-            <PropertyRef Name="Referral_Name" />
-          </Key>
-          <Property Name="Referral_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Referral_Firm" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
-          <Property Name="Referral_Tax_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Referral_Credit_Atty" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="tblAttorneyCombo">
           <Key>
             <PropertyRef Name="SSMA_TimeStamp" />
@@ -1340,7 +1332,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <EntitySet Name="tblClientReferrals" EntityType="Self.tblClientReferral" />
           <EntitySet Name="tblCounties" EntityType="Self.tblCounty" />
           <EntitySet Name="tblPayments" EntityType="Self.tblPayment" />
-          <EntitySet Name="tblReferrals" EntityType="Self.tblReferral" />
           <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombo" />
           <EntitySet Name="Banks_H__Martin__C__Pd_thru_date" EntityType="Self.Banks_H__Martin__C__Pd_thru_date" />
           <EntitySet Name="qryAttorneyListings" EntityType="Self.qryAttorneyListing" />
@@ -1371,6 +1362,7 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
             <End Role="tblAttorneyCombos" EntitySet="tblAttorneyCombos" />
           </AssociationSet>
           <EntitySet Name="tblInsurances" EntityType="FeesPackageModel.tblInsurance" />
+          <EntitySet Name="tblReferrals" EntityType="FeesPackageModel.tblReferral" />
         </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
@@ -1379,6 +1371,16 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Ins_Co_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Ins_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblReferral">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Referral_Name" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Referral_Firm" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Referral_Tax_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Referral_Credit_Atty" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1519,16 +1521,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
                 <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
                 <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
                 <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblReferrals">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblReferral">
-              <MappingFragment StoreEntitySet="tblReferral">
-                <ScalarProperty Name="Referral_Name" ColumnName="Referral_Name" />
-                <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
-                <ScalarProperty Name="Referral_Tax_ID" ColumnName="Referral_Tax_ID" />
-                <ScalarProperty Name="Referral_Credit_Atty" ColumnName="Referral_Credit_Atty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1865,6 +1857,17 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
               <MappingFragment StoreEntitySet="tblInsurance">
                 <ScalarProperty Name="Ins_Contact" ColumnName="Ins_Contact" />
                 <ScalarProperty Name="Ins_Co_Name" ColumnName="Ins_Co_Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblReferrals">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblReferral">
+              <MappingFragment StoreEntitySet="tblReferral">
+                <ScalarProperty Name="Referral_Credit_Atty" ColumnName="Referral_Credit_Atty" />
+                <ScalarProperty Name="Referral_Tax_ID" ColumnName="Referral_Tax_ID" />
+                <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
+                <ScalarProperty Name="Referral_Name" ColumnName="Referral_Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
