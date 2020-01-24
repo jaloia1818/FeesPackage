@@ -39,20 +39,20 @@
 
     function ready() {
         // prepare the Attorney list dropdown data
-        var locallista = @Html.Raw(Json.Encode(Model.attys));
+        var locallista = @Html.Raw(Json.Encode(Model.Attys));
 
         var locallistaSource = {
             datatype: "array",
             datafields: [
-                    { name: 'name', type: 'string' },
-                    { name: 'id', type: 'string' }
+                    { name: 'Name', type: 'string' },
+                    { name: 'Id', type: 'string' }
             ],
             localdata: locallista
         };
         var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
 
         // prepare the data
-        var data = @Html.Raw(Json.Encode(Model.referrals));
+        var data = @Html.Raw(Json.Encode(Model.Referrals));
         var inUpdate = false;
 
         var source =
@@ -135,8 +135,8 @@
                         editor.jqxDropDownList({
                             dropDownHeight: 60,
                             source: locallistaAdapter,
-                            displayMember: 'id',
-                            valueMember: 'name',
+                            displayMember: 'Id',
+                            valueMember: 'Name',
                             filterable: false,
                             placeHolder: 'Choose…',
                             renderer: function (index, label, value)

@@ -8,13 +8,13 @@ namespace FeesPackage.Models
 {
     public class ReferralModel
     {
-       public List<tblReferral> referrals { get; set; }
-       public List<listClass> attys { get; set; }
+       public List<tblReferral> Referrals { get; set; }
+       public List<ListClass> Attys { get; set; }
     }
 
-    public class listClass
+    public class ListClass
     {
-        public string id { get; set; }
-        public string name { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }

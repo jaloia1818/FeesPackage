@@ -153,69 +153,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FeesPackage.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Data_Access\qryAttorneyListing.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaimInfo.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaimPaymentTotal.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaimsDormant.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaimsDormant2.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaims_30Days.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaims_30Days2.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaimTotal.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClaim_Without_Matching_tblPayment.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClientClaimList.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClientClaimListteststatu.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClientClaimListtstatuswith_referal_Query.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryClientList.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryDailyTotal.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryDeposit.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryMonthlyIncome__AJS_Weeklies.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryMonthlyIncome__AJS_Weeklies__no_posted_yet.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryPaymentsView.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qryShowAllClient.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\qrySpecialSearch.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\Query_Hand_Credit_Atty.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data_Access\ReferralwithClient.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>

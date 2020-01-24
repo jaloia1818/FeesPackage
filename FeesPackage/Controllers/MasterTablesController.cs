@@ -255,17 +255,19 @@ namespace FeesPackage.Controllers
         [HttpGet]
         public ActionResult Referral()
         {
-            ReferralModel model = new ReferralModel();
-            model.referrals = db.tblReferrals.OrderByDescending(x => x.id).ToList();
-            
-            model.attys = db.tblAttorneys //.OrderBy(c => c.ToString())
+            ReferralModel model = new ReferralModel
+            {
+                Referrals = db.tblReferrals.OrderByDescending(x => x.id).ToList(),
+
+                Attys = db.tblAttorneys
                 .ToArray()
-                .Select(c => new listClass
-                    {
-                        id = c.Atty_Initials.ToString(),
-                        name = c.Atty_Name.ToString()
-                    })
-                .ToList();
+                .Select(c => new ListClass
+                {
+                    Id = c.Atty_Initials.ToString(),
+                    Name = c.Atty_Name.ToString()
+                })
+                .ToList()
+            };
 
             return View(model);
         }
