@@ -1,5 +1,5 @@
-﻿@using FeesPackage.Data_Access;
-@model List<tblReferral>
+﻿@using FeesPackage.Models;
+@model ReferralModel
 
 @{
     ViewBag.Title = "tblReferral";
@@ -38,8 +38,21 @@
     var groups = [];
 
     function ready() {
+        // prepare the Attorney list dropdown data
+        var locallista = @Html.Raw(Json.Encode(Model.attys));
+
+        var locallistaSource = {
+            datatype: "array",
+            datafields: [
+                    { name: 'name', type: 'string' },
+                    { name: 'id', type: 'string' }
+            ],
+            localdata: locallista
+        };
+        var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
+
         // prepare the data
-        var data = @Html.Raw(Json.Encode(Model));
+        var data = @Html.Raw(Json.Encode(Model.referrals));
         var inUpdate = false;
 
         var source =
@@ -114,7 +127,26 @@
                 { text: 'Referral Name', datafield: 'Referral_Name', filtertype: 'checkedlist' },
                 { text: 'Referral Firm', datafield: 'Referral_Firm', filtertype: 'checkedlist' },
                 { text: 'Referral Tax ID', datafield: 'Referral_Tax_ID', filtertype: 'checkedlist' },
-                { text: 'Referral Credit Atty', datafield: 'Referral_Credit_Atty', filtertype: 'checkedlist' }
+                {
+                    text: 'Referral Credit Atty', datafield: 'Referral_Credit_Atty', filtertype: 'checkedlist',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor)
+                    {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 60,
+                            source: locallistaAdapter,
+                            displayMember: 'id',
+                            valueMember: 'name',
+                            filterable: false,
+                            placeHolder: 'Choose…',
+                            renderer: function (index, label, value)
+                            {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return label + ' - ' + value;
+                            }
+                        });
+                    }
+                }
             ]
         });
 

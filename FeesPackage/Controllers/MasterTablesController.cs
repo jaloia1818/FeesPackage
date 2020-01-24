@@ -1,4 +1,5 @@
 ﻿using FeesPackage.Data_Access;
+using FeesPackage.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -254,7 +255,17 @@ namespace FeesPackage.Controllers
         [HttpGet]
         public ActionResult Referral()
         {
-            List<tblReferral> model = db.tblReferrals.OrderByDescending(x => x.id).ToList();
+            ReferralModel model = new ReferralModel();
+            model.referrals = db.tblReferrals.OrderByDescending(x => x.id).ToList();
+            
+            model.attys = db.tblAttorneys //.OrderBy(c => c.ToString())
+                .ToArray()
+                .Select(c => new listClass
+                    {
+                        id = c.Atty_Initials.ToString(),
+                        name = c.Atty_Name.ToString()
+                    })
+                .ToList();
 
             return View(model);
         }
