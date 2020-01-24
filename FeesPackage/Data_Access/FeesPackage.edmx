@@ -46,28 +46,27 @@
         </EntityType>
         <EntityType Name="tblAttorney">
           <Key>
-            <PropertyRef Name="Atty-Initials" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Atty-Initials" Type="nvarchar" MaxLength="4" Nullable="false" />
           <Property Name="Atty-Name" Type="nvarchar" MaxLength="35" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.tblAttorneyCombos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblAttorneyCombos">
           <Key>
-            <PropertyRef Name="SSMA_TimeStamp" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="Deposit_Options" Type="float" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deposit_Options" Type="float" Nullable="false" />
           <Property Name="Attorney_Combinations" Type="nvarchar" MaxLength="10" />
-          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblAttyDesc">
           <Key>
-            <PropertyRef Name="Combo_Indicator" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Combo_Indicator" Type="float" Nullable="false" />
           <Property Name="Combo_Description" Type="nvarchar" MaxLength="20" />
-          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblC&amp;R">
           <Key>
@@ -534,23 +533,12 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="Accident_Desc" Type="nvarchar(max)" />
           <Property Name="Selection_Control" Type="smallint" />
         </EntityType>
-        <Association Name="tblAttorneyCombos$[N:\APPS\FEES\old_mdb]_Reference7">
-          <End Role="tblAttyDesc" Type="Self.tblAttyDesc" Multiplicity="0..1" />
-          <End Role="tblAttorneyCombos" Type="Self.tblAttorneyCombos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAttyDesc">
-              <PropertyRef Name="Combo_Indicator" />
-            </Principal>
-            <Dependent Role="tblAttorneyCombos">
-              <PropertyRef Name="Deposit_Options" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FeesPackageModelStoreContainer">
           <EntitySet Name="ReferralwithClient" EntityType="Self.ReferralwithClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBL PAYMENTS" EntityType="Self.TBL PAYMENTS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl PMTS with Comment" EntityType="Self.tbl PMTS with Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorney" EntityType="Self.tblAttorney" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttyDesc" EntityType="Self.tblAttyDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblC&amp;R" EntityType="Self.tblC&amp;R" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblClaim" EntityType="Self.tblClaim" Schema="dbo" store:Type="Tables" />
@@ -560,13 +548,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <EntitySet Name="tblInsurance" EntityType="Self.tblInsurance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPayments" EntityType="Self.tblPayments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferral" EntityType="Self.tblReferral" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombos" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblAttorneyCombos].[Deposit_Options] AS [Deposit_Options], 
-    [tblAttorneyCombos].[Attorney_Combinations] AS [Attorney_Combinations], 
-    [tblAttorneyCombos].[SSMA_TimeStamp] AS [SSMA_TimeStamp]
-    FROM [dbo].[tblAttorneyCombos] AS [tblAttorneyCombos]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="Banks(H) Martin (C) Pd thru date" EntityType="Self.Banks(H) Martin (C) Pd thru date" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Banks(H) Martin (C) Pd thru date].[Handling_Atty] AS [Handling_Atty], 
@@ -838,10 +819,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
     [tblClient Without Matching tblClientReferral].[Selection_Control] AS [Selection_Control]
     FROM [dbo].[tblClient Without Matching tblClientReferral] AS [tblClient Without Matching tblClientReferral]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="tblAttorneyCombos$[N:\APPS\FEES\old_mdb]_Reference7" Association="Self.tblAttorneyCombos$[N:\APPS\FEES\old_mdb]_Reference7">
-            <End Role="tblAttyDesc" EntitySet="tblAttyDesc" />
-            <End Role="tblAttorneyCombos" EntitySet="tblAttorneyCombos" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -885,22 +862,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Input_Date" Type="DateTime" Precision="0" />
           <Property Name="Item_Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblAttorney">
-          <Key>
-            <PropertyRef Name="Atty_Initials" />
-          </Key>
-          <Property Name="Atty_Initials" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Atty_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblAttyDesc">
-          <Key>
-            <PropertyRef Name="Combo_Indicator" />
-          </Key>
-          <Property Name="Combo_Indicator" Type="Double" Nullable="false" />
-          <Property Name="Combo_Description" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="tblAttorneyCombos" Relationship="Self.tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7" FromRole="tblAttyDesc" ToRole="tblAttorneyCombos" />
         </EntityType>
         <EntityType Name="tblC_R">
           <Key>
@@ -968,15 +929,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="Deposit_Indicator" Type="Int32" />
           <Property Name="Posted_Indicator" Type="Boolean" />
           <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="tblAttorneyCombo">
-          <Key>
-            <PropertyRef Name="SSMA_TimeStamp" />
-          </Key>
-          <Property Name="Deposit_Options" Type="Double" />
-          <Property Name="Attorney_Combinations" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="tblAttyDesc" Relationship="Self.tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7" FromRole="tblAttorneyCombos" ToRole="tblAttyDesc" />
         </EntityType>
         <EntityType Name="Banks_H__Martin__C__Pd_thru_date">
           <Key>
@@ -1301,30 +1253,15 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="Accident_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Selection_Control" Type="Int16" />
         </EntityType>
-        <Association Name="tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7">
-          <End Role="tblAttyDesc" Type="Self.tblAttyDesc" Multiplicity="0..1" />
-          <End Role="tblAttorneyCombos" Type="Self.tblAttorneyCombo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAttyDesc">
-              <PropertyRef Name="Combo_Indicator" />
-            </Principal>
-            <Dependent Role="tblAttorneyCombos">
-              <PropertyRef Name="Deposit_Options" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FeesPackageEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ReferralwithClients" EntityType="Self.ReferralwithClient" />
           <EntitySet Name="TBL_PAYMENTS" EntityType="Self.TBL_PAYMENT" />
           <EntitySet Name="tbl_PMTS_with_Comments" EntityType="Self.tbl_PMTS_with_Comment" />
-          <EntitySet Name="tblAttorneys" EntityType="Self.tblAttorney" />
-          <EntitySet Name="tblAttyDescs" EntityType="Self.tblAttyDesc" />
           <EntitySet Name="tblC_R" EntityType="Self.tblC_R" />
           <EntitySet Name="tblClaims" EntityType="Self.tblClaim" />
           <EntitySet Name="tblClients" EntityType="Self.tblClient" />
           <EntitySet Name="tblClientReferrals" EntityType="Self.tblClientReferral" />
           <EntitySet Name="tblPayments" EntityType="Self.tblPayment" />
-          <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombo" />
           <EntitySet Name="Banks_H__Martin__C__Pd_thru_date" EntityType="Self.Banks_H__Martin__C__Pd_thru_date" />
           <EntitySet Name="qryAttorneyListings" EntityType="Self.qryAttorneyListing" />
           <EntitySet Name="qryClaim_Without_Matching_tblPayments" EntityType="Self.qryClaim_Without_Matching_tblPayment" />
@@ -1349,22 +1286,13 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <EntitySet Name="Query_Hand_Credit_Atty" EntityType="Self.Query_Hand_Credit_Atty" />
           <EntitySet Name="tblClient_Query__PL_HANDLING" EntityType="Self.tblClient_Query__PL_HANDLING" />
           <EntitySet Name="tblClient_Without_Matching_tblClientReferrals" EntityType="Self.tblClient_Without_Matching_tblClientReferral" />
-          <AssociationSet Name="tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7" Association="Self.tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7">
-            <End Role="tblAttyDesc" EntitySet="tblAttyDescs" />
-            <End Role="tblAttorneyCombos" EntitySet="tblAttorneyCombos" />
-          </AssociationSet>
-          <EntitySet Name="tblInsurances" EntityType="FeesPackageModel.tblInsurance" />
           <EntitySet Name="tblReferrals" EntityType="FeesPackageModel.tblReferral" />
           <EntitySet Name="tblCounties" EntityType="FeesPackageModel.tblCounty" />
+          <EntitySet Name="tblInsurances" EntityType="FeesPackageModel.tblInsurance" />
+          <EntitySet Name="tblAttorneys" EntityType="FeesPackageModel.tblAttorney" />
+          <EntitySet Name="tblAttorneyCombos" EntityType="FeesPackageModel.tblAttorneyCombo" />
+          <EntitySet Name="tblAttyDescs" EntityType="FeesPackageModel.tblAttyDesc" />
         </EntityContainer>
-        <EntityType Name="tblInsurance">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ins_Co_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Ins_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="tblReferral">
           <Key>
             <PropertyRef Name="id" />
@@ -1383,6 +1311,38 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
           <Property Name="County" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="County_Desc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="County_Value" Type="Int16" />
+        </EntityType>
+        <EntityType Name="tblInsurance">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ins_Co_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ins_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblAttorney">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Atty_Initials" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="Atty_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblAttorneyCombo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deposit_Options" Type="Double" Nullable="false" />
+          <Property Name="Attorney_Combinations" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblAttyDesc">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Combo_Indicator" Type="Double" Nullable="false" />
+          <Property Name="Combo_Description" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1427,23 +1387,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
                 <ScalarProperty Name="Item_Comment" ColumnName="Item_Comment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblAttorneys">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblAttorney">
-              <MappingFragment StoreEntitySet="tblAttorney">
-                <ScalarProperty Name="Atty_Initials" ColumnName="Atty-Initials" />
-                <ScalarProperty Name="Atty_Name" ColumnName="Atty-Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblAttyDescs">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblAttyDesc">
-              <MappingFragment StoreEntitySet="tblAttyDesc">
-                <ScalarProperty Name="Combo_Indicator" ColumnName="Combo_Indicator" />
-                <ScalarProperty Name="Combo_Description" ColumnName="Combo_Description" />
-                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1513,15 +1456,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
                 <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
                 <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
                 <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
-                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblAttorneyCombos">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblAttorneyCombo">
-              <MappingFragment StoreEntitySet="tblAttorneyCombos">
-                <ScalarProperty Name="Deposit_Options" ColumnName="Deposit_Options" />
-                <ScalarProperty Name="Attorney_Combinations" ColumnName="Attorney_Combinations" />
                 <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1845,15 +1779,6 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblInsurances">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblInsurance">
-              <MappingFragment StoreEntitySet="tblInsurance">
-                <ScalarProperty Name="Ins_Contact" ColumnName="Ins_Contact" />
-                <ScalarProperty Name="Ins_Co_Name" ColumnName="Ins_Co_Name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblReferrals">
             <EntityTypeMapping TypeName="FeesPackageModel.tblReferral">
               <MappingFragment StoreEntitySet="tblReferral">
@@ -1871,6 +1796,42 @@ warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClie
                 <ScalarProperty Name="County_Value" ColumnName="County_Value" />
                 <ScalarProperty Name="County_Desc" ColumnName="County_Desc" />
                 <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInsurances">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblInsurance">
+              <MappingFragment StoreEntitySet="tblInsurance">
+                <ScalarProperty Name="Ins_Contact" ColumnName="Ins_Contact" />
+                <ScalarProperty Name="Ins_Co_Name" ColumnName="Ins_Co_Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttorneys">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblAttorney">
+              <MappingFragment StoreEntitySet="tblAttorney">
+                <ScalarProperty Name="Atty_Name" ColumnName="Atty-Name" />
+                <ScalarProperty Name="Atty_Initials" ColumnName="Atty-Initials" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttorneyCombos">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblAttorneyCombo">
+              <MappingFragment StoreEntitySet="tblAttorneyCombos">
+                <ScalarProperty Name="Attorney_Combinations" ColumnName="Attorney_Combinations" />
+                <ScalarProperty Name="Deposit_Options" ColumnName="Deposit_Options" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttyDescs">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblAttyDesc">
+              <MappingFragment StoreEntitySet="tblAttyDesc">
+                <ScalarProperty Name="Combo_Description" ColumnName="Combo_Description" />
+                <ScalarProperty Name="Combo_Indicator" ColumnName="Combo_Indicator" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -14,6 +14,7 @@ namespace FeesPackage.Data_Access
     
     public partial class tblAttorney
     {
+        public int id { get; set; }
         public string Atty_Initials { get; set; }
         public string Atty_Name { get; set; }
     }

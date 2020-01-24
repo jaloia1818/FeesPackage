@@ -14,17 +14,8 @@ namespace FeesPackage.Data_Access
     
     public partial class tblAttyDesc
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblAttyDesc()
-        {
-            this.tblAttorneyCombos = new HashSet<tblAttorneyCombo>();
-        }
-    
+        public int id { get; set; }
         public double Combo_Indicator { get; set; }
         public string Combo_Description { get; set; }
-        public byte[] SSMA_TimeStamp { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAttorneyCombo> tblAttorneyCombos { get; set; }
     }
 }

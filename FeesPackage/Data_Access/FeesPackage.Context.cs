@@ -28,14 +28,11 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<ReferralwithClient> ReferralwithClients { get; set; }
         public virtual DbSet<TBL_PAYMENT> TBL_PAYMENTS { get; set; }
         public virtual DbSet<tbl_PMTS_with_Comment> tbl_PMTS_with_Comments { get; set; }
-        public virtual DbSet<tblAttorney> tblAttorneys { get; set; }
-        public virtual DbSet<tblAttyDesc> tblAttyDescs { get; set; }
         public virtual DbSet<tblC_R> tblC_R { get; set; }
         public virtual DbSet<tblClaim> tblClaims { get; set; }
         public virtual DbSet<tblClient> tblClients { get; set; }
         public virtual DbSet<tblClientReferral> tblClientReferrals { get; set; }
         public virtual DbSet<tblPayment> tblPayments { get; set; }
-        public virtual DbSet<tblAttorneyCombo> tblAttorneyCombos { get; set; }
         public virtual DbSet<Banks_H__Martin__C__Pd_thru_date> Banks_H__Martin__C__Pd_thru_date { get; set; }
         public virtual DbSet<qryAttorneyListing> qryAttorneyListings { get; set; }
         public virtual DbSet<qryClaim_Without_Matching_tblPayment> qryClaim_Without_Matching_tblPayments { get; set; }
@@ -60,8 +57,11 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<Query_Hand_Credit_Atty> Query_Hand_Credit_Atty { get; set; }
         public virtual DbSet<tblClient_Query__PL_HANDLING> tblClient_Query__PL_HANDLING { get; set; }
         public virtual DbSet<tblClient_Without_Matching_tblClientReferral> tblClient_Without_Matching_tblClientReferrals { get; set; }
-        public virtual DbSet<tblInsurance> tblInsurances { get; set; }
         public virtual DbSet<tblReferral> tblReferrals { get; set; }
         public virtual DbSet<tblCounty> tblCounties { get; set; }
+        public virtual DbSet<tblInsurance> tblInsurances { get; set; }
+        public virtual DbSet<tblAttorney> tblAttorneys { get; set; }
+        public virtual DbSet<tblAttorneyCombo> tblAttorneyCombos { get; set; }
+        public virtual DbSet<tblAttyDesc> tblAttyDescs { get; set; }
     }
 }

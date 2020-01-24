@@ -8,14 +8,11 @@
         <EntityTypeShape EntityType="FeesPackageModel.ReferralwithClient" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.TBL_PAYMENT" Width="1.5" PointX="8.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tbl_PMTS_with_Comment" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FeesPackageModel.tblAttorney" Width="1.5" PointX="5.75" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FeesPackageModel.tblAttyDesc" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblC_R" Width="1.5" PointX="9.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClaim" Width="1.5" PointX="9.75" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClient" Width="1.5" PointX="2.75" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClientReferral" Width="1.5" PointX="10.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblPayment" Width="1.5" PointX="11.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FeesPackageModel.tblAttorneyCombo" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.Banks_H__Martin__C__Pd_thru_date" Width="1.5" PointX="8.75" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.qryAttorneyListing" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.qryClaim_Without_Matching_tblPayment" Width="1.5" PointX="13.75" PointY="5.25" IsExpanded="true" />
@@ -40,10 +37,12 @@
         <EntityTypeShape EntityType="FeesPackageModel.Query_Hand_Credit_Atty" Width="1.5" PointX="17.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClient_Query__PL_HANDLING" Width="1.5" PointX="17.75" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClient_Without_Matching_tblClientReferral" Width="1.5" PointX="4.75" PointY="20.25" IsExpanded="true" />
-        <AssociationConnector Association="FeesPackageModel.tblAttorneyCombos__N__APPS_FEES_old_mdb__Reference7" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="FeesPackageModel.tblInsurance" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="FeesPackageModel.tblReferral" Width="1.5" PointX="3.375" PointY="4.75" />
         <EntityTypeShape EntityType="FeesPackageModel.tblCounty" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="FeesPackageModel.tblInsurance" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FeesPackageModel.tblAttorney" Width="1.5" PointX="6.125" PointY="0.75" />
+        <EntityTypeShape EntityType="FeesPackageModel.tblAttorneyCombo" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="FeesPackageModel.tblAttyDesc" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

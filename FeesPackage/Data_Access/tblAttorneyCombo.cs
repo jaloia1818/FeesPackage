@@ -14,10 +14,8 @@ namespace FeesPackage.Data_Access
     
     public partial class tblAttorneyCombo
     {
-        public Nullable<double> Deposit_Options { get; set; }
+        public int id { get; set; }
+        public double Deposit_Options { get; set; }
         public string Attorney_Combinations { get; set; }
-        public byte[] SSMA_TimeStamp { get; set; }
-    
-        public virtual tblAttyDesc tblAttyDesc { get; set; }
     }
 }
