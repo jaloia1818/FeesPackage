@@ -176,48 +176,6 @@ warning 6002: The table/view 'FeesPackage.dbo.Banks(H) Martin (C) Pd thru date' 
           <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryAttorneyListing' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaim Without Matching tblPayments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaimInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaimPaymentTotal' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaims>30Days' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaims>30Days2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaimsDormant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaimsDormant2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaimTotals' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClientClaimList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClientClaimListteststatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClientClaimListtstatuswith referal Query' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClientList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryDailyTotals' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryDeposit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryMonthlyIncome- AJS Weeklies' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryMonthlyIncome- AJS Weeklies- no posted yet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryPaymentsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryShowAllClients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qrySpecialSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.Query-Hand/Credit Atty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'FeesPackage.dbo.tblClient Query- PL HANDLING' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblClient Query- PL HANDLING">
           <Key>
