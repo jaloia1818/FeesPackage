@@ -57,11 +57,11 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<Query_Hand_Credit_Atty> Query_Hand_Credit_Atty { get; set; }
         public virtual DbSet<tblClient_Query__PL_HANDLING> tblClient_Query__PL_HANDLING { get; set; }
         public virtual DbSet<tblClient_Without_Matching_tblClientReferral> tblClient_Without_Matching_tblClientReferrals { get; set; }
-        public virtual DbSet<tblReferral> tblReferrals { get; set; }
-        public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblInsurance> tblInsurances { get; set; }
         public virtual DbSet<tblAttorney> tblAttorneys { get; set; }
         public virtual DbSet<tblAttorneyCombo> tblAttorneyCombos { get; set; }
         public virtual DbSet<tblAttyDesc> tblAttyDescs { get; set; }
+        public virtual DbSet<tblCounty> tblCounties { get; set; }
+        public virtual DbSet<tblReferral> tblReferrals { get; set; }
     }
 }
