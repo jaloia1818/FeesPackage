@@ -14,7 +14,7 @@ namespace FeesPackage.Data_Access
     
     public partial class tblClient
     {
-        public int Reference_Number { get; set; }
+        public int id { get; set; }
         public string Client_Name { get; set; }
         public string Employer_Name { get; set; }
         public Nullable<double> Escrow__ { get; set; }
@@ -26,6 +26,5 @@ namespace FeesPackage.Data_Access
         public string County { get; set; }
         public string Accident_Desc { get; set; }
         public Nullable<short> Selection_Control { get; set; }
-        public byte[] SSMA_TimeStamp { get; set; }
     }
 }

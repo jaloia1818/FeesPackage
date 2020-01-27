@@ -1,4 +1,5 @@
 ﻿@using FeesPackage.Data_Access;
+@using Newtonsoft.Json;
 @model List<tblAttorney>
 
 @{
@@ -39,7 +40,7 @@
 
     function ready() {
         // prepare the data
-        var data = @Html.Raw(Json.Encode(Model));
+        var data = @Html.Raw(JsonConvert.SerializeObject(Model));
         var inUpdate = false;
 
         var source =

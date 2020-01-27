@@ -9,12 +9,12 @@ namespace FeesPackage.Controllers
 {
     public class ClientInfoController : Controller
     {
-        private FeesPackageEntities db = new FeesPackageEntities();
+        private readonly FeesPackageEntities db = new FeesPackageEntities();
 
         // GET: ClientInfo
         public ActionResult Index()
         {
-            List<tblClient> model = db.tblClients.ToList();
+            List<tblClient> model = db.tblClients.OrderByDescending(x => x.id).ToList();
 
             return View(model);
         }

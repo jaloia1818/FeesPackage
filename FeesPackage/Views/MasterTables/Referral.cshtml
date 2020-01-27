@@ -1,4 +1,5 @@
 ﻿@using FeesPackage.Models;
+@using Newtonsoft.Json;
 @model ReferralModel
 
 @{
@@ -39,7 +40,7 @@
 
     function ready() {
         // prepare the Attorney list dropdown data
-        var locallista = @Html.Raw(Json.Encode(Model.Attys));
+        var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.Attys));
 
         var locallistaSource = {
             datatype: "array",
