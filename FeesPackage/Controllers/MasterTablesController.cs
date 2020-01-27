@@ -46,15 +46,20 @@ namespace FeesPackage.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+                return HandleException(ex);
             }
 
             // return Status OK
             return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+        }
+
+        private HttpStatusCodeResult HandleException(Exception ex)
+        {
+            if (ex.InnerException != null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
         }
 
         [HttpGet]
@@ -92,11 +97,7 @@ namespace FeesPackage.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+                return HandleException(ex);
             }
 
             // return Status OK
@@ -138,11 +139,7 @@ namespace FeesPackage.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+                return HandleException(ex);
             }
 
             // return Status OK
@@ -189,11 +186,7 @@ namespace FeesPackage.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+                return HandleException(ex);
             }
 
             // return Status OK
@@ -241,11 +234,7 @@ namespace FeesPackage.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+                return HandleException(ex);
             }
 
             // return Status OK
@@ -301,11 +290,7 @@ namespace FeesPackage.Controllers
             }
             catch(Exception ex)
             {
-                if (ex.InnerException != null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
+                return HandleException(ex);
             }
 
             // return Status OK
