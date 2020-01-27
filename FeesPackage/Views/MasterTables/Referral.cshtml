@@ -61,9 +61,11 @@
             updaterow: function (rowid, rowdata, commit) {
                 if (!inUpdate) {
                     $.post('/masterTables/referral', rowdata, function (data, status, jqXHR) {
-                        inUpdate = true;
-                        $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
-                        inUpdate = false;
+                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
+                            inUpdate = true;
+                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
+                            inUpdate = false;
+                        }
                         commit(true);
                     }).fail(function (jqXHR, textStatus, errorThrown) {
                         alert(textStatus + ': ' + errorThrown);
