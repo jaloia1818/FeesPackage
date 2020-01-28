@@ -217,6 +217,13 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\css\theme.css" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\icons\css\font-awesome.css" />
@@ -523,8 +530,11 @@
     <Content Include="Content\scripts\flot\jquery.flot.js" />
     <Content Include="Content\scripts\flot\jquery.flot.pie.js" />
     <Content Include="Content\scripts\flot\jquery.flot.resize.js" />
+    <Content Include="Content\scripts\jquery-1.12.4.js" />
+    <Content Include="Content\scripts\jquery-1.12.4.min.js" />
     <Content Include="Content\scripts\jquery-1.9.1.min.js" />
     <Content Include="Content\scripts\jquery-ui-1.10.1.custom.min.js" />
+    <Content Include="Content\scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Content\scripts\jquery.dataTables.js" />
     <Content Include="Content\scripts\typewatch\jquery.typewatch.js" />
     <Content Include="Data_Access\FeesPackage.Context.tt">

@@ -23,6 +23,7 @@
             <div class="module-body table">
                 <span>Search: </span>
                 <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
+                <button id="opener">Open Dialog</button>
                 <button id="addrowbutton" style="float: right">+</button>
                 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
                     <div id="jqxgrid"></div>
@@ -35,10 +36,30 @@
 </div>
 <!--/.span9-->
 
+<div id="dialog" title="Basic dialog" style="display:none">
+    <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+
 <script>
     var groups = [];
 
     function ready() {
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+
+        $("#opener").on("click", function () {
+            $("#dialog").dialog("open");
+        });
+
         // prepare the data
         var data = @Html.Raw(JsonConvert.SerializeObject(Model));
         var inUpdate = false;
