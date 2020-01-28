@@ -124,17 +124,12 @@
         var columnrenderer_center = function (value) {
             return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
         }
-        var generaterow = function (i) {
-            var row = {};
-            //row["Ins_Co_Name"] = "";
-            //row["Ins_Contact"] = "";
-            return row;
-        }
         // create new row.
         $("#addrowbutton").on('click', function () {
-            var datarow = generaterow();
-            $("#jqxgrid").jqxGrid('addrow', null, datarow, 'first');    // add empty row in first position
-            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Client_Name');   // begin editting newly added row, first column
+            // add empty row in first position
+            $("#jqxgrid").jqxGrid('addrow', null, {}, 'first');
+            // begin editting newly added row, first column
+            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Client_Name');
         });
         $("#jqxgrid").jqxGrid(
         {
@@ -171,13 +166,15 @@
         $("#jqxgrid").on("celldoubleclick", function (event) {
             var args = event.args;
             var rowBoundIndex = args.rowindex;
-            var rowVisibleIndex = args.visibleindex;
-            var rightClick = args.rightclick; 
-            var ev = args.originalEvent;
-            var columnIndex = args.columnindex;
-            var dataField = args.datafield;
-            var value = args.value;
-            alert(JSON.stringify($("#jqxgrid").jqxGrid('getrowdata', rowBoundIndex)));
+            //var rowVisibleIndex = args.visibleindex;
+            //var rightClick = args.rightclick; 
+            //var ev = args.originalEvent;
+            //var columnIndex = args.columnindex;
+            //var dataField = args.datafield;
+            //var value = args.value;
+
+            // get 'id' value of row dblclk'd on
+            alert($("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value);
         });
 
         var options = {

@@ -81,18 +81,12 @@
         var columnrenderer_center = function (value) {
             return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
         }
-        var generaterow = function (i) {
-            var row = {};
-            row["County"] = "";
-            row["County_Desc"] = "";
-            row["County_Value"] = "";
-            return row;
-        }
         // create new row.
         $("#addrowbutton").on('click', function () {
-            var datarow = generaterow();
-            $("#jqxgrid").jqxGrid('addrow', null, datarow, 'first');    // add empty row in first position
-            $("#jqxgrid").jqxGrid('begincelledit', 0, 'County');        // begin editting newly added row, first column
+            // add empty row in first position
+            $("#jqxgrid").jqxGrid('addrow', null, {}, 'first');
+            // begin editting newly added row, first column
+            $("#jqxgrid").jqxGrid('begincelledit', 0, 'County');
         });
         $("#jqxgrid").jqxGrid(
         {
