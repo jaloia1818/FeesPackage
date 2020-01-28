@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
 {
-    public class SpecialTasksController : Controller
+    public class SpecialTasksController : BaseController
     {
         // GET: SpecialTasks
         public ActionResult Index()

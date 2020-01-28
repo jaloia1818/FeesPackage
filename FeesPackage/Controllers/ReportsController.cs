@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
 {
-    public class ReportsController : Controller
+    public class ReportsController : BaseController
     {
         // GET: Reports
         public ActionResult Index()

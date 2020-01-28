@@ -1,6 +1,6 @@
-﻿@using FeesPackage.Data_Access;
+﻿@using FeesPackage.Models;
 @using Newtonsoft.Json;
-@model List<tblClient>
+@model ClientInfoModel
 
 @{
     ViewBag.Title = "tblClient";
@@ -60,8 +60,21 @@
             $("#dialog").dialog("open");
         });
 
+        // prepare the Attorney list dropdown data
+        var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.Attys));
+
+        var locallistaSource = {
+            datatype: "array",
+            datafields: [
+                    { name: 'Name', type: 'string' },
+                    { name: 'Id', type: 'string' }
+            ],
+            localdata: locallista
+        };
+        var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
+
         // prepare the data
-        var data = @Html.Raw(JsonConvert.SerializeObject(Model));
+        var data = @Html.Raw(JsonConvert.SerializeObject(Model.Clients));
         var inUpdate = false;
 
         var source =
@@ -135,7 +148,7 @@
             pageable: true,
             pagesize: 20,
             groupable: false,
-            editable: true,
+            editable: false,
             sortable: true,
             ready: function () { setup(); },
             columnsresize: true,
@@ -153,6 +166,18 @@
                 { text: 'Accident Desc', datafield: 'Accident_Desc', filtertype: 'checkedlist' },
                 { text: 'Selection Control', datafield: 'Selection_Control', filtertype: 'checkedlist' }
             ]
+        });
+
+        $("#jqxgrid").on("celldoubleclick", function (event) {
+            var args = event.args;
+            var rowBoundIndex = args.rowindex;
+            var rowVisibleIndex = args.visibleindex;
+            var rightClick = args.rightclick; 
+            var ev = args.originalEvent;
+            var columnIndex = args.columnindex;
+            var dataField = args.datafield;
+            var value = args.value;
+            alert(JSON.stringify($("#jqxgrid").jqxGrid('getrowdata', rowBoundIndex)));
         });
 
         var options = {

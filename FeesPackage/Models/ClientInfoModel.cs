@@ -3,9 +3,9 @@ using FeesPackage.Data_Access;
 
 namespace FeesPackage.Models
 {
-    public class ReferralModel
+    public class ClientInfoModel
     {
-       public List<tblReferral> Referrals { get; set; }
+       public List<tblClient> Clients { get; set; }
        public List<ListClass> Attys { get; set; }
     }
 }

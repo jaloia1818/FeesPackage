@@ -4,15 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
 {
-    public class MasterTablesController : Controller
+    public class MasterTablesController : BaseController
     {
-        private readonly FeesPackageEntities db = new FeesPackageEntities();
-
         // GET: MasterTables
         public ActionResult Index()
         {
