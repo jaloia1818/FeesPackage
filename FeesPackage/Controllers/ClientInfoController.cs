@@ -8,6 +8,13 @@ namespace FeesPackage.Controllers
 {
     public class ClientInfoController : BaseController
     {
+        [HttpPost]
+        public ActionResult Edit(int id)
+        {
+            tblClient client = db.tblClients.SingleOrDefault(x => x.id == id);
+            return PartialView("~/Views/ClientInfo/_Edit.cshtml", client);
+        }
+
         // GET: ClientInfo
         public ActionResult Index()
         {

@@ -17,11 +17,11 @@ namespace FeesPackage.Data_Access
         public int id { get; set; }
         public string Client_Name { get; set; }
         public string Employer_Name { get; set; }
-        public Nullable<double> Escrow__ { get; set; }
+        public Nullable<double> Escrow { get; set; }
         public string Handling_Atty { get; set; }
-        public Nullable<double> Handling__ { get; set; }
+        public Nullable<double> Handling { get; set; }
         public string Credit_Atty { get; set; }
-        public Nullable<double> Credit__ { get; set; }
+        public Nullable<double> Credit { get; set; }
         public Nullable<bool> Is_County { get; set; }
         public string County { get; set; }
         public string Accident_Desc { get; set; }

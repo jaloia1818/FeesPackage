@@ -609,6 +609,7 @@
     <Content Include="Views\MasterTables\County.cshtml" />
     <Content Include="Views\MasterTables\Referral.cshtml" />
     <Content Include="Views\MasterTables\InsuranceInfo.cshtml" />
+    <Content Include="Views\ClientInfo\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,7 +23,6 @@
             <div class="module-body table">
                 <span>Search: </span>
                 <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
-                <button id="opener">Open Dialog</button>
                 <button id="addrowbutton" style="float: right">+</button>
                 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
                     <div id="jqxgrid"></div>
@@ -37,7 +36,6 @@
 <!--/.span9-->
 
 <div id="dialog" title="Basic dialog" style="display:none">
-    <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
 </div>
 
 <script>
@@ -46,6 +44,9 @@
     function ready() {
         $("#dialog").dialog({
             autoOpen: false,
+            width: 460,
+            resizable: false,
+            modal: true,
             show: {
                 effect: "blind",
                 duration: 1000
@@ -54,10 +55,6 @@
                 effect: "explode",
                 duration: 1000
             }
-        });
-
-        $("#opener").on("click", function () {
-            $("#dialog").dialog("open");
         });
 
         // prepare the Attorney list dropdown data
@@ -98,11 +95,11 @@
                 { name: 'id', type: 'int' },
                 { name: 'Client_Name', type: 'string' },
                 { name: 'Employer_Name', type: 'string' },
-                { name: 'Escrow__', type: 'string' },
+                { name: 'Escrow', type: 'string' },
                 { name: 'Handling_Atty', type: 'string' },
-                { name: 'Handling__', type: 'string' },
+                { name: 'Handling', type: 'string' },
                 { name: 'Credit_Atty', type: 'string' },
-                { name: 'Credit__', type: 'string' },
+                { name: 'Credit', type: 'string' },
                 { name: 'Is_County', type: 'string' },
                 { name: 'County', type: 'string' },
                 { name: 'Accident_Desc', type: 'string' },
@@ -151,11 +148,11 @@
                 { text: 'id', datafield: 'id', hidden: true },
                 { text: 'Client Name', datafield: 'Client_Name', filtertype: 'checkedlist' },
                 { text: 'Employer Name', datafield: 'Employer_Name', filtertype: 'checkedlist' },
-                { text: 'Escrow %', datafield: 'Escrow__', filtertype: 'checkedlist' },
+                { text: 'Escrow %', datafield: 'Escrow', filtertype: 'checkedlist' },
                 { text: 'Handling Atty', datafield: 'Handling_Atty', filtertype: 'checkedlist' },
-                { text: 'Handling %', datafield: 'Handling__', filtertype: 'checkedlist' },
+                { text: 'Handling %', datafield: 'Handling', filtertype: 'checkedlist' },
                 { text: 'Credit Atty', datafield: 'Credit_Atty', filtertype: 'checkedlist' },
-                { text: 'Credit %', datafield: 'Credit__', filtertype: 'checkedlist' },
+                { text: 'Credit %', datafield: 'Credit', filtertype: 'checkedlist' },
                 { text: 'Is County', datafield: 'Is_County', filtertype: 'checkedlist' },
                 { text: 'County', datafield: 'County', filtertype: 'checkedlist' },
                 { text: 'Accident Desc', datafield: 'Accident_Desc', filtertype: 'checkedlist' },
@@ -174,7 +171,12 @@
             //var value = args.value;
 
             // get 'id' value of row dblclk'd on
-            alert($("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value);
+            $.post('/ClientInfo/Edit', { id: $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value }, function (data, status, jqXHR) {
+                $('#dialog').html(data);
+                $("#dialog").dialog("open");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
         });
 
         var options = {

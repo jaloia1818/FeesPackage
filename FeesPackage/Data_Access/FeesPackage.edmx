@@ -98,11 +98,11 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
           <Property Name="Employer_Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Escrow_%" Type="float" />
+          <Property Name="Escrow" Type="float" />
           <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" />
-          <Property Name="Handling_%" Type="float" />
+          <Property Name="Handling" Type="float" />
           <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
-          <Property Name="Credit_%" Type="float" />
+          <Property Name="Credit" Type="float" />
           <Property Name="Is_County" Type="bit" />
           <Property Name="County" Type="nvarchar" MaxLength="5" />
           <Property Name="Accident_Desc" Type="nvarchar(max)" />
@@ -471,11 +471,11 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="Employer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Escrow__" Type="Double" />
+          <Property Name="Escrow" Type="Double" />
           <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Handling__" Type="Double" />
+          <Property Name="Handling" Type="Double" />
           <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Credit__" Type="Double" />
+          <Property Name="Credit" Type="Double" />
           <Property Name="Is_County" Type="Boolean" />
           <Property Name="County" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="Accident_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -682,11 +682,11 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Accident_Desc" ColumnName="Accident_Desc" />
                 <ScalarProperty Name="County" ColumnName="County" />
                 <ScalarProperty Name="Is_County" ColumnName="Is_County" />
-                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
                 <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
-                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
+                <ScalarProperty Name="Handling" ColumnName="Handling" />
                 <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
-                <ScalarProperty Name="Escrow__" ColumnName="Escrow_%" />
+                <ScalarProperty Name="Escrow" ColumnName="Escrow" />
                 <ScalarProperty Name="Employer_Name" ColumnName="Employer_Name" />
                 <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
