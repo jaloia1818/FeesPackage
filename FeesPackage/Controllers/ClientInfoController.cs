@@ -1,9 +1,7 @@
 ﻿using FeesPackage.Data_Access;
 using FeesPackage.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
@@ -13,13 +11,34 @@ namespace FeesPackage.Controllers
         // GET: ClientInfo/Create
         public ActionResult Create()
         {
-            tblClient client = new tblClient();
-            return PartialView("~/Views/ClientInfo/_Edit.cshtml", client);
+            ClientInfoModel model = new ClientInfoModel
+            {
+                Client = new tblClient(),
+
+                Attys = db.tblAttorneys.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Atty_Initials,
+                    Name = c.Atty_Initials + " - " + c.Atty_Name
+                })
+                .ToList(),
+
+                Counties = db.tblCounties.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.County,
+                    Name = c.County_Desc
+                })
+                .ToList()
+            };
+
+            return PartialView("~/Views/ClientInfo/_Edit.cshtml", model);
         }
 
         [HttpPost]
-        public ActionResult Save(tblClient model)
+        public ActionResult Save(ClientInfoModel mdl)
         {
+            tblClient model = mdl.Client;
             try
             {
                 if (model.id == 0)
@@ -44,7 +63,6 @@ namespace FeesPackage.Controllers
                     record.Is_County = model.Is_County;
                     record.County = model.County;
                     record.Accident_Desc = model.Accident_Desc;
-                    record.Selection_Control = model.Selection_Control;
 
                     // Update record
                     db.Entry(record).State = System.Data.Entity.EntityState.Modified;
@@ -63,8 +81,28 @@ namespace FeesPackage.Controllers
         [HttpPost]
         public ActionResult Edit(int id)
         {
-            tblClient client = db.tblClients.SingleOrDefault(x => x.id == id);
-            return PartialView("~/Views/ClientInfo/_Edit.cshtml", client);
+            ClientInfoModel model = new ClientInfoModel
+            {
+                Client = db.tblClients.SingleOrDefault(x => x.id == id),
+
+                Attys = db.tblAttorneys.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Atty_Initials,
+                    Name = c.Atty_Initials + " - " + c.Atty_Name
+                })
+                .ToList(),
+
+                Counties = db.tblCounties.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.County,
+                    Name = c.County_Desc
+                })
+                .ToList()
+            };
+
+            return PartialView("~/Views/ClientInfo/_Edit.cshtml", model);
         }
 
         // GET: ClientInfo
