@@ -27,7 +27,7 @@ namespace FeesPackage.Controllers
                 .Select(c => new ListClass
                 {
                     Id = c.County,
-                    Name = c.County_Desc
+                    Name = c.County + " - " + c.County_Desc
                 })
                 .ToList()
             };
@@ -97,7 +97,7 @@ namespace FeesPackage.Controllers
                 .Select(c => new ListClass
                 {
                     Id = c.County,
-                    Name = c.County_Desc
+                    Name = c.County + " - " + c.County_Desc
                 })
                 .ToList()
             };

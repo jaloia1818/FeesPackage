@@ -128,6 +128,7 @@
         $("#addrowbutton").on('click', function () {
             $.get('/ClientInfo/Create', function (data, status, jqXHR) {
                 $('#dialog').html(data);
+                $('.ui-dialog-title').html('@ViewBag.Title [0]');
                 $("#dialog").dialog("open");
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 alert(textStatus + ': ' + errorThrown);
@@ -176,8 +177,12 @@
             //var value = args.value;
 
             // get 'id' value of row dblclk'd on
-            $.post('/ClientInfo/Edit', { id: $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value }, function (data, status, jqXHR) {
+            var id = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value;
+
+            // render view/show dialog
+            $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
                 $('#dialog').html(data);
+                $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
                 $("#dialog").dialog("open");
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 alert(textStatus + ': ' + errorThrown);
