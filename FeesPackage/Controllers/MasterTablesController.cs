@@ -22,13 +22,13 @@ namespace FeesPackage.Controllers
             try
             {
                 if (model.id == 0)
-                { // insert
+                {   // insert
                     // Insert into table
                     db.tblAttorneys.Add(model);
                     db.SaveChanges();
                 }
                 else
-                {               // update
+                {   // update
                     // get original record for unedited fields
                     tblAttorney record = db.tblAttorneys.Where(x => x.id == model.id).Single();
 
@@ -50,15 +50,6 @@ namespace FeesPackage.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
         }
 
-        private HttpStatusCodeResult HandleException(Exception ex)
-        {
-            if (ex.InnerException != null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.InnerException.InnerException.Message.Replace("\r\n", " "));
-            }
-            return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
-        }
-
         [HttpGet]
         public ActionResult Attorney()
         {
@@ -73,13 +64,13 @@ namespace FeesPackage.Controllers
             try
             {
                 if (model.id == 0)
-                { // insert
+                {   // insert
                     // Insert into table
                     db.tblAttorneyCombos.Add(model);
                     db.SaveChanges();
                 }
                 else
-                {               // update
+                {   // update
                     // get original record for unedited fields
                     tblAttorneyCombo record = db.tblAttorneyCombos.Where(x => x.id == model.id).Single();
 
@@ -115,13 +106,13 @@ namespace FeesPackage.Controllers
             try
             {
                 if (model.id == 0)
-                { // insert
+                {   // insert
                     // Insert into table
                     db.tblAttyDescs.Add(model);
                     db.SaveChanges();
                 }
                 else
-                {               // update
+                {   // update
                     // get original record for unedited fields
                     tblAttyDesc record = db.tblAttyDescs.Where(x => x.id == model.id).Single();
 
@@ -157,7 +148,7 @@ namespace FeesPackage.Controllers
             try
             {
                 if (model.id == 0)
-                { // insert
+                {   // insert
                     // set new Guid for primary key
                     int id = db.tblCounties.Max(x => x.id);
                     model.id = ++id;
@@ -167,7 +158,7 @@ namespace FeesPackage.Controllers
                     db.SaveChanges();
                 }
                 else
-                {               // update
+                {   // update
                     // get original record for unedited fields
                     tblCounty record = db.tblCounties.Where(x => x.id == model.id).Single();
 
@@ -204,7 +195,7 @@ namespace FeesPackage.Controllers
             try
             {
                 if (model.id == 0)
-                { // insert
+                {   // insert
                     // set new Guid for primary key
                     int id = db.tblReferrals.Max(x => x.id);
                     model.id = ++id;
@@ -214,7 +205,7 @@ namespace FeesPackage.Controllers
                     db.SaveChanges();
                 }
                 else
-                {               // update
+                {   // update
                     // get original record for unedited fields
                     tblReferral record = db.tblReferrals.Where(x => x.id == model.id).Single();
 
@@ -263,7 +254,8 @@ namespace FeesPackage.Controllers
         {
             try
             {
-                if (model.id == 0) { // insert
+                if (model.id == 0)
+                {   // insert
                     // set new Guid for primary key
                     int id = db.tblInsurances.Max(x => x.id);
                     model.id = ++id;
@@ -272,7 +264,8 @@ namespace FeesPackage.Controllers
                     db.tblInsurances.Add(model);
                     db.SaveChanges();
                 }
-                else {               // update
+                else
+                {   // update
                     // get original record for unedited fields
                     tblInsurance record = db.tblInsurances.Where(x => x.id == model.id).Single();
 

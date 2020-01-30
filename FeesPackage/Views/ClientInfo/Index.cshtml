@@ -116,19 +116,25 @@
             beforeLoadComplete: function (records) { },
             loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
         });
+
         var cellsrenderer_center = function (row, column, value) {
             return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
         }
+
         var columnrenderer_center = function (value) {
             return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
         }
+
         // create new row.
         $("#addrowbutton").on('click', function () {
-            // add empty row in first position
-            $("#jqxgrid").jqxGrid('addrow', null, {}, 'first');
-            // begin editting newly added row, first column
-            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Client_Name');
+            $.get('/ClientInfo/Create', function (data, status, jqXHR) {
+                $('#dialog').html(data);
+                $("#dialog").dialog("open");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
         });
+
         $("#jqxgrid").jqxGrid(
         {
             theme: 'energyblue',
@@ -201,6 +207,7 @@
             allowSubmit: false,
             captureLength: 2
         }
+
         $("#search").typeWatch(options);
     }
 

@@ -1,6 +1,6 @@
 ﻿@model FeesPackage.Data_Access.tblClient
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Save", "ClientInfo"))
 {
     @Html.AntiForgeryToken()
     
@@ -95,12 +95,18 @@
 }
 
 <style>
+    .ui-dialog-titlebar {
+        background-color: lightblue;
+    }
     .control-label.col-md-2 {
         margin-right: 5px;
         width: 110px;
     }
     .ui-dialog {
         background-color: #e0e9f5;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
     }
     input.btn {
         background-color: blue;
@@ -111,13 +117,17 @@
         text-decoration: none;
         display: inline-block;
         font-size: 12px;
-        -webkit-transition-duration: 0.4s; /* Safari */
+        -webkit-transition-duration: 0.4s;
         transition-duration: 0.4s;
+        -webkit-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        -moz-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     }
     input.btn:hover {
         background-color: darkblue;
         color: white;
+        -webkit-box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        -moz-box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     }
 </style>
