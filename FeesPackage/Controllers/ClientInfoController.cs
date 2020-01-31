@@ -1,6 +1,7 @@
 ﻿using FeesPackage.Data_Access;
 using FeesPackage.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -15,20 +16,34 @@ namespace FeesPackage.Controllers
             {
                 Client = new tblClient(),
 
-                Attys = db.tblAttorneys.ToArray()
+                Attys = new List<ListClass>
+                {
+                    new ListClass() {
+                        Id = null,
+                        Name = "Select ..."
+                    }
+                }
+                .Concat(db.tblAttorneys.ToArray()
                 .Select(c => new ListClass
                 {
                     Id = c.Atty_Initials,
                     Name = c.Atty_Initials + " - " + c.Atty_Name
-                })
+                }))
                 .ToList(),
 
-                Counties = db.tblCounties.ToArray()
+                Counties = new List<ListClass>
+                {
+                    new ListClass() {
+                        Id = null,
+                        Name = "Select ..."
+                    }
+                }
+                .Concat(db.tblCounties.ToArray()
                 .Select(c => new ListClass
                 {
                     Id = c.County,
                     Name = c.County + " - " + c.County_Desc
-                })
+                }))
                 .ToList()
             };
 
@@ -60,7 +75,6 @@ namespace FeesPackage.Controllers
                     record.Handling = model.Handling;
                     record.Credit_Atty = model.Credit_Atty;
                     record.Credit = model.Credit;
-                    record.Is_County = model.Is_County;
                     record.County = model.County;
                     record.Accident_Desc = model.Accident_Desc;
 
@@ -85,20 +99,34 @@ namespace FeesPackage.Controllers
             {
                 Client = db.tblClients.SingleOrDefault(x => x.id == id),
 
-                Attys = db.tblAttorneys.ToArray()
+                Attys = new List<ListClass>
+                {
+                    new ListClass() {
+                        Id = null,
+                        Name = "Select ..."
+                    }
+                }
+                .Concat(db.tblAttorneys.ToArray()
                 .Select(c => new ListClass
                 {
                     Id = c.Atty_Initials,
                     Name = c.Atty_Initials + " - " + c.Atty_Name
-                })
+                }))
                 .ToList(),
 
-                Counties = db.tblCounties.ToArray()
+                Counties = new List<ListClass>
+                {
+                    new ListClass() {
+                        Id = null,
+                        Name = "Select ..."
+                    }
+                }
+                .Concat(db.tblCounties.ToArray()
                 .Select(c => new ListClass
                 {
                     Id = c.County,
                     Name = c.County + " - " + c.County_Desc
-                })
+                }))
                 .ToList()
             };
 

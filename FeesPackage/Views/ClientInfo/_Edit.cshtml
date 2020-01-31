@@ -53,16 +53,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Client.Is_County, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Client.Is_County)
-                    @Html.ValidationMessageFor(model => model.Client.Is_County, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Client.County, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Client.County, new SelectList(Model.Counties, "Id", "Name"))
@@ -78,6 +68,21 @@
             </div>
         </div>
         <br />
+        <div class="form-group" style="float:left">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="+ Referral" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="form-group" style="float:left;margin-left:5px;">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="+ Insurance" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="form-group" style="float:left;margin-left:5px;">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Pmt Hist" class="btn btn-default" />
+            </div>
+        </div>
         <div class="form-group" style="float:right">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

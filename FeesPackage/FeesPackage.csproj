@@ -232,6 +232,7 @@
     <Content Include="Content\images\icons\css\font-awesome.css" />
     <Content Include="Content\images\img.jpg" />
     <Content Include="Content\images\jquery-ui\picker.png" />
+    <Content Include="Content\images\MartinLaw.png" />
     <Content Include="Content\images\user.png" />
     <Content Include="Content\jqwidgets\css\images\backgroundTop.png" />
     <Content Include="Content\jqwidgets\css\images\backImage.png" />
