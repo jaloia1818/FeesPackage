@@ -104,6 +104,7 @@
 <style>
     .jqx-grid-cell {
         text-align: center;
+        vertical-align: middle;
     }
 
     #Client_Client_Name, 
@@ -194,16 +195,16 @@
         pagesize: 20,
         groupable: false,
         editable: false,
-        sortable: true,
+        sortable: false,
         ready: function () { _setup(); },
-        columnsresize: true,
+        columnsresize: false,
         columns: [
             { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist' },
-            { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsformat: 'd' },
-            { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsformat: 'd' },
-            { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsformat: 'd' },
-            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsformat: 'c' },
-            { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsformat: 'd' },
+            { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
+            { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
+            { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
+            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c' },
+            { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
             { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center' },
             { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', 
                     cellsRenderer: function (row, column, value, rowData) {
