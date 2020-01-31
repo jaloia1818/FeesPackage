@@ -6,92 +6,100 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Client.id)
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Client.id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Client.Client_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Client.Client_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Client.Client_Name, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Client_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Client.Client_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Client_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Employer_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Client.Employer_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Employer_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Escrow, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Client.Escrow, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
+                @Html.ValidationMessageFor(model => model.Client.Escrow, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Handling_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Client.Handling_Atty, new SelectList(Model.Attys, "Id", "Name"))
+                @Html.ValidationMessageFor(model => model.Client.Handling_Atty, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Client.Handling, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
+                @Html.ValidationMessageFor(model => model.Client.Handling, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Credit_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Client.Credit_Atty, new SelectList(Model.Attys, "Id", "Name"))
+                @Html.ValidationMessageFor(model => model.Client.Credit_Atty, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Client.Credit, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
+                @Html.ValidationMessageFor(model => model.Client.Credit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.County, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Client.County, new SelectList(Model.Counties, "Id", "Name"))
+                @Html.ValidationMessageFor(model => model.Client.County, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Accident_Desc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Client.Accident_Desc, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Accident_Desc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+        <div class="form-group">
+            Payments:
+            <div class="col-md-10">
+                <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; width: 100%; height: 100%;">
+                    <div id="payments"></div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <div class="form-group" style="float:left">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="+ Referral Source" class="btn btn-default" />
+            </div>
+        </div>
+
+        <div class="form-group" style="float:left;margin-left:5px;">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="+ Insurance Contact" class="btn btn-default" />
+            </div>
+        </div>
+
+        <div class="form-group" style="float:right">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Client.Employer_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Client.Employer_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Client.Employer_Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Client.Escrow, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Client.Escrow, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
-            @Html.ValidationMessageFor(model => model.Client.Escrow, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Client.Handling_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Client.Handling_Atty, new SelectList(Model.Attys, "Id", "Name"))
-            @Html.ValidationMessageFor(model => model.Client.Handling_Atty, "", new { @class = "text-danger" })
-            @Html.EditorFor(model => model.Client.Handling, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
-            @Html.ValidationMessageFor(model => model.Client.Handling, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Client.Credit_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Client.Credit_Atty, new SelectList(Model.Attys, "Id", "Name"))
-            @Html.ValidationMessageFor(model => model.Client.Credit_Atty, "", new { @class = "text-danger" })
-            @Html.EditorFor(model => model.Client.Credit, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
-            @Html.ValidationMessageFor(model => model.Client.Credit, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Client.County, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Client.County, new SelectList(Model.Counties, "Id", "Name"))
-            @Html.ValidationMessageFor(model => model.Client.County, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Client.Accident_Desc, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Client.Accident_Desc, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Client.Accident_Desc, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
-        <div id="payments"></div>
-    </div>
-
-    <div class="form-group" style="float:left">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="button" value="+ Referral Source" class="btn btn-default" />
-        </div>
-    </div>
-
-    <div class="form-group" style="float:left;margin-left:5px;">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="button" value="+ Insurance Contact" class="btn btn-default" />
-        </div>
-    </div>
-
-    <div class="form-group" style="float:right">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <style>
@@ -174,7 +182,7 @@
     {
         theme: 'energyblue',
         width: '100%',
-        height: '200px',
+        height: '180px',
         autowidth: false,
         source: dataAdapter,
         showfilterrow: false,
