@@ -23,6 +23,5 @@ namespace FeesPackage.Data_Access
         public string Inputter_Name { get; set; }
         public Nullable<int> Deposit_Indicator { get; set; }
         public Nullable<bool> Posted_Indicator { get; set; }
-        public byte[] SSMA_TimeStamp { get; set; }
     }
 }

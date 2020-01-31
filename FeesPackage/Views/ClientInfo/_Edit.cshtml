@@ -1,110 +1,117 @@
-﻿@model FeesPackage.Models.ClientInfoModel
+﻿@using FeesPackage.Models;
+@using Newtonsoft.Json;
+@model ClientInfoModel
 
 @using (Html.BeginForm("Save", "ClientInfo", FormMethod.Post, Model.Client))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Client.id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Client.Client_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Client.Client_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Client.Client_Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Client.id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Client.Employer_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Client.Employer_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Client.Employer_Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Client.Escrow, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Client.Escrow, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
-                @Html.ValidationMessageFor(model => model.Client.Escrow, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Client.Handling_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Client.Handling_Atty, new SelectList(Model.Attys, "Id", "Name"))
-                @Html.ValidationMessageFor(model => model.Client.Handling_Atty, "", new { @class = "text-danger" })
-                @Html.EditorFor(model => model.Client.Handling, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
-                @Html.ValidationMessageFor(model => model.Client.Handling, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Client.Credit_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Client.Credit_Atty, new SelectList(Model.Attys, "Id", "Name"))
-                @Html.ValidationMessageFor(model => model.Client.Credit_Atty, "", new { @class = "text-danger" })
-                @Html.EditorFor(model => model.Client.Credit, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
-                @Html.ValidationMessageFor(model => model.Client.Credit, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Client.County, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Client.County, new SelectList(Model.Counties, "Id", "Name"))
-                @Html.ValidationMessageFor(model => model.Client.County, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Client.Accident_Desc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Client.Accident_Desc, new { rows = 4, htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Client.Accident_Desc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <br />
-        <div class="form-group" style="float:left">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="+ Referral" class="btn btn-default" />
-            </div>
-        </div>
-        <div class="form-group" style="float:left;margin-left:5px;">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="+ Insurance" class="btn btn-default" />
-            </div>
-        </div>
-        <div class="form-group" style="float:left;margin-left:5px;">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Pmt Hist" class="btn btn-default" />
-            </div>
-        </div>
-        <div class="form-group" style="float:right">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Client.Client_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Client.Client_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Client.Client_Name, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Client.Employer_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Client.Employer_Name, new { rows = 2, htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Client.Employer_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Client.Escrow, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Client.Escrow, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
+            @Html.ValidationMessageFor(model => model.Client.Escrow, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Client.Handling_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Client.Handling_Atty, new SelectList(Model.Attys, "Id", "Name"))
+            @Html.ValidationMessageFor(model => model.Client.Handling_Atty, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Client.Handling, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
+            @Html.ValidationMessageFor(model => model.Client.Handling, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Client.Credit_Atty, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Client.Credit_Atty, new SelectList(Model.Attys, "Id", "Name"))
+            @Html.ValidationMessageFor(model => model.Client.Credit_Atty, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Client.Credit, new { htmlAttributes = new { @class = "form-control", @style = "width:30px" } })
+            @Html.ValidationMessageFor(model => model.Client.Credit, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Client.County, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Client.County, new SelectList(Model.Counties, "Id", "Name"))
+            @Html.ValidationMessageFor(model => model.Client.County, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Client.Accident_Desc, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Client.Accident_Desc, new { rows = 4, htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Client.Accident_Desc, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
+        <div id="payments"></div>
+    </div>
+
+    <br />
+    <div class="form-group" style="float:left">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="+ Referral Source" class="btn btn-default" />
+        </div>
+    </div>
+
+    <div class="form-group" style="float:left;margin-left:5px;">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="+ Insurance Contact" class="btn btn-default" />
+        </div>
+    </div>
+
+    <div class="form-group" style="float:right">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <style>
     .ui-dialog-titlebar {
         background-color: lightblue;
     }
+
     .control-label.col-md-2 {
         margin-right: 5px;
         width: 110px;
     }
+
     .ui-dialog {
         background-color: #e0e9f5;
         -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
         -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
         box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
     }
+
     input.btn {
         background-color: blue;
         border: none;
@@ -120,6 +127,7 @@
         -moz-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     }
+
     input.btn:hover {
         background-color: darkblue;
         color: white;
@@ -128,3 +136,73 @@
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     }
 </style>
+
+<script>
+    // prepare the data
+    var data = @Html.Raw(JsonConvert.SerializeObject(Model.Payments));
+
+    var source =
+    {
+        dataType: "json",
+        dataFields: [
+            { name: 'Claim_Number', type: 'string' },
+            { name: 'Payment_Date', type: 'date' },
+            { name: 'Period_From', type: 'date' },
+            { name: 'Period_To', type: 'date' },
+            { name: 'Amount', type: 'float' },
+            { name: 'Input_Date', type: 'date' },
+            { name: 'Deposit_Indicator', type: 'int' },
+            { name: 'Posted_Indicator', type: 'bool' }
+        ],
+        id: 'payment',
+        localdata: data
+    };
+
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+        downloadComplete: function (data, status, xhr) { },
+        loadComplete: function (data) { },
+        beforeLoadComplete: function (records) { },
+        loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
+    });
+
+    $("#payments").jqxGrid(
+    {
+        theme: 'energyblue',
+        width: '100%',
+        height: '200px',
+        autowidth: false,
+        source: dataAdapter,
+        showfilterrow: false,
+        filterable: false,
+        pageable: false,
+        pagesize: 20,
+        groupable: false,
+        editable: false,
+        sortable: true,
+        ready: function () { _setup(); },
+        columnsresize: true,
+        columns: [
+            { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist' },
+            { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsformat: 'd' },
+            { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsformat: 'd' },
+            { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsformat: 'd' },
+            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsformat: 'c' },
+            { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsformat: 'd' },
+            { text: 'Deposit Indicator', datafield: 'Deposit_Indicator', filtertype: 'checkedlist' },
+            { text: 'Posted Indicator', datafield: 'Posted_Indicator', filtertype: 'checkedlist', 
+                    cellsRenderer: function (row, column, value, rowData) {
+          	            var checkbox;
+                        if (value === true)
+            	            checkbox = '<input type="checkbox" onclick="return false;">'
+                        else
+            	            checkbox = '<input type="checkbox" checked onclick="return false;">'
+                        return checkbox;
+                    }
+            }
+        ]
+    });
+
+    function _setup() {
+        $("#payments").jqxGrid('autoresizecolumns');
+    }
+</script>

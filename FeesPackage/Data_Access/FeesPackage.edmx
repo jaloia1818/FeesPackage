@@ -14,22 +14,6 @@
           <Property Name="Referral_Tax_ID" Type="nvarchar" MaxLength="15" />
           <Property Name="Referral_Credit_Atty" Type="nvarchar" MaxLength="4" />
         </EntityType>
-        <EntityType Name="TBL PAYMENTS">
-          <Key>
-            <PropertyRef Name="Claim_Number" />
-            <PropertyRef Name="Payment_Date" />
-          </Key>
-          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Payment_Date" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="Period_From" Type="datetime2" Precision="0" />
-          <Property Name="Period_To" Type="datetime2" Precision="0" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="Input_Date" Type="datetime2" Precision="0" />
-          <Property Name="Inputter_Name" Type="nvarchar" MaxLength="3" />
-          <Property Name="Deposit_Indicator" Type="int" />
-          <Property Name="Posted_Indicator" Type="bit" />
-          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
-        </EntityType>
         <EntityType Name="tbl PMTS with Comment">
           <Key>
             <PropertyRef Name="Claim_Number" />
@@ -149,7 +133,6 @@
           <Property Name="Inputter_Name" Type="nvarchar" MaxLength="3" />
           <Property Name="Deposit_Indicator" Type="int" />
           <Property Name="Posted_Indicator" Type="bit" />
-          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblReferral">
           <Key>
@@ -213,7 +196,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
         <Association Name="FK_tblReferral_tblAttorney" />-->
         <EntityContainer Name="FeesPackageModelStoreContainer">
           <EntitySet Name="ReferralwithClient" EntityType="Self.ReferralwithClient" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TBL PAYMENTS" EntityType="Self.TBL PAYMENTS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl PMTS with Comment" EntityType="Self.tbl PMTS with Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorney" EntityType="Self.tblAttorney" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombos" Schema="dbo" store:Type="Tables" />
@@ -274,22 +256,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Referral_Tax_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Referral_Credit_Atty" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="TBL_PAYMENT">
-          <Key>
-            <PropertyRef Name="Claim_Number" />
-            <PropertyRef Name="Payment_Date" />
-          </Key>
-          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Period_From" Type="DateTime" Precision="0" />
-          <Property Name="Period_To" Type="DateTime" Precision="0" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Input_Date" Type="DateTime" Precision="0" />
-          <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Deposit_Indicator" Type="Int32" />
-          <Property Name="Posted_Indicator" Type="Boolean" />
-          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
         <EntityType Name="tbl_PMTS_with_Comment">
           <Key>
             <PropertyRef Name="Claim_Number" />
@@ -337,22 +303,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Client_Referral__" Type="Double" />
           <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
-        <EntityType Name="tblPayment">
-          <Key>
-            <PropertyRef Name="Claim_Number" />
-            <PropertyRef Name="Payment_Date" />
-          </Key>
-          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Period_From" Type="DateTime" Precision="0" />
-          <Property Name="Period_To" Type="DateTime" Precision="0" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Input_Date" Type="DateTime" Precision="0" />
-          <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Deposit_Indicator" Type="Int32" />
-          <Property Name="Posted_Indicator" Type="Boolean" />
-          <Property Name="SSMA_TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
         <EntityType Name="Banks_H__Martin__C__Pd_thru_date">
           <Key>
             <PropertyRef Name="Handling_Atty" />
@@ -396,12 +346,10 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
         </EntityType>
         <EntityContainer Name="FeesPackageEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ReferralwithClients" EntityType="Self.ReferralwithClient" />
-          <EntitySet Name="TBL_PAYMENTS" EntityType="Self.TBL_PAYMENT" />
           <EntitySet Name="tbl_PMTS_with_Comments" EntityType="Self.tbl_PMTS_with_Comment" />
           <EntitySet Name="tblC_R" EntityType="Self.tblC_R" />
           <EntitySet Name="tblClaims" EntityType="Self.tblClaim" />
           <EntitySet Name="tblClientReferrals" EntityType="Self.tblClientReferral" />
-          <EntitySet Name="tblPayments" EntityType="Self.tblPayment" />
           <EntitySet Name="Banks_H__Martin__C__Pd_thru_date" EntityType="Self.Banks_H__Martin__C__Pd_thru_date" />
           <EntitySet Name="tblClient_Query__PL_HANDLING" EntityType="Self.tblClient_Query__PL_HANDLING" />
           <EntitySet Name="tblClient_Without_Matching_tblClientReferrals" EntityType="Self.tblClient_Without_Matching_tblClientReferral" />
@@ -412,6 +360,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="tblCounties" EntityType="FeesPackageModel.tblCounty" />
           <EntitySet Name="tblReferrals" EntityType="FeesPackageModel.tblReferral" />
           <EntitySet Name="tblClients" EntityType="FeesPackageModel.tblClient" />
+          <EntitySet Name="tblPayments" EntityType="FeesPackageModel.tblPayment" />
         </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
@@ -481,6 +430,21 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Accident_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Selection_Control" Type="Int16" />
         </EntityType>
+        <EntityType Name="tblPayment">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Payment_Date" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Input_Date" Type="DateTime" Precision="0" />
+          <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Deposit_Indicator" Type="Int32" />
+          <Property Name="Posted_Indicator" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -494,22 +458,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
                 <ScalarProperty Name="Referral_Tax_ID" ColumnName="Referral_Tax_ID" />
                 <ScalarProperty Name="Referral_Credit_Atty" ColumnName="Referral_Credit_Atty" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TBL_PAYMENTS">
-            <EntityTypeMapping TypeName="FeesPackageModel.TBL_PAYMENT">
-              <MappingFragment StoreEntitySet="TBL PAYMENTS">
-                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
-                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
-                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
-                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
-                <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
-                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
-                <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
-                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -558,22 +506,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
                 <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
                 <ScalarProperty Name="Client_Referral__" ColumnName="Client_Referral_%" />
-                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblPayments">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblPayment">
-              <MappingFragment StoreEntitySet="tblPayments">
-                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
-                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
-                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
-                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
-                <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
-                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
-                <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
                 <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -690,6 +622,21 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Employer_Name" ColumnName="Employer_Name" />
                 <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPayments">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblPayment">
+              <MappingFragment StoreEntitySet="tblPayments">
+                <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
+                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
+                <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
+                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

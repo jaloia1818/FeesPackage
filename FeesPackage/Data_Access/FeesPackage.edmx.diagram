@@ -6,12 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f394803b6fd9411c9f255ce8bb9fd14b" Name="Diagram1">
         <EntityTypeShape EntityType="FeesPackageModel.ReferralwithClient" Width="1.5" PointX="2.625" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FeesPackageModel.TBL_PAYMENT" Width="1.5" PointX="8" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tbl_PMTS_with_Comment" Width="1.5" PointX="2.625" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblC_R" Width="1.5" PointX="6.25" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClaim" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClientReferral" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FeesPackageModel.tblPayment" Width="1.5" PointX="8" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.Banks_H__Martin__C__Pd_thru_date" Width="1.5" PointX="8" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClient_Query__PL_HANDLING" Width="1.5" PointX="6.25" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClient_Without_Matching_tblClientReferral" Width="1.5" PointX="9.75" PointY="4" IsExpanded="true" />
@@ -22,6 +20,7 @@
         <EntityTypeShape EntityType="FeesPackageModel.tblCounty" Width="1.5" PointX="0.75" PointY="4" />
         <EntityTypeShape EntityType="FeesPackageModel.tblReferral" Width="1.5" PointX="4.5" PointY="4" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClient" Width="1.5" PointX="4.5" PointY="7.375" />
+        <EntityTypeShape EntityType="FeesPackageModel.tblPayment" Width="1.5" PointX="8" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

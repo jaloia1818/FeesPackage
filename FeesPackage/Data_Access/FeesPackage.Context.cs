@@ -26,12 +26,10 @@ namespace FeesPackage.Data_Access
         }
     
         public virtual DbSet<ReferralwithClient> ReferralwithClients { get; set; }
-        public virtual DbSet<TBL_PAYMENT> TBL_PAYMENTS { get; set; }
         public virtual DbSet<tbl_PMTS_with_Comment> tbl_PMTS_with_Comments { get; set; }
         public virtual DbSet<tblC_R> tblC_R { get; set; }
         public virtual DbSet<tblClaim> tblClaims { get; set; }
         public virtual DbSet<tblClientReferral> tblClientReferrals { get; set; }
-        public virtual DbSet<tblPayment> tblPayments { get; set; }
         public virtual DbSet<Banks_H__Martin__C__Pd_thru_date> Banks_H__Martin__C__Pd_thru_date { get; set; }
         public virtual DbSet<tblClient_Query__PL_HANDLING> tblClient_Query__PL_HANDLING { get; set; }
         public virtual DbSet<tblClient_Without_Matching_tblClientReferral> tblClient_Without_Matching_tblClientReferrals { get; set; }
@@ -42,5 +40,6 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblReferral> tblReferrals { get; set; }
         public virtual DbSet<tblClient> tblClients { get; set; }
+        public virtual DbSet<tblPayment> tblPayments { get; set; }
     }
 }

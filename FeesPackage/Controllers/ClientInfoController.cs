@@ -98,6 +98,13 @@ namespace FeesPackage.Controllers
             ClientInfoModel model = new ClientInfoModel
             {
                 Client = db.tblClients.SingleOrDefault(x => x.id == id),
+                Payments = 
+                    (from clt in db.tblClients
+                     join cla in db.tblClaims on clt.id equals cla.Reference_Number
+                     join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
+                     where clt.id == id
+                     select pay
+                    ).ToList(),
 
                 Attys = new List<ListClass>
                 {

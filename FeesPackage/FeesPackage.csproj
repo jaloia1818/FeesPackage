@@ -196,9 +196,6 @@
     <Compile Include="Data_Access\tblReferral.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data_Access\TBL_PAYMENT.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data_Access\tbl_PMTS_with_Comment.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
