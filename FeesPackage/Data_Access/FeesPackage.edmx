@@ -158,6 +158,20 @@ warning 6002: The table/view 'FeesPackage.dbo.Banks(H) Martin (C) Pd thru date' 
           <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaims">
+          <Key>
+            <PropertyRef Name="Claim No" />
+          </Key>
+          <Property Name="Claim No" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Adjuster" Type="nvarchar" MaxLength="35" />
+          <Property Name="Atty Combo" Type="varchar" MaxLength="10" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Status" Type="nvarchar" MaxLength="1" />
+          <Property Name="Reference_Number" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'FeesPackage.dbo.tblClient Query- PL HANDLING' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblClient Query- PL HANDLING">
           <Key>
@@ -216,6 +230,17 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
     [Banks(H) Martin (C) Pd thru date].[Reference_Number] AS [Reference_Number], 
     [Banks(H) Martin (C) Pd thru date].[Client_Name] AS [Client_Name]
     FROM [dbo].[Banks(H) Martin (C) Pd thru date] AS [Banks(H) Martin (C) Pd thru date]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaims" EntityType="Self.qryClaims" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaims].[Claim No] AS [Claim No], 
+    [qryClaims].[Adjuster] AS [Adjuster], 
+    [qryClaims].[Atty Combo] AS [Atty Combo], 
+    [qryClaims].[Amount] AS [Amount], 
+    [qryClaims].[Frequency] AS [Frequency], 
+    [qryClaims].[Status] AS [Status], 
+    [qryClaims].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qryClaims] AS [qryClaims]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblClient Query- PL HANDLING" EntityType="Self.tblClient Query- PL HANDLING" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -361,6 +386,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="tblReferrals" EntityType="FeesPackageModel.tblReferral" />
           <EntitySet Name="tblClients" EntityType="FeesPackageModel.tblClient" />
           <EntitySet Name="tblPayments" EntityType="FeesPackageModel.tblPayment" />
+          <EntitySet Name="qryClaims" EntityType="FeesPackageModel.qryClaim" />
         </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
@@ -444,6 +470,18 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="Deposit_Indicator" Type="Int32" />
           <Property Name="Posted_Indicator" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="qryClaim">
+          <Key>
+            <PropertyRef Name="Claim_No" />
+          </Key>
+          <Property Name="Claim_No" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Adjuster" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Atty_Combo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Reference_Number" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -637,6 +675,19 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Period_From" ColumnName="Period_From" />
                 <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
                 <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaims">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaim">
+              <MappingFragment StoreEntitySet="qryClaims">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Atty_Combo" ColumnName="Atty Combo" />
+                <ScalarProperty Name="Adjuster" ColumnName="Adjuster" />
+                <ScalarProperty Name="Claim_No" ColumnName="Claim No" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

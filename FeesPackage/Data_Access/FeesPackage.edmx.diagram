@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="FeesPackageModel.tblReferral" Width="1.5" PointX="4.5" PointY="4" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClient" Width="1.5" PointX="4.5" PointY="7.375" />
         <EntityTypeShape EntityType="FeesPackageModel.tblPayment" Width="1.5" PointX="8" PointY="0.75" />
+        <EntityTypeShape EntityType="FeesPackageModel.qryClaim" Width="1.5" PointX="8" PointY="4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

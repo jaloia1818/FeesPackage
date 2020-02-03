@@ -41,5 +41,6 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<tblReferral> tblReferrals { get; set; }
         public virtual DbSet<tblClient> tblClients { get; set; }
         public virtual DbSet<tblPayment> tblPayments { get; set; }
+        public virtual DbSet<qryClaim> qryClaims { get; set; }
     }
 }

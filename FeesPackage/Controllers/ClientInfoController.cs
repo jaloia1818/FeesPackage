@@ -98,6 +98,9 @@ namespace FeesPackage.Controllers
             ClientInfoModel model = new ClientInfoModel
             {
                 Client = db.tblClients.SingleOrDefault(x => x.id == id),
+
+                Claims = db.qryClaims.Where(x => x.Reference_Number == id).ToList(),
+
                 Payments = 
                     (from clt in db.tblClients
                      join cla in db.tblClaims on clt.id equals cla.Reference_Number

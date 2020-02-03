@@ -154,6 +154,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FeesPackage.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data_Access\qryClaim.cs">
+      <DependentUpon>FeesPackage.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data_Access\ReferralwithClient.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
