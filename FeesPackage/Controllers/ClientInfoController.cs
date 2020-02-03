@@ -124,6 +124,22 @@ namespace FeesPackage.Controllers
                 }))
                 .ToList(),
 
+                AttyCombos = db.tblAttorneyCombos.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.id.ToString(),
+                    Name = c.Attorney_Combinations
+                })
+                .ToList(),
+
+                Adjusters = db.tblInsurances.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Ins_Contact,
+                    Name = c.Ins_Co_Name
+                })
+                .ToList(),
+
                 Counties = new List<ListClass>
                 {
                     new ListClass() {

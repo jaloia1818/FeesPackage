@@ -18,7 +18,7 @@ namespace FeesPackage.Data_Access
         public string Claim_Number { get; set; }
         public string Insurance_Contact { get; set; }
         public Nullable<System.DateTime> Claim_Date { get; set; }
-        public Nullable<double> Attorney_Breakdown { get; set; }
+        public Nullable<int> Attorney_Breakdown { get; set; }
         public Nullable<decimal> Payment_Amount { get; set; }
         public string Payment_Frequency { get; set; }
         public string Status_Code { get; set; }

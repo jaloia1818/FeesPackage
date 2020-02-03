@@ -165,6 +165,32 @@
 </style>
 
 <script>
+    // prepare the Attorney list dropdown data
+    var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.AttyCombos));
+
+    var locallistaSource = {
+        datatype: "array",
+        datafields: [
+                { name: 'Name', type: 'string' },
+                { name: 'Id', type: 'string' }
+        ],
+        localdata: locallista
+    };
+    var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
+
+    // prepare the Attorney list dropdown data
+    var locallistb = @Html.Raw(JsonConvert.SerializeObject(Model.Adjusters));
+
+    var locallistbSource = {
+        datatype: "array",
+        datafields: [
+                { name: 'Name', type: 'string' },
+                { name: 'Id', type: 'string' }
+        ],
+        localdata: locallistb
+    };
+    var locallistbAdapter = new $.jqx.dataAdapter(locallistbSource);
+
     // prepare the data
     var data = @Html.Raw(JsonConvert.SerializeObject(Model.Claims));
 
@@ -179,7 +205,7 @@
             { name: 'Frequency', type: 'string' },
             { name: 'Status', type: 'string' }
         ],
-        id: 'payment',
+        //id: 'claim',
         localdata: data
     };
 
@@ -202,26 +228,63 @@
         pageable: false,
         pagesize: 20,
         groupable: false,
-        editable: false,
+        editable: true,
         sortable: false,
         ready: function () { _setup(); },
-        columnsresize: false,
+        columnsresize: true,
         columns: [
-            { text: 'Claim Number', datafield: 'Claim_No', filtertype: 'checkedlist' },
-            { text: 'Adjuster', datafield: 'Adjuster', filtertype: 'checkedlist' },
-            { text: 'Atty Combo', datafield: 'Atty_Combo', filtertype: 'checkedlist' },
-            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'center' },
-            { text: 'Frequency', datafield: 'Frequency', filtertype: 'checkedlist' },
-            { text: 'Status', datafield: 'Status', filtertype: 'checkedlist' }
-/*                    cellsRenderer: function (row, column, value, rowData) {
-          	            var checkbox;
-                        if (value === true)
-            	            checkbox = '<input type="checkbox" onclick="return false;">'
-                        else
-            	            checkbox = '<input type="checkbox" checked onclick="return false;">'
-                        return checkbox;
+            { text: 'Claim Number', datafield: 'Claim_No', filtertype: 'checkedlist', width: '104px', align: 'center' },
+            { text: 'Adjuster', datafield: 'Adjuster', filtertype: 'checkedlist', align: 'center',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor)
+                    {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 200,
+                            source: locallistbAdapter,
+                            displayMember: 'Id',
+                            valueMember: 'Name',
+                            filterable: false,
+                            placeHolder: 'Choose…',
+                            renderer: function (index, label, value)
+                            {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return label + ' - ' + value;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            var sel = $('#claims').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                        });
                     }
-            }*/
+            },
+            { text: 'Atty Combo', datafield: 'Atty_Combo', filtertype: 'checkedlist', width: '89px', align: 'center',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor)
+                    {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 200,
+                            source: locallistaAdapter,
+                            displayMember: 'Id',
+                            valueMember: 'Name',
+                            filterable: false,
+                            placeHolder: 'Choose…',
+                            renderer: function (index, label, value)
+                            {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return label + ' - ' + value;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            var sel = $('#claims').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                        });
+                    }
+            },
+            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', width: '63px', cellsalign: 'right', cellsformat: 'c', align: 'center' },
+            { text: 'Frequency', datafield: 'Frequency', filtertype: 'checkedlist', width: '80px', cellsalign: 'center', align: 'center' },
+            { text: 'Status', datafield: 'Status', filtertype: 'checkedlist', width: '54px', cellsalign: 'center', align: 'center' }
         ]
     });
 
@@ -238,7 +301,7 @@
     {
         dataType: "json",
         dataFields: [
-            { name: 'Claim_Number', type: 'string' },
+            { name: 'Claim_Number', type: 'string', align: 'center' },
             { name: 'Payment_Date', type: 'date' },
             { name: 'Period_From', type: 'date' },
             { name: 'Period_To', type: 'date' },
@@ -247,7 +310,7 @@
             { name: 'Deposit_Indicator', type: 'int' },
             { name: 'Posted_Indicator', type: 'bool' }
         ],
-        id: 'payment',
+        //id: 'payment',
         localdata: data
     };
 
@@ -273,7 +336,7 @@
         editable: false,
         sortable: false,
         ready: function () { _setup(); },
-        columnsresize: false,
+        columnsresize: true,
         columns: [
             { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist' },
             { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
