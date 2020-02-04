@@ -3,6 +3,7 @@ using FeesPackage.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
@@ -48,6 +49,49 @@ namespace FeesPackage.Controllers
             };
 
             return PartialView("~/Views/ClientInfo/_Edit.cshtml", model);
+        }
+
+        [HttpPost]
+        public ActionResult SaveClaim(tblClaim data, int ref_no)
+        {
+            var model = data;
+            try
+            {
+                if (model.Reference_Number == null)
+                {   // insert
+                    // transfer form fields
+                    model.Reference_Number = ref_no;
+
+                    // Insert into table
+                    db.tblClaims.Add(model);
+                    db.SaveChanges();
+                }
+                else
+                {   // update
+                    // get original record for unedited fields
+                    tblClaim record = db.tblClaims.Where(x => x.Claim_Number == model.Claim_Number).Single();
+
+                    // transfer form fields
+                    record.Claim_Number = model.Claim_Number;
+                    record.Insurance_Contact = model.Insurance_Contact;
+                    record.Claim_Date = model.Claim_Date;
+                    record.Attorney_Breakdown = model.Attorney_Breakdown;
+                    record.Payment_Amount = model.Payment_Amount;
+                    record.Payment_Frequency = model.Payment_Frequency;
+                    record.Status_Code = model.Status_Code;
+
+                    // Update record
+                    db.Entry(record).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+
+            // refresh screen
+            return new HttpStatusCodeResult(HttpStatusCode.OK, model.Reference_Number.ToString());
         }
 
         [HttpPost]
@@ -153,6 +197,22 @@ namespace FeesPackage.Controllers
                     Id = c.County,
                     Name = c.County + " - " + c.County_Desc
                 }))
+                .ToList(),
+
+                Frequencys = db.tblPaymentFrequencies.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Payment_Frequency,
+                    Name = c.Payment_Frequency
+                })
+                .ToList(),
+
+                StatusCodes = db.tblStatusCodes.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Status_Code,
+                    Name = c.Status_Code
+                })
                 .ToList()
             };
 

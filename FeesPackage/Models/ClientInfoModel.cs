@@ -11,6 +11,8 @@ namespace FeesPackage.Models
         public List<ListClass> Attys { get; set; }
         public List<ListClass> AttyCombos { get; set; }
         public List<ListClass> Adjusters { get; set; }
+        public List<ListClass> Frequencys { get; set; }
+        public List<ListClass> StatusCodes { get; set; }
         public List<tblPayment> Payments { get; set; }
         public List<qryClaim> Claims { get; set; }
     }

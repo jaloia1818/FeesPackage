@@ -42,5 +42,7 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<tblPayment> tblPayments { get; set; }
         public virtual DbSet<tblClaim> tblClaims { get; set; }
         public virtual DbSet<qryClaim> qryClaims { get; set; }
+        public virtual DbSet<tblPaymentFrequency> tblPaymentFrequencies { get; set; }
+        public virtual DbSet<tblStatusCode> tblStatusCodes { get; set; }
     }
 }

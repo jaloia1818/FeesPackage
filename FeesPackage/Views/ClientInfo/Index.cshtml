@@ -40,6 +40,7 @@
 
 <script>
     var groups = [];
+    var id;
 
     function ready() {
         $("#dialog").dialog({
@@ -175,7 +176,7 @@
             //var value = args.value;
 
             // get 'id' value of row dblclk'd on
-            var id = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value;
+            id = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value;
 
             // render view/show dialog
             $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {

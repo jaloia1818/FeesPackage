@@ -14,12 +14,12 @@ namespace FeesPackage.Data_Access
     
     public partial class qryClaim
     {
-        public string Claim_No { get; set; }
-        public string Adjuster { get; set; }
-        public string Atty_Combo { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-        public string Frequency { get; set; }
-        public string Status { get; set; }
+        public string Claim_Number { get; set; }
+        public string Insurance_Contact { get; set; }
+        public string Attorney_Breakdown { get; set; }
+        public Nullable<decimal> Payment_Amount { get; set; }
+        public string Payment_Frequency { get; set; }
+        public string Status_Code { get; set; }
         public Nullable<int> Reference_Number { get; set; }
     }
 }

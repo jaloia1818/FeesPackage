@@ -73,6 +73,7 @@
     <br />
     <div class="form-group">
         Claims:
+        <button id="addclaimrowbutton" type="button" style="float: right">+</button>
         <div class="col-md-10">
             <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; width: 100%; height: 100%;">
                 <div id="claims"></div>
@@ -165,6 +166,18 @@
 </style>
 
 <script>
+    var inUpdate = false;
+
+    // create new row.
+    $("#addclaimrowbutton").on('click', function () {
+        // add empty row in first position
+        $("#claims").jqxGrid('addrow', null, {}, 'first');
+        // begin editting newly added row, first column
+        $("#claims").jqxGrid('begincelledit', 0, 'Claim_Number');
+
+        return false;
+    });
+
     // prepare the Attorney list dropdown data
     var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.AttyCombos));
 
@@ -178,7 +191,7 @@
     };
     var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
 
-    // prepare the Attorney list dropdown data
+    // prepare the Adjusters list dropdown data
     var locallistb = @Html.Raw(JsonConvert.SerializeObject(Model.Adjusters));
 
     var locallistbSource = {
@@ -191,21 +204,62 @@
     };
     var locallistbAdapter = new $.jqx.dataAdapter(locallistbSource);
 
+    // prepare the Frequencys list dropdown data
+    var locallistc = @Html.Raw(JsonConvert.SerializeObject(Model.Frequencys));
+
+    var locallistcSource = {
+        datatype: "array",
+        datafields: [
+                { name: 'Name', type: 'string' },
+                { name: 'Id', type: 'string' }
+        ],
+        localdata: locallistc
+    };
+    var locallistcAdapter = new $.jqx.dataAdapter(locallistcSource);
+
+    // prepare the StatusCodes list dropdown data
+    var locallistd = @Html.Raw(JsonConvert.SerializeObject(Model.StatusCodes));
+
+    var locallistdSource = {
+        datatype: "array",
+        datafields: [
+                { name: 'Name', type: 'string' },
+                { name: 'Id', type: 'string' }
+        ],
+        localdata: locallistd
+    };
+    var locallistdAdapter = new $.jqx.dataAdapter(locallistdSource);
+
     // prepare the data
     var data = @Html.Raw(JsonConvert.SerializeObject(Model.Claims));
 
     var source =
     {
         dataType: "json",
+        updaterow: function (rowid, rowdata, commit) {
+            if (!inUpdate) {
+                $.post('/ClientInfo/SaveClaim', { data: rowdata, ref_no: id }, function (data, status, jqXHR) {
+                    if ($("#claims").jqxGrid('getcellvaluebyid', rowid, 'Reference_Number') != jqXHR.statusText) {
+                        inUpdate = true;
+                        $("#claims").jqxGrid('setcellvaluebyid', rowid, 'Reference_Number', jqXHR.statusText);
+                        inUpdate = false;
+                    }
+                    commit(true);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
+                });
+            }
+        },
         dataFields: [
-            { name: 'Claim_No', type: 'string' },
-            { name: 'Adjuster', type: 'string' },
-            { name: 'Atty_Combo', type: 'string' },
-            { name: 'Amount', type: 'string' },
-            { name: 'Frequency', type: 'string' },
-            { name: 'Status', type: 'string' }
+            { name: 'Reference_Number', type: 'string' },
+            { name: 'Claim_Number', type: 'string' },
+            { name: 'Insurance_Contact', type: 'string' },
+            { name: 'Attorney_Breakdown', type: 'int' },
+            { name: 'Payment_Amount', type: 'float' },
+            { name: 'Payment_Frequency', type: 'string' },
+            { name: 'Status_Code', type: 'string' }
         ],
-        //id: 'claim',
+        id: 'claim',
         localdata: data
     };
 
@@ -233,8 +287,9 @@
         ready: function () { _setup(); },
         columnsresize: true,
         columns: [
-            { text: 'Claim Number', datafield: 'Claim_No', filtertype: 'checkedlist', width: '104px', align: 'center' },
-            { text: 'Adjuster', datafield: 'Adjuster', filtertype: 'checkedlist', align: 'center',
+            { text: 'Reference Number', datafield: 'Reference_Number', hidden: true },
+            { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist', width: '104px', align: 'center' },
+            { text: 'Insurance Contact', datafield: 'Insurance_Contact', filtertype: 'checkedlist', align: 'center',
                     columntype: 'dropdownlist',
                     createeditor: function (row, column, editor)
                     {
@@ -244,7 +299,7 @@
                             displayMember: 'Id',
                             valueMember: 'Name',
                             filterable: false,
-                            placeHolder: 'Choose…',
+                            placeHolder: 'Choose ...',
                             renderer: function (index, label, value)
                             {
                                 var item = editor.jqxDropDownList('getSelectedItem');
@@ -254,11 +309,11 @@
                         editor.on('close', function (event) {
                             var sel = $('#claims').jqxGrid('getselectedrowindex');
                             // this will lose focus on current dropdownlist, firing onChange event on this row
-                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'Reference_Number'); }, 10);
                         });
                     }
             },
-            { text: 'Atty Combo', datafield: 'Atty_Combo', filtertype: 'checkedlist', width: '89px', align: 'center',
+            { text: 'Atty Combo', datafield: 'Attorney_Breakdown', filtertype: 'checkedlist', width: '89px', align: 'center',
                     columntype: 'dropdownlist',
                     createeditor: function (row, column, editor)
                     {
@@ -268,7 +323,7 @@
                             displayMember: 'Id',
                             valueMember: 'Name',
                             filterable: false,
-                            placeHolder: 'Choose…',
+                            placeHolder: 'Choose ...',
                             renderer: function (index, label, value)
                             {
                                 var item = editor.jqxDropDownList('getSelectedItem');
@@ -278,13 +333,59 @@
                         editor.on('close', function (event) {
                             var sel = $('#claims').jqxGrid('getselectedrowindex');
                             // this will lose focus on current dropdownlist, firing onChange event on this row
-                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'Reference_Number'); }, 10);
                         });
                     }
             },
-            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', width: '63px', cellsalign: 'right', cellsformat: 'c', align: 'center' },
-            { text: 'Frequency', datafield: 'Frequency', filtertype: 'checkedlist', width: '80px', cellsalign: 'center', align: 'center' },
-            { text: 'Status', datafield: 'Status', filtertype: 'checkedlist', width: '54px', cellsalign: 'center', align: 'center' }
+            { text: 'Amount', datafield: 'Payment_Amount', filtertype: 'checkedlist', width: '63px', cellsalign: 'right', cellsformat: 'c', align: 'center' },
+            { text: 'Frequency', datafield: 'Payment_Frequency', filtertype: 'checkedlist', width: '80px', cellsalign: 'center', align: 'center',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor)
+                    {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 200,
+                            source: locallistcAdapter,
+                            displayMember: 'Id',
+                            valueMember: 'Name',
+                            filterable: false,
+                            placeHolder: 'Choose ...',
+                            renderer: function (index, label, value)
+                            {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return value;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            var sel = $('#claims').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'Reference_Number'); }, 10);
+                        });
+                    }
+            },
+            { text: 'Status', datafield: 'Status_Code', filtertype: 'checkedlist', width: '54px', cellsalign: 'center', align: 'center',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor)
+                    {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 200,
+                            source: locallistdAdapter,
+                            displayMember: 'Id',
+                            valueMember: 'Name',
+                            filterable: false,
+                            placeHolder: 'Choose ...',
+                            renderer: function (index, label, value)
+                            {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return value;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            var sel = $('#claims').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'Reference_Number'); }, 10);
+                        });
+                    }
+            }
         ]
     });
 
@@ -310,7 +411,7 @@
             { name: 'Deposit_Indicator', type: 'int' },
             { name: 'Posted_Indicator', type: 'bool' }
         ],
-        //id: 'payment',
+        id: 'payment',
         localdata: data
     };
 

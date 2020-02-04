@@ -73,7 +73,6 @@
           <Property Name="Payment_Amount" Type="money" />
           <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
           <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
-          <Property Name="SSMA_TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblClient">
           <Key>
@@ -119,6 +118,13 @@
           <Property Name="Ins_Co_Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Ins_Contact" Type="varchar" MaxLength="35" />
         </EntityType>
+        <EntityType Name="tblPaymentFrequency">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Payment_Frequency" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblPayments">
           <Key>
             <PropertyRef Name="Claim_Number" />
@@ -144,6 +150,13 @@
           <Property Name="Referral_Tax_ID" Type="nvarchar" MaxLength="15" />
           <Property Name="Referral_Credit_Atty" Type="nvarchar" MaxLength="4" />
         </EntityType>
+        <EntityType Name="tblStatusCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status_Code" Type="nchar" MaxLength="1" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'FeesPackage.dbo.Banks(H) Martin (C) Pd thru date' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Banks(H) Martin (C) Pd thru date">
@@ -161,14 +174,14 @@ warning 6002: The table/view 'FeesPackage.dbo.Banks(H) Martin (C) Pd thru date' 
 warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="qryClaims">
           <Key>
-            <PropertyRef Name="Claim No" />
+            <PropertyRef Name="Claim_Number" />
           </Key>
-          <Property Name="Claim No" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Adjuster" Type="nvarchar" MaxLength="35" />
-          <Property Name="Atty Combo" Type="varchar" MaxLength="10" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="Frequency" Type="nvarchar" MaxLength="1" />
-          <Property Name="Status" Type="nvarchar" MaxLength="1" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Insurance_Contact" Type="nvarchar" MaxLength="35" />
+          <Property Name="Attorney_Breakdown" Type="varchar" MaxLength="10" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
           <Property Name="Reference_Number" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -220,8 +233,10 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="tblClientReferral" EntityType="Self.tblClientReferral" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCounty" EntityType="Self.tblCounty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblInsurance" EntityType="Self.tblInsurance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPaymentFrequency" EntityType="Self.tblPaymentFrequency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPayments" EntityType="Self.tblPayments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferral" EntityType="Self.tblReferral" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStatusCode" EntityType="Self.tblStatusCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Banks(H) Martin (C) Pd thru date" EntityType="Self.Banks(H) Martin (C) Pd thru date" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Banks(H) Martin (C) Pd thru date].[Handling_Atty] AS [Handling_Atty], 
@@ -233,12 +248,12 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           </EntitySet>
           <EntitySet Name="qryClaims" EntityType="Self.qryClaims" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [qryClaims].[Claim No] AS [Claim No], 
-    [qryClaims].[Adjuster] AS [Adjuster], 
-    [qryClaims].[Atty Combo] AS [Atty Combo], 
-    [qryClaims].[Amount] AS [Amount], 
-    [qryClaims].[Frequency] AS [Frequency], 
-    [qryClaims].[Status] AS [Status], 
+    [qryClaims].[Claim_Number] AS [Claim_Number], 
+    [qryClaims].[Insurance_Contact] AS [Insurance_Contact], 
+    [qryClaims].[Attorney_Breakdown] AS [Attorney_Breakdown], 
+    [qryClaims].[Payment_Amount] AS [Payment_Amount], 
+    [qryClaims].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaims].[Status_Code] AS [Status_Code], 
     [qryClaims].[Reference_Number] AS [Reference_Number]
     FROM [dbo].[qryClaims] AS [qryClaims]</DefiningQuery>
           </EntitySet>
@@ -373,6 +388,8 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="tblPayments" EntityType="FeesPackageModel.tblPayment" />
           <EntitySet Name="tblClaims" EntityType="FeesPackageModel.tblClaim" />
           <EntitySet Name="qryClaims" EntityType="FeesPackageModel.qryClaim" />
+          <EntitySet Name="tblPaymentFrequencies" EntityType="FeesPackageModel.tblPaymentFrequency" />
+          <EntitySet Name="tblStatusCodes" EntityType="FeesPackageModel.tblStatusCode" />
         </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
@@ -469,19 +486,32 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="SSMA_TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="qryClaim">
           <Key>
-            <PropertyRef Name="Claim_No" />
+            <PropertyRef Name="Claim_Number" />
           </Key>
-          <Property Name="Claim_No" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Adjuster" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
-          <Property Name="Atty_Combo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Claim_Number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Insurance_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Attorney_Breakdown" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="Reference_Number" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblPaymentFrequency">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Payment_Frequency" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblStatusCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status_Code" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -666,7 +696,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySetMapping Name="tblClaims">
             <EntityTypeMapping TypeName="FeesPackageModel.tblClaim">
               <MappingFragment StoreEntitySet="tblClaim">
-                <ScalarProperty Name="SSMA_TimeStamp" ColumnName="SSMA_TimeStamp" />
                 <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
                 <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
                 <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
@@ -682,12 +711,28 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
             <EntityTypeMapping TypeName="FeesPackageModel.qryClaim">
               <MappingFragment StoreEntitySet="qryClaims">
                 <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Atty_Combo" ColumnName="Atty Combo" />
-                <ScalarProperty Name="Adjuster" ColumnName="Adjuster" />
-                <ScalarProperty Name="Claim_No" ColumnName="Claim No" />
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Attorney_Breakdown" ColumnName="Attorney_Breakdown" />
+                <ScalarProperty Name="Insurance_Contact" ColumnName="Insurance_Contact" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPaymentFrequencies">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblPaymentFrequency">
+              <MappingFragment StoreEntitySet="tblPaymentFrequency">
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStatusCodes">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblStatusCode">
+              <MappingFragment StoreEntitySet="tblStatusCode">
+                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
