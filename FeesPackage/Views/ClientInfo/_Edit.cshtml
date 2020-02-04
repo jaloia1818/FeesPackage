@@ -83,7 +83,7 @@
 
     <br />
     <div class="form-group">
-        Payments:
+        Payments: (@Model.Payments.Count()) Totaling: @string.Format("{0:C}", @Model.Payments.Sum(item => item.Amount))
         <div class="col-md-10">
             <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; width: 100%; height: 100%;">
                 <div id="payments"></div>
