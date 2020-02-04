@@ -43,6 +43,7 @@
     var id;
 
     function ready() {
+        // setup edit dialog
         $("#dialog").dialog({
             autoOpen: false,
             width: 700,
@@ -57,6 +58,11 @@
                 effect: "explode",
                 duration: 500
             }
+        });
+
+        // on close, reload page to refresh
+        $("#dialog").on( "dialogclose", function(event, ui) {
+            location.reload();
         });
 
         // prepare the Attorney list dropdown data
