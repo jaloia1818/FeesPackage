@@ -100,7 +100,7 @@
 
     <div class="form-group" style="float:left;margin-left:5px;">
         <div class="col-md-offset-2 col-md-10">
-            <input type="button" value="+ Insurance Contact" class="btn btn-default" />
+            <input id="insuranceContactBtn" type="button" value="+ Insurance Contact" class="btn btn-default" />
         </div>
     </div>
 
@@ -113,6 +113,9 @@
 }
 
 <div id="referralSrc" style="display:none">
+</div>
+
+<div id="insuranceContact" style="display:none">
 </div>
 
 <style>
@@ -169,18 +172,18 @@
 </style>
 
 <script>
+    // open InsuranceContact dialog
+    $('#insuranceContactBtn').click(function() {
+        alert('insuranceContactBtn');
+    });
+
     // open ReferralSrc dialog
     $('#referralSrcBtn').click(function() {
         $.get('/MasterTables/ReferralSrc', {}, function (data, status, jqXHR) {
             // load dialog content
             $('#referralSrc').html(data);
-
             // intialize referral grid by calling it's ready() function
             ready();
-
-            // position dialog at center top
-            $('#referralSrc').dialog('widget').position({my:"center top", at:"center top", of:window});
-
             // open dialog
             $("#referralSrc").dialog("open");
         }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -192,7 +195,7 @@
     $("#referralSrc").dialog({
         autoOpen: false,
         width: 920,
-        position: 'center',
+        position: 'center top',
         resizable: false,
         modal: true,
         title: 'Referral Source',

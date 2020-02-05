@@ -23,7 +23,7 @@
             <div class="module-body table">
                 <span>Search: </span>
                 <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
-                <button id="addrowbutton" style="float: right">+</button>
+                <button id="addreferralbutton" style="float: right">+</button>
                 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
                     <div id="referral"></div>
                 </div>
@@ -96,7 +96,7 @@
             return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
         }
         // create new row.
-        $("#addrowbutton").on('click', function () {
+        $("#addreferralbutton").on('click', function () {
             // add empty row in first position
             $("#referral").jqxGrid('addrow', null, {}, 'first');
             // begin editting newly added row, first column
@@ -119,7 +119,7 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', hidden: true },
+                { text: 'Id', datafield: 'id', filtertype: 'checkedlist' },
                 { text: 'Referral Name', datafield: 'Referral_Name', filtertype: 'checkedlist' },
                 { text: 'Referral Firm', datafield: 'Referral_Firm', filtertype: 'checkedlist' },
                 { text: 'Referral Tax ID', datafield: 'Referral_Tax_ID', filtertype: 'checkedlist' },
