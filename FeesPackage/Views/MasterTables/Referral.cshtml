@@ -119,12 +119,12 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'Id', datafield: 'id', filtertype: 'checkedlist', editable: false },
-                { text: 'Referral Name', datafield: 'Referral_Name', filtertype: 'checkedlist' },
-                { text: 'Referral Firm', datafield: 'Referral_Firm', filtertype: 'checkedlist' },
-                { text: 'Referral Tax ID', datafield: 'Referral_Tax_ID', filtertype: 'checkedlist' },
+                { text: 'Id', datafield: 'id', filtertype: 'checkedlist', editable: false, width: '50px', align: 'center' },
+                { text: 'Referral Name', datafield: 'Referral_Name', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Referral Firm', datafield: 'Referral_Firm', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Referral Tax ID', datafield: 'Referral_Tax_ID', filtertype: 'checkedlist', align: 'center' },
                 {
-                    text: 'Referral Credit Atty', datafield: 'Referral_Credit_Atty', filtertype: 'checkedlist',
+                    text: 'Referral Credit Atty', datafield: 'Referral_Credit_Atty', filtertype: 'checkedlist', align: 'center',
                     columntype: 'dropdownlist',
                     createeditor: function (row, column, editor)
                     {
