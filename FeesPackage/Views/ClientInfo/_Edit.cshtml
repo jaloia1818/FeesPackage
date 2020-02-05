@@ -206,7 +206,13 @@
 
     // on close, reload page to refresh
     $("#insuranceContactDlg").on( "dialogclose", function(event, ui) {
-        //location.reload();
+        $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
+            $('#ClientDlg').html(data);
+            $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
+            $("#ClientDlg").dialog("open");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
     });
 </script>
 
@@ -245,7 +251,13 @@
 
     // on close, reload page to refresh
     $("#referralSrcDlg").on( "dialogclose", function(event, ui) {
-        //location.reload();
+        $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
+            $('#ClientDlg').html(data);
+            $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
+            $("#ClientDlg").dialog("open");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
     });
 </script>
 

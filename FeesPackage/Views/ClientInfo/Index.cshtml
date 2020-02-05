@@ -35,7 +35,7 @@
 </div>
 <!--/.span9-->
 
-<div id="dialog" style="display:none">
+<div id="ClientDlg" style="display:none">
 </div>
 
 <script>
@@ -44,7 +44,7 @@
 
     function ready() {
         // setup edit dialog
-        $("#dialog").dialog({
+        $("#ClientDlg").dialog({
             autoOpen: false,
             width: 700,
             resizable: false,
@@ -61,7 +61,7 @@
         });
 
         // on close, reload page to refresh
-        $("#dialog").on( "dialogclose", function(event, ui) {
+        $("#ClientDlg").on( "dialogclose", function(event, ui) {
             location.reload();
         });
 
@@ -133,9 +133,9 @@
         // create new row.
         $("#addrowbutton").on('click', function () {
             $.get('/ClientInfo/Create', function (data, status, jqXHR) {
-                $('#dialog').html(data);
+                $('#ClientDlg').html(data);
                 $('.ui-dialog-title').html('@ViewBag.Title [0]');
-                $("#dialog").dialog("open");
+                $("#ClientDlg").dialog("open");
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 alert(textStatus + ': ' + errorThrown);
             });
@@ -186,9 +186,9 @@
 
             // render view/show dialog
             $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
-                $('#dialog').html(data);
+                $('#ClientDlg').html(data);
                 $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
-                $("#dialog").dialog("open");
+                $("#ClientDlg").dialog("open");
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 alert(textStatus + ': ' + errorThrown);
             });
