@@ -308,6 +308,14 @@ namespace FeesPackage.Controllers
         }
 
         [HttpGet]
+        public ActionResult InsuranceContact()
+        {
+            List<tblInsurance> model = db.tblInsurances.OrderByDescending(x => x.id).ToList();
+
+            return PartialView("~/Views/MasterTables/InsuranceInfo.cshtml", model);
+        }
+
+        [HttpGet]
         public ActionResult InsuranceInfo()
         {
             List<tblInsurance> model = db.tblInsurances.OrderByDescending(x => x.id).ToList();

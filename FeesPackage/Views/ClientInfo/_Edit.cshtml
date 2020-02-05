@@ -94,13 +94,13 @@
     <br />
     <div class="form-group" style="float:left">
         <div class="col-md-offset-2 col-md-10">
-            <input id="referralSrcBtn" type="button" value="+ Referral Source" class="btn btn-default" />
+            <input id="referralSrcBtn" type="button" value="+ Referral Source" class="btn" />
         </div>
     </div>
 
     <div class="form-group" style="float:left;margin-left:5px;">
         <div class="col-md-offset-2 col-md-10">
-            <input id="insuranceContactBtn" type="button" value="+ Insurance Contact" class="btn btn-default" />
+            <input id="insuranceContactBtn" type="button" value="+ Insurance Contact" class="btn" />
         </div>
     </div>
 
@@ -112,10 +112,10 @@
 </div>
 }
 
-<div id="referralSrc" style="display:none">
+<div id="referralSrcDlg" style="display:none">
 </div>
 
-<div id="insuranceContact" style="display:none">
+<div id="insuranceContactDlg" style="display:none">
 </div>
 
 <style>
@@ -174,25 +174,59 @@
 <script>
     // open InsuranceContact dialog
     $('#insuranceContactBtn').click(function() {
-        alert('insuranceContactBtn');
-    });
-
-    // open ReferralSrc dialog
-    $('#referralSrcBtn').click(function() {
-        $.get('/MasterTables/ReferralSrc', {}, function (data, status, jqXHR) {
+        $.get('/MasterTables/InsuranceContact', {}, function (data, status, jqXHR) {
             // load dialog content
-            $('#referralSrc').html(data);
+            $('#insuranceContactDlg').html(data);
             // intialize referral grid by calling it's ready() function
             ready();
             // open dialog
-            $("#referralSrc").dialog("open");
+            $("#insuranceContactDlg").dialog("open");
         }).fail(function (jqXHR, textStatus, errorThrown) {
             alert(textStatus + ': ' + errorThrown);
         });
     });
 
     // setup edit dialog
-    $("#referralSrc").dialog({
+    $("#insuranceContactDlg").dialog({
+        autoOpen: false,
+        width: 920,
+        position: 'center top',
+        resizable: false,
+        modal: true,
+        title: 'Insurance Contact',
+        show: {
+            effect: "blind",
+            duration: 500
+        },
+        hide: {
+            effect: "explode",
+            duration: 500
+        }
+    });
+
+    // on close, reload page to refresh
+    $("#insuranceContactDlg").on( "dialogclose", function(event, ui) {
+        //location.reload();
+    });
+</script>
+
+<script>
+    // open ReferralSrc dialog
+    $('#referralSrcBtn').click(function() {
+        $.get('/MasterTables/ReferralSrc', {}, function (data, status, jqXHR) {
+            // load dialog content
+            $('#referralSrcDlg').html(data);
+            // intialize referral grid by calling it's ready() function
+            ready();
+            // open dialog
+            $("#referralSrcDlg").dialog("open");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
+    });
+
+    // setup edit dialog
+    $("#referralSrcDlg").dialog({
         autoOpen: false,
         width: 920,
         position: 'center top',
@@ -210,7 +244,7 @@
     });
 
     // on close, reload page to refresh
-    $("#referralSrc").on( "dialogclose", function(event, ui) {
+    $("#referralSrcDlg").on( "dialogclose", function(event, ui) {
         //location.reload();
     });
 </script>
@@ -490,13 +524,13 @@
         columnsresize: true,
         columns: [
             { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist' },
-            { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
-            { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
-            { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
-            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c' },
-            { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy' },
-            { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center' },
-            { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist',
+            { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
+            { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
+            { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
+            { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c', align: 'center' },
+            { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
+            { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', align: 'center' },
+            { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center',
                     cellsRenderer: function (row, column, value, rowData) {
           	            var checkbox;
                         if (value === true)

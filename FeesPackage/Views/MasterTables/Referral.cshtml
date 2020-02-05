@@ -22,7 +22,7 @@
             </div>
             <div class="module-body table">
                 <span>Search: </span>
-                <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
+                <input type="text" id="searchRef" placeholder="Type here ..." style="height: 21px; width: 200px;" />
                 <button id="addreferralbutton" style="float: right">+</button>
                 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
                     <div id="referral"></div>
@@ -172,7 +172,7 @@
             allowSubmit: false,
             captureLength: 2
         }
-        $("#search").typeWatch(options);
+        $("#searchRef").typeWatch(options);
     }
 
     function getCookie(cname) {
