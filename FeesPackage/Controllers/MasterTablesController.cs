@@ -230,6 +230,26 @@ namespace FeesPackage.Controllers
         }
 
         [HttpGet]
+        public ActionResult ReferralSrc()
+        {
+            ReferralModel model = new ReferralModel
+            {
+                Referrals = db.tblReferrals.OrderByDescending(x => x.id).ToList(),
+
+                Attys = db.tblAttorneys
+                .ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Atty_Initials.ToString(),
+                    Name = c.Atty_Name.ToString()
+                })
+                .ToList()
+            };
+
+            return PartialView("~/Views/MasterTables/Referral.cshtml", model);
+        }
+
+        [HttpGet]
         public ActionResult Referral()
         {
             ReferralModel model = new ReferralModel

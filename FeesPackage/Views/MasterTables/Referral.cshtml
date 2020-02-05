@@ -25,7 +25,7 @@
                 <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
                 <button id="addrowbutton" style="float: right">+</button>
                 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
-                    <div id="jqxgrid"></div>
+                    <div id="referral"></div>
                 </div>
             </div>
         </div>
@@ -62,9 +62,9 @@
             updaterow: function (rowid, rowdata, commit) {
                 if (!inUpdate) {
                     $.post('/masterTables/referral', rowdata, function (data, status, jqXHR) {
-                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
+                        if ($("#referral").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
                             inUpdate = true;
-                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
+                            $("#referral").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
                             inUpdate = false;
                         }
                         commit(true);
@@ -98,11 +98,11 @@
         // create new row.
         $("#addrowbutton").on('click', function () {
             // add empty row in first position
-            $("#jqxgrid").jqxGrid('addrow', null, {}, 'first');
+            $("#referral").jqxGrid('addrow', null, {}, 'first');
             // begin editting newly added row, first column
-            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Referral_Name');
+            $("#referral").jqxGrid('begincelledit', 0, 'Referral_Name');
         });
-        $("#jqxgrid").jqxGrid(
+        $("#referral").jqxGrid(
         {
             theme: 'energyblue',
             width: '100%',
@@ -142,9 +142,9 @@
                             }
                         });
                         editor.on('close', function (event) {
-                            var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                            var sel = $('#referral').jqxGrid('getselectedrowindex');
                             // this will lose focus on current dropdownlist, firing onChange event on this row
-                            setTimeout(function () { $("#jqxgrid").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                            setTimeout(function () { $("#referral").jqxGrid('begincelledit', sel, 'id'); }, 10);
                         });
                     }
                 }
@@ -163,9 +163,9 @@
                 var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
                 filtergroup.addfilter(filter_or_operator, filter);
 
-                $("#jqxgrid").jqxGrid('clearfilters');
-                $("#jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
-                $("#jqxgrid").jqxGrid('applyfilters');
+                $("#referral").jqxGrid('clearfilters');
+                $("#referral").jqxGrid('addfilter', datafield, filtergroup);
+                $("#referral").jqxGrid('applyfilters');
             },
             wait: 750,
             highlight: true,
@@ -191,10 +191,10 @@
     }
 
     function setup() {
-        $("#jqxgrid").jqxGrid('autoresizecolumns');
+        $("#referral").jqxGrid('autoresizecolumns');
 
         $(window).bind('resize', function () {
-            $("#jqxgrid").jqxGrid(
+            $("#referral").jqxGrid(
             {
                 // set height of grid to available space
                 height: $(window).height() - ($('.navbar').height()

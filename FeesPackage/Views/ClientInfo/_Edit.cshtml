@@ -112,7 +112,7 @@
 </div>
 }
 
-<div id="referralSrc" title="Referral Source" _style="display:none">
+<div id="referralSrc" style="display:none">
 </div>
 
 <style>
@@ -171,14 +171,28 @@
 <script>
     // open ReferralSrc dialog
     $('#referralSrcBtn').click(function() {
-        $('#referralSrc').html('this is referral source dialog');
-        $("#referralSrc").dialog("open");
+        $.get('/MasterTables/ReferralSrc', {}, function (data, status, jqXHR) {
+            // load dialog content
+            $('#referralSrc').html(data);
+
+            // intialize referral grid by calling it's ready() function
+            ready();
+
+            // position dialog at center top
+            $('#referralSrc').dialog('widget').position({my:"center top", at:"center top", of:window});
+
+            // open dialog
+            $("#referralSrc").dialog("open");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
     });
 
     // setup edit dialog
     $("#referralSrc").dialog({
         autoOpen: false,
-        width: 700,
+        width: 920,
+        position: 'center',
         resizable: false,
         modal: true,
         title: 'Referral Source',
