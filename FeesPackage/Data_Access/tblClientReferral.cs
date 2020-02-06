@@ -14,9 +14,9 @@ namespace FeesPackage.Data_Access
     
     public partial class tblClientReferral
     {
+        public int id { get; set; }
         public int Reference_Number { get; set; }
         public string Client_Referral_Atty { get; set; }
-        public Nullable<double> Client_Referral__ { get; set; }
-        public byte[] SSMA_TimeStamp { get; set; }
+        public Nullable<double> Client_Referral { get; set; }
     }
 }

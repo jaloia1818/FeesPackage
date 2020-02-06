@@ -52,6 +52,45 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
+        public ActionResult SaveClientReferral(tblClientReferral data, int ref_no)
+        {
+            var model = data;
+            try
+            {
+                if (model.id == 0)
+                {   // insert
+                    // transfer form fields
+                    model.Reference_Number = ref_no;
+
+                    // Insert into table
+                    db.tblClientReferrals.Add(model);
+                    db.SaveChanges();
+                }
+                else
+                {   // update
+                    // get original record for unedited fields
+                    tblClientReferral record = db.tblClientReferrals.Where(x => x.id == model.id).Single();
+
+                    // transfer form fields
+                    record.Reference_Number = ref_no;
+                    record.Client_Referral_Atty = model.Client_Referral_Atty;
+                    record.Client_Referral = model.Client_Referral;
+
+                    // Update record
+                    db.Entry(record).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+
+            // refresh screen
+            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+        }
+
+        [HttpPost]
         public ActionResult SaveClaim(tblClaim data, int ref_no)
         {
             var model = data;
@@ -145,6 +184,8 @@ namespace FeesPackage.Controllers
 
                 Claims = db.qryClaims.Where(x => x.Reference_Number == id).ToList(),
                 
+                ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
+
                 Payments = 
                     (from clt in db.tblClients
                      join cla in db.tblClaims on clt.id equals cla.Reference_Number
@@ -166,6 +207,14 @@ namespace FeesPackage.Controllers
                     Id = c.Atty_Initials,
                     Name = c.Atty_Initials + " - " + c.Atty_Name
                 }))
+                .ToList(),
+
+                ReferralwithClients = db.ReferralwithClients.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Referral_Name,
+                    Name = c.Referral_Name
+                })
                 .ToList(),
 
                 AttyCombos = db.tblAttorneyCombos.ToArray()

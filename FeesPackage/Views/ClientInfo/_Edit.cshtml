@@ -72,6 +72,17 @@
 
     <br />
     <div class="form-group">
+        Referrals: (@Model.ClientReferrals.Count())
+        <button id="addclientreferralrowbutton" type="button" style="float: right">+</button>
+        <div class="col-md-10">
+            <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; width: 100%; height: 100%;">
+                <div id="clientReferrals"></div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group">
         Claims: (@Model.Claims.Count())
         <button id="addclaimrowbutton" type="button" style="float: right">+</button>
         <div class="col-md-10">
@@ -380,7 +391,7 @@
         groupable: false,
         editable: true,
         sortable: false,
-        ready: function () { _setup(); },
+        ready: function () { $("#claims").jqxGrid('autoresizecolumns'); },
         columnsresize: true,
         columns: [
             { text: 'Reference Number', datafield: 'Reference_Number', hidden: true },
@@ -484,10 +495,6 @@
             }
         ]
     });
-
-    function _setup() {
-        $("#claims").jqxGrid('autoresizecolumns');
-    }
 </script>
 
 <script>
@@ -532,7 +539,7 @@
         groupable: false,
         editable: false,
         sortable: false,
-        ready: function () { _setup(); },
+        ready: function () { $("#payments").jqxGrid('autoresizecolumns'); },
         columnsresize: true,
         columns: [
             { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist' },
@@ -554,8 +561,113 @@
             }
         ]
     });
+</script>
 
-    function _setup() {
-        $("#payments").jqxGrid('autoresizecolumns');
-    }
+<script>
+    // create new row.
+    $("#addclientreferralrowbutton").on('click', function () {
+        // add empty row in first position
+        $("#clientReferrals").jqxGrid('addrow', null, {}, 'first');
+        // begin editting newly added row, first column
+        $("#clientReferrals").jqxGrid('begincelledit', 0, 'Client_Referral_Atty');
+
+        return false;
+    });
+
+    // prepare the Attorney list dropdown data
+    var localliste = @Html.Raw(JsonConvert.SerializeObject(Model.ReferralwithClients));
+
+    var locallisteSource = {
+        datatype: "array",
+        datafields: [
+                { name: 'Name', type: 'string' },
+                { name: 'Id', type: 'string' }
+        ],
+        localdata: localliste
+    };
+    var locallisteAdapter = new $.jqx.dataAdapter(locallisteSource);
+
+    // prepare the data
+    var data = @Html.Raw(JsonConvert.SerializeObject(Model.ClientReferrals));
+
+    var source =
+    {
+        dataType: "json",
+        updaterow: function (rowid, rowdata, commit) {
+            if (!inUpdate) {
+                $.post('/ClientInfo/SaveClientReferral', { data: rowdata, ref_no: id }, function (data, status, jqXHR) {
+                    if ($("#clientReferrals").jqxGrid('getcellvaluebyid', rowid, 'id') != jqXHR.statusText) {
+                        inUpdate = true;
+                        $("#clientReferrals").jqxGrid('setcellvaluebyid', rowid, 'id', jqXHR.statusText);
+                        inUpdate = false;
+                    }
+                    commit(true);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
+                });
+            }
+        },
+        dataFields: [
+            { name: 'id', type: 'int', align: 'center' },
+            { name: 'Reference_Number', type: 'int', align: 'center' },
+            { name: 'Client_Referral_Atty', type: 'string' },
+            { name: 'Client_Referral', type: 'float' }
+        ],
+        id: 'client_referral',
+        localdata: data
+    };
+
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+        downloadComplete: function (data, status, xhr) { },
+        loadComplete: function (data) { },
+        beforeLoadComplete: function (records) { },
+        loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
+    });
+
+    $("#clientReferrals").jqxGrid(
+    {
+        theme: 'energyblue',
+        width: '100%',
+        height: '100px',
+        autowidth: false,
+        source: dataAdapter,
+        showfilterrow: false,
+        filterable: false,
+        pageable: false,
+        pagesize: 20,
+        groupable: false,
+        editable: true,
+        sortable: false,
+        ready: function () { $("#clientReferrals").jqxGrid('autoresizecolumns'); },
+        columnsresize: true,
+        columns: [
+            { text: 'Id', datafield: 'id', hidden: true },
+            { text: 'Reference Number', datafield: 'Reference_Number', hidden: true },
+            { text: 'Client Referral Attorney', datafield: 'Client_Referral_Atty', filtertype: 'checkedlist', align: 'center',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor)
+                    {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 200,
+                            source: locallisteAdapter,
+                            displayMember: 'Id',
+                            valueMember: 'Name',
+                            filterable: false,
+                            placeHolder: 'Choose ...',
+                            renderer: function (index, label, value)
+                            {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return value;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            //var sel = $('#clientReferrals').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            //setTimeout(function () { $("#clientReferrals").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                        });
+                    }
+            },
+            { text: 'Client Referral %', datafield: 'Client_Referral', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'p', align: 'center' }
+        ]
+    });
 </script>
