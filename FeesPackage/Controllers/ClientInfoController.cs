@@ -11,12 +11,18 @@ namespace FeesPackage.Controllers
     public class ClientInfoController : BaseController
     {
         // GET: ClientInfo/Print
+#if DEBUG
+        // render to a new tab for debugging
         public ActionResult Print()
         {
             //RenderToPDF(ControllerContext, "~/Views/ClientInfo/Print.cshtml");
-            //return PartialView();
-
-            /*var htmlContent = RenderViewToString(ControllerContext, "~/Views/ClientInfo/Print.cshtml", null, true);
+            return PartialView();
+        }
+#else
+        // render as PDF for download/print
+        public void Print()
+        {
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/ClientInfo/Print.cshtml", null, true);
             var pdfBytes = (new NReco.PdfGenerator.HtmlToPdfConverter()).GeneratePdf(htmlContent);
 
             Response.Buffer = true;
@@ -24,10 +30,9 @@ namespace FeesPackage.Controllers
             Response.ContentType = string.Empty;
             Response.AddHeader("content-disposition", "attachment; filename=ClientPrintout.pdf");
             Response.BinaryWrite(pdfBytes);
-            Response.Flush();*/
-
-            return PartialView();
+            Response.Flush();
         }
+#endif
 
         // GET: ClientInfo/Create
         public ActionResult Create()
