@@ -15,22 +15,7 @@ namespace FeesPackage.Controllers
         [Obsolete]
         public void Print()
         {
-            Report report = new Report(new PdfFormatter());
-            FontDef fd = new FontDef(report, "Helvetica");
-            FontProp fp = new FontPropMM(fd, 3);
-            Page page = new Page(report);
-
-            page.AddLT_MM(0, 0, new RepString(fp, "________________________________"));
-            page.AddLT_MM(0, 4, new RepString(fp, "Hello World!"));
-            page.AddLT_MM(0, 8, new RepString(fp, "________________________________"));
-            page.AddLT_MM(0, 12, new RepString(fp, "Hello World!"));
-
-#if DEBUG
-            RT.ViewPDF(report, "HelloWorld.pdf");
-#else
-            RT.ResponsePDF(report, System.Web.HttpContext.Current.Response);
-            //RT.ResponsePDF(report, page);
-#endif
+            RenderToPDF(ControllerContext, "~/Views/ClientInfo/Print.cshtml");
         }
 
         // GET: ClientInfo/Create
