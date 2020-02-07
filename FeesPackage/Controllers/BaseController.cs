@@ -23,8 +23,8 @@ namespace FeesPackage.Controllers
         static protected void RenderToPDF(ControllerContext ctx, string pathToView)
         {
             Report report = new Report(new PdfFormatter());
-            FontDef fd = new FontDef(report, "Helvetica");
-            FontProp fp = new FontPropMM(fd, 12 / 4);
+            FontDef fd = new FontDef(report, "Courier");
+            FontProp fp = new FontPropMM(fd, 11 / 4);
             Page page = new Page(report);
 
             string html = RenderViewToString(ctx, pathToView, null, true);
@@ -34,7 +34,7 @@ namespace FeesPackage.Controllers
             foreach (var line in lines)
             {
                 page.AddLT_MM(0, lineNo, new RepString(fp, line));
-                lineNo += 4;
+                lineNo += (int) (4 * 1.5);
             }
 
 #if DEBUG

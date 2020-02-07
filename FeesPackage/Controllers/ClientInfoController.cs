@@ -5,17 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using Root.Reports;
 
 namespace FeesPackage.Controllers
 {
     public class ClientInfoController : BaseController
     {
         // GET: ClientInfo/Print
-        [Obsolete]
-        public void Print()
+        public ActionResult Print()
         {
-            RenderToPDF(ControllerContext, "~/Views/ClientInfo/Print.cshtml");
+            //RenderToPDF(ControllerContext, "~/Views/ClientInfo/Print.cshtml");
+            //return PartialView();
+
+            /*var htmlContent = RenderViewToString(ControllerContext, "~/Views/ClientInfo/Print.cshtml", null, true);
+            var pdfBytes = (new NReco.PdfGenerator.HtmlToPdfConverter()).GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", "attachment; filename=ClientPrintout.pdf");
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();*/
+
+            return PartialView();
         }
 
         // GET: ClientInfo/Create
