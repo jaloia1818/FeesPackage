@@ -15,6 +15,7 @@ namespace FeesPackage.Models
         public List<ListClass> Frequencys { get; set; }
         public List<ListClass> StatusCodes { get; set; }
         public List<tblPayment> Payments { get; set; }
+        public tblClaim Claim { get; set; }
         public List<qryClaim> Claims { get; set; }
         public List<tblClientReferral> ClientReferrals { get; set; }
     }

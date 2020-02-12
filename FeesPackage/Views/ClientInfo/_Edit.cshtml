@@ -193,8 +193,8 @@
 </style>
 
 <script>
-    $('#printBtn').click(function() {
-        window.open('/ClientInfo/Print');
+    $('#printBtn').click(function () {
+        window.open('/ClientInfo/Print?id= + @Model.Client.id');
     });
 </script>
 

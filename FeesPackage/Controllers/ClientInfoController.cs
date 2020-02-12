@@ -10,20 +10,52 @@ namespace FeesPackage.Controllers
 {
     public class ClientInfoController : BaseController
     {
+        private ClientInfoModel GetModel(int id)
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                Client = db.tblClients.SingleOrDefault(x => x.id == id),
+
+                Claim = db.tblClaims.SingleOrDefault(x => x.Reference_Number == id),
+
+                ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
+
+                Payments =
+                    (from clt in db.tblClients
+                     join cla in db.tblClaims on clt.id equals cla.Reference_Number
+                     join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
+                     where clt.id == id
+                     select pay
+                    ).ToList(),
+            };
+
+            return model;
+        }
+
         // GET: ClientInfo/Print
 #if DEBUG
         // render to a new tab for debugging
-        public ActionResult Print()
+        public ActionResult Print(int id)
         {
             //RenderToPDF(ControllerContext, "~/Views/ClientInfo/Print.cshtml");
-            return PartialView();
+
+            return PartialView(GetModel(id));
         }
 #else
         // render as PDF for download/print
-        public void Print()
+        public void Print(int id)
         {
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/ClientInfo/Print.cshtml", null, true);
-            var pdfBytes = (new NReco.PdfGenerator.HtmlToPdfConverter()).GeneratePdf(htmlContent);
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 1, Right = 1 },
+                Size = NReco.PdfGenerator.PageSize.Letter
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/ClientInfo/Print.cshtml", GetModel(id), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;
             Response.Clear();

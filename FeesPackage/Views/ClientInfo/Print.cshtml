@@ -1,4 +1,7 @@
-﻿<html>
+﻿@using FeesPackage.Models;
+@model ClientInfoModel
+
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
@@ -34,12 +37,12 @@
             min-width: 120px;
         }
 
-        td.right, 
+        td.right,
         th.right {
             text-align: right;
         }
 
-        td.left, 
+        td.left,
         th.left {
             text-align: left;
         }
@@ -47,16 +50,17 @@
 
     <div style="max-width: 1000px;">
         ══════════════════════════════════════════════════════════════════════════════════════════
-        <div class="title">Client Printout</div><div class="date">07-Feb-20</div>
+        <div class="title">Client Printout</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         ══════════════════════════════════════════════════════════════════════════════════════════
         <p>
             <div style="float:left">
                 <span class="label">Client Name: </span>
-                <span>HINCHLIFFE, CAROLE</span>
+                <span>@Model.Client.Client_Name</span>
             </div>
             <div style="float:right">
                 <span class="label">Reference Number:</span>
-                <span>101</span>
+                <span>@Model.Client.id</span>
             </div>
         </p>
         <br />
@@ -64,33 +68,33 @@
         <table>
             <tr>
                 <td class="label">Handling Attorney:</td>
-                <td class="value">GM</td>
+                <td class="value">@Model.Client.Handling_Atty</td>
                 <td class="label">Handling Attorney %:</td>
-                <td class="value">67.00%</td>
+                <td class="value">@(Model.Client.Handling * 100)%</td>
             </tr>
             <tr>
                 <td class="label">Credit Attorney:</td>
-                <td class="value">GM</td>
+                <td class="value">@Model.Client.Credit_Atty</td>
                 <td class="label">Credit Attorney %:</td>
-                <td class="value">33.00%</td>
+                <td class="value">@(Model.Client.Credit * 100)%</td>
             </tr>
             <tr>
                 <td class="label">County:</td>
-                <td class="value">Cty</td>
+                <td class="value">@Model.Client.County</td>
                 <td class="label">Escrow %:</td>
-                <td class="value">20.00%</td>
+                <td class="value">@(Model.Client.Escrow * 100)%</td>
             </tr>
         </table>
         <table>
             <tr>
                 <td class="label">Employer Name:</td>
-                <td class="value">BENNETT CLOTHING STORE</td>
+                <td class="value">@Model.Client.Employer_Name</td>
             </tr>
         </table>
         <table>
             <tr>
                 <td class="label">Accident Description or Comments:</td>
-                <td class="value">GM is HA as of December 2000. // C&R 10/30/17 // C&R 10/30/17</td>
+                <td class="value">@Model.Client.Accident_Desc</td>
             </tr>
         </table>
         <br />
@@ -99,10 +103,12 @@
                 <th class="left">Referral Attorney</th>
                 <th class="right">Referral %</th>
             </tr>
-            <tr>
-                <td class="left">CAPEK, JOHN C.</td>
-                <td class="right">20.00%</td>
-            </tr>
+            @foreach (var referral in Model.ClientReferrals) {
+                <tr>
+                    <td class="left">@referral.Client_Referral_Atty</td>
+                    <td class="right">@(referral.Client_Referral * 100)%</td>
+                </tr>
+            }
         </table>
         <br />
         <br />
@@ -115,165 +121,32 @@
                 <th>Amount</th>
                 <th>Insurance Contact</th>
             </tr>
+            @foreach (var payment in Model.Payments)
+            {
+                <tr>
+                    <td>@payment.Claim_Number</td>
+                    <td>@string.Format("{0:MM/dd/yyyy}", payment.Input_Date)</td>
+                    <td class="right">@string.Format("{0:MM/dd/yyyy}", payment.Period_From) => </td>
+                    <td class="left">@string.Format("{0:MM/dd/yyyy}", payment.Period_To)</td>
+                    <td>@string.Format("{0:C}", payment.Amount)</td>
+                    <td class="left">@Model.Claim.Insurance_Contact</td>
+                </tr>
+            }
             <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
+                <td></td>
+                <td></td>
+                <td class="right"></td>
+                <td class="left"></td>
+                <td>════════</td>
+                <td class="left"></td>
             </tr>
             <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/15/1997</td>
-                <td class="right">9/26/1997 => </td>
-                <td class="left">10/9/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
-            </tr>
-            <tr>
-                <td>01239437</td>
-                <td>10/27/1997</td>
-                <td class="right">10/10/1997 => </td>
-                <td class="left">10/23/1997</td>
-                <td>$95.00</td>
-                <td class="left">717-963-4635</td>
+                <td></td>
+                <td></td>
+                <td class="right"></td>
+                <td class="left"></td>
+                <td>@string.Format("{0:C}", Model.Payments.Sum(x => x.Amount))</td>
+                <td class="left"></td>
             </tr>
         </table>
     </div>
