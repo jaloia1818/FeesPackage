@@ -21,6 +21,7 @@ namespace FeesPackage.Controllers
             while (myDataReader.Read())
             {
                 System.Diagnostics.Debug.WriteLine("cnt: {0}", myDataReader["cnt"]);
+                ViewBag.CNT = myDataReader["cnt"];
             }
 
             myDataReader.Close();
