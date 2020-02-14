@@ -569,9 +569,9 @@
                     cellsRenderer: function (row, column, value, rowData) {
           	            var checkbox;
                         if (value === true)
-            	            checkbox = '<input type="checkbox" onclick="return false;">'
-                        else
             	            checkbox = '<input type="checkbox" checked onclick="return false;">'
+                        else
+            	            checkbox = '<input type="checkbox" onclick="return false;">'
                         return checkbox;
                     }
             }

@@ -59,6 +59,9 @@
     <Reference Include="Reports, Version=0.9.7114.24548, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Report.NET.0.9.8\lib\net472\Reports.dll</HintPath>
     </Reference>
+    <Reference Include="Sap.Data.SQLAnywhere.EF6, Version=17.0.7.33994, Culture=neutral, PublicKeyToken=f222fc4333e0d400, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sap.Data.SQLAnywhere.EF6.17.0.7.3399\lib\net45\Sap.Data.SQLAnywhere.EF6.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
