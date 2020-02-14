@@ -72,7 +72,7 @@
             dataType: "json",
             updaterow: function (rowid, rowdata, commit) {
                 if (!inUpdate) {
-                    $.post('/SailyPayments', rowdata, function (data, status, jqXHR) {
+                    $.post('/DailyPayments', rowdata, function (data, status, jqXHR) {
                         if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
                             inUpdate = true;
                             $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
@@ -136,7 +136,7 @@
             pageable: true,
             pagesize: 20,
             groupable: false,
-            editable: false,
+            editable: true,
             sortable: true,
             ready: function () { setup(); },
             columnsresize: true,

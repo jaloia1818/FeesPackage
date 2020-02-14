@@ -73,6 +73,12 @@ namespace FeesPackage.Controllers
             {
                 Client = new tblClient(),
 
+                ClientReferrals = new List<tblClientReferral>(),
+
+                Claims = new List<qryClaim>(),
+
+                Payments = new List<tblPayment>(),
+
                 Attys = new List<ListClass>
                 {
                     new ListClass() {
