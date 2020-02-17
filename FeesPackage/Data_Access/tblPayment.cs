@@ -14,6 +14,7 @@ namespace FeesPackage.Data_Access
     
     public partial class tblPayment
     {
+        public int id { get; set; }
         public string Claim_Number { get; set; }
         public System.DateTime Payment_Date { get; set; }
         public Nullable<System.DateTime> Period_From { get; set; }

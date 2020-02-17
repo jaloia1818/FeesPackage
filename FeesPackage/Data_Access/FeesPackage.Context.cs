@@ -38,11 +38,11 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblReferral> tblReferrals { get; set; }
         public virtual DbSet<tblClient> tblClients { get; set; }
-        public virtual DbSet<tblPayment> tblPayments { get; set; }
         public virtual DbSet<tblClaim> tblClaims { get; set; }
         public virtual DbSet<qryClaim> qryClaims { get; set; }
         public virtual DbSet<tblPaymentFrequency> tblPaymentFrequencies { get; set; }
         public virtual DbSet<tblStatusCode> tblStatusCodes { get; set; }
         public virtual DbSet<tblClientReferral> tblClientReferrals { get; set; }
+        public virtual DbSet<tblPayment> tblPayments { get; set; }
     }
 }

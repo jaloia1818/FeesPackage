@@ -85,6 +85,7 @@
                 }
             },
             dataFields: [
+                { name: 'id', type: 'int' },
                 { name: 'Claim_Number', type: 'string', align: 'center' },
                 { name: 'Payment_Date', type: 'date' },
                 { name: 'Period_From', type: 'date' },
@@ -115,13 +116,10 @@
 
         // create new row.
         $("#addrowbutton").on('click', function () {
-            $.get('/ClientInfo/Create', function (data, status, jqXHR) {
-                $('#ClientDlg').html(data);
-                $('.ui-dialog-title').html('@ViewBag.Title [0]');
-                $("#ClientDlg").dialog("open");
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus + ': ' + errorThrown);
-            });
+            // add empty row in first position
+            $("#jqxgrid").jqxGrid('addrow', null, {}, 'first');
+            // begin editting newly added row, first column
+            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Claim_Number');
         });
 
         $("#jqxgrid").jqxGrid(
@@ -141,47 +139,16 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
+                { text: 'id', datafield: 'id', hidden: true },
                 { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist' },
-                { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
+                { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
                 { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
                 { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
                 { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c', align: 'center' },
                 { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center' },
                 { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', align: 'center' },
-                { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center',
-                        cellsRenderer: function (row, column, value, rowData) {
-          	                var checkbox;
-                            if (value === true)
-            	                checkbox = '<input type="checkbox" checked>'
-                            else
-            	                checkbox = '<input type="checkbox">'
-                            return checkbox;
-                        }
-                }
+                { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center', columntype: 'checkbox' }
             ]
-        });
-
-        $("#jqxgrid").on("celldoubleclick", function (event) {
-            var args = event.args;
-            var rowBoundIndex = args.rowindex;
-            //var rowVisibleIndex = args.visibleindex;
-            //var rightClick = args.rightclick;
-            //var ev = args.originalEvent;
-            //var columnIndex = args.columnindex;
-            //var dataField = args.datafield;
-            //var value = args.value;
-
-            // get 'id' value of row dblclk'd on
-            id = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value;
-
-            // render view/show dialog
-            $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
-                $('#ClientDlg').html(data);
-                $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
-                $("#ClientDlg").dialog("open");
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus + ': ' + errorThrown);
-            });
         });
 
         var options = {

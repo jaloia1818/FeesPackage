@@ -1,6 +1,7 @@
 ﻿using FeesPackage.Data_Access;
 using Root.Reports;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Web.Mvc;
@@ -10,6 +11,11 @@ namespace FeesPackage.Controllers
     public class BaseController : Controller
     {
         protected readonly FeesPackageEntities db = new FeesPackageEntities();
+
+        protected DateTime ToDate(string str)
+        {
+            return DateTime.ParseExact(str.Substring(0, str.IndexOf(" (")), "ddd MMM dd yyyy HH:mm:ss 'GMT'K", CultureInfo.InvariantCulture).Date;
+        }
 
         protected HttpStatusCodeResult HandleException(Exception ex)
         {
