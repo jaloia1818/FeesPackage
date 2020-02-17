@@ -131,7 +131,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Payment_Date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Payment_Date" Type="datetime2" Precision="0" />
           <Property Name="Period_From" Type="datetime2" Precision="0" />
           <Property Name="Period_To" Type="datetime2" Precision="0" />
           <Property Name="Amount" Type="money" />
@@ -504,7 +504,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Claim_Number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Payment_Date" Type="DateTime" Precision="0" />
           <Property Name="Period_From" Type="DateTime" Precision="0" />
           <Property Name="Period_To" Type="DateTime" Precision="0" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />

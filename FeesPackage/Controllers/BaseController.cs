@@ -12,9 +12,12 @@ namespace FeesPackage.Controllers
     {
         protected readonly FeesPackageEntities db = new FeesPackageEntities();
 
-        protected DateTime ToDate(string str)
+        protected DateTime? ToDate(string str)
         {
-            return DateTime.ParseExact(str.Substring(0, str.IndexOf(" (")), "ddd MMM dd yyyy HH:mm:ss 'GMT'K", CultureInfo.InvariantCulture).Date;
+            if (string.IsNullOrEmpty(str))
+                return null;
+            else
+                return DateTime.ParseExact(str.Substring(0, str.IndexOf(" (")), "ddd MMM dd yyyy HH:mm:ss 'GMT'K", CultureInfo.InvariantCulture).Date;
         }
 
         protected HttpStatusCodeResult HandleException(Exception ex)
