@@ -36,7 +36,9 @@
 </div>
 <!--/.span9-->
 
-<div id="ClientDlg" style="display:none">
+<div id="ToFromDlg" style="display:none">
+    <p>Begin date: <input type="text" id="fromDate" /></p>
+    <p>End date: <input type="text" id="toDate" /></p>
 </div>
 
 <style>
@@ -52,7 +54,24 @@
 
     function ready() {
         $('#DailyDetailPrint').click(function () {
-            window.open('/DailyPayments/DailyDetailPrint?fromDate=1/1/20&toDate=1/31/20');
+            $('#ToFromDlg').dialog({
+                buttons: [{
+                    text: "Run",
+                    "id": "run",
+                    click: function () {
+                        window.open('/DailyPayments/DailyDetailPrint?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                        $('#ToFromDlg').dialog('close')
+                    }
+                }],
+                open: function() {
+                    $('#fromDate').datepicker({title:'From Date'}).blur();
+                    $('#toDate').datepicker({title:'To Date'}).blur();
+                },
+                close: function() {
+                    $('#fromDate').datepicker('destroy');
+                    $('#toDate').datepicker('destroy');
+                },
+            });
         });
 
         // prepare the Attorney list dropdown data

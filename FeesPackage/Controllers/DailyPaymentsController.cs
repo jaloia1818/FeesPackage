@@ -39,12 +39,10 @@ namespace FeesPackage.Controllers
         }
 
         // GET: DailyDetailPrint
-#if !DEBUG
+#if DEBUG
         // render to a new tab for debugging
-        public ActionResult DailyDetailPrint()
+        public ActionResult DailyDetailPrint(DateTime fromDate, DateTime toDate)
         {
-            var fromDate = DateTime.Parse("1/1/20").Date;
-            var toDate = DateTime.Parse("1/31/20").Date;
             ViewBag.fromDate = fromDate;
             ViewBag.toDate = toDate;
 
@@ -54,8 +52,6 @@ namespace FeesPackage.Controllers
         // render as PDF for download/print
         public void DailyDetailPrint(DateTime fromDate, DateTime toDate)
         {
-            //var fromDate = DateTime.Parse("1/1/20").Date;
-            //var toDate = DateTime.Parse("1/31/20").Date;
             ViewBag.fromDate = fromDate;
             ViewBag.toDate = toDate;
 
