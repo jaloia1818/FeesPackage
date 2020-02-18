@@ -24,6 +24,7 @@
                 <span>Search: </span>
                 <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
                 <button id="addrowbutton" style="float: right">+</button>
+                <button id="DailyDetailPrint" style="float: right">Daily Detail</button>
                 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
                     <div id="jqxgrid"></div>
                 </div>
@@ -50,6 +51,10 @@
     var id;
 
     function ready() {
+        $('#DailyDetailPrint').click(function () {
+            window.open('/DailyPayments/DailyDetailPrint?fromDate=1/1/20&toDate=1/31/20');
+        });
+
         // prepare the Attorney list dropdown data
         var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.Claims));
 

@@ -221,6 +221,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ClientInfoModel.cs" />
+    <Compile Include="Models\DailyDetail.cs" />
     <Compile Include="Models\ListClass.cs" />
     <Compile Include="Models\ReferralModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -627,6 +628,7 @@
     <Content Include="Views\MasterTables\InsuranceInfo.cshtml" />
     <Content Include="Views\ClientInfo\_Edit.cshtml" />
     <Content Include="Views\ClientInfo\Print.cshtml" />
+    <Content Include="Views\DailyPayments\DailyDetailPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

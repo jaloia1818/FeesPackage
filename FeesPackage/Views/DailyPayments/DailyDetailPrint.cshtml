@@ -1,0 +1,104 @@
+﻿@using FeesPackage.Models;
+@model ClientInfoModel
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <style>
+        .title {
+            font-size: larger;
+            font-weight: bold;
+            float: left;
+        }
+        .date {
+            float: right;
+            font-style: italic;
+        }
+        .label {
+            min-width: 246px;
+            text-align: right;
+            font-weight: bold
+        }
+        .value {
+            min-width: 200px;
+        }
+        table.center {
+            margin: auto;
+            text-align: center;
+        }
+        td {
+            min-width: 100px;
+        }
+        td.right,
+        th.right {
+            text-align: right;
+        }
+        td.left,
+        th.left {
+            text-align: left;
+        }
+        th {
+            border-bottom: 1px solid #555;
+        }
+    </style>
+
+    <div style="max-width: 1294px;">
+        <h2>MARTIN LLC</h2>
+        <div class="title">Daily Detail Report @string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        <br />
+        <br />
+        <table class="center">
+            <tr>
+                <th>Claim Number</th>
+                <th>Client Name</th>
+                <th>Payment Date</th>
+                <th>Handling/Credit</th>
+                <th>Amount</th>
+                <th>Escrow</th>
+                <th>Atty.Amount</th>
+                <th>Status</th>
+                <th>Input Date</th>
+            </tr>
+            @foreach (var row in Model.DailyDetails)
+            {
+                <tr>
+                    <td class="left">@row.Claim_Number</td>
+                    <td class="left" style="min-width:400px">@row.Client_Name</td>
+                    <td>@string.Format("{0:MM/dd/yyyy}", row.Payment_Date)</td>
+                    <td>@row.Handling_Atty / @row.Credit_Atty</td>
+                    <td>@string.Format("{0:C}", row.Amount)</td>
+                    <td>@string.Format("{0:C}", (Double?)row.Amount * row.Escrow)</td>
+                    <td>@string.Format("{0:C}", (Double?)row.Amount - ((Double?)row.Amount * row.Escrow))</td>
+                    <td>@row.Status_Code</td>
+                    <td>@string.Format("{0:MM/dd/yyyy}", row.Input_Date)</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>════════</td>
+                <td>════════</td>
+                <td>════════</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@string.Format("{0:C}", Model.DailyDetails.Sum(x => x.Amount))</td>
+                <td>@string.Format("{0:C}", Model.DailyDetails.Sum(x => (Double?)x.Amount * x.Escrow))</td>
+                <td>@string.Format("{0:C}", Model.DailyDetails.Sum(x => (Double?)x.Amount - ((Double?)x.Amount * x.Escrow)))</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
