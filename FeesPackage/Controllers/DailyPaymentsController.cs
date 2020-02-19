@@ -122,7 +122,7 @@ namespace FeesPackage.Controllers
             Response.Buffer = true;
             Response.Clear();
             Response.ContentType = string.Empty;
-            Response.AddHeader("content-disposition", "attachment; filename=DailyDepositsPrint.pdf");
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} DailyDepositsPrint.pdf", fromDate.ToString("MM/dd/yy")));
             Response.BinaryWrite(pdfBytes);
             Response.Flush();
         }
@@ -161,7 +161,7 @@ namespace FeesPackage.Controllers
             Response.Buffer = true;
             Response.Clear();
             Response.ContentType = string.Empty;
-            Response.AddHeader("content-disposition", "attachment; filename=DailyDetailPrint.pdf");
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} DailyDetailPrint.pdf", fromDate.ToString("MM/dd/yy")));
             Response.BinaryWrite(pdfBytes);
             Response.Flush();
         }
