@@ -1,0 +1,90 @@
+﻿@using FeesPackage.Models;
+@model ClientInfoModel
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <style>
+        .title {
+            font-size: larger;
+            font-weight: bold;
+            float: left;
+        }
+        .date {
+            float: right;
+            font-style: italic;
+        }
+        .label {
+            min-width: 246px;
+            text-align: right;
+            font-weight: bold
+        }
+        .value {
+            min-width: 200px;
+        }
+        table.center {
+            margin: auto;
+            text-align: center;
+        }
+        td {
+            min-width: 150px;
+        }
+        td.right,
+        th.right {
+            text-align: right;
+        }
+        td.left,
+        th.left {
+            text-align: left;
+        }
+        th {
+            border-bottom: 4px double #555;
+            border-top: 4px double #555;
+        }
+    </style>
+
+    <div style="max-width: 1000px;">
+        ══════════════════════════════════════════════════════════════════════════════════════════
+        <h2>MARTIN LLC</h2>
+        <div class="title">Daily Deposit Summary @string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        <br />
+        <br />
+        <table class="center">
+            <tr>
+                <th>Deposit_Breakdown</th>
+                <th>Total</th>
+                <th>Escrow</th>
+                <th>Philadelphia</th>
+                <th>County</th>
+            </tr>
+            @foreach (var row in Model.DailyDeposits)
+            {
+                <tr>
+                    <td class="left">@row.Deposit_Breakdown</td>
+                    <td class="right">@string.Format("{0:C}", (Double)row.Total)</td>
+                    <td class="right">@string.Format("{0:C}", row.Escrow)</td>
+                    <td class="right">@string.Format("{0:C}", row.Philadelphia)</td>
+                    <td class="right">@string.Format("{0:C}", row.County)</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td>══════════════</td>
+                <td>══════════════</td>
+                <td>══════════════</td>
+                <td>══════════════</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="right">@string.Format("{0:C}", Model.DailyDeposits.Sum(x => x.Total))</td>
+                <td class="right">@string.Format("{0:C}", Model.DailyDeposits.Sum(x => x.Escrow))</td>
+                <td class="right">@string.Format("{0:C}", Model.DailyDeposits.Sum(x => x.Philadelphia))</td>
+                <td class="right">@string.Format("{0:C}", Model.DailyDeposits.Sum(x => x.County))</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

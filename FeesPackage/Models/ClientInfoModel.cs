@@ -19,5 +19,6 @@ namespace FeesPackage.Models
         public List<qryClaim> Claims { get; set; }
         public List<tblClientReferral> ClientReferrals { get; set; }
         public List<DailyDetail> DailyDetails { get; set; }
+        public List<DailyDeposits> DailyDeposits { get; set; }
     }
 }

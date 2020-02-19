@@ -2,9 +2,9 @@
 using FeesPackage.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
@@ -13,29 +13,51 @@ namespace FeesPackage.Controllers
     {
         private ClientInfoModel GetDepositModel(DateTime fromDate, DateTime toDate)
         {
+            var connection = db.Database.Connection as SqlConnection;
+            connection.Open();
+            
+            SqlCommand command = new SqlCommand(string.Format("SELECT atty.Combo_Description AS Deposit_Breakdown, ROUND(SUM(pay.Amount * 1), 2) AS Total, ROUND(SUM(pay.Amount * clt.Escrow), 2) AS Escrow, \n" +
+                                                              "ROUND(SUM((pay.Amount - pay.Amount * clt.Escrow) * cnty.County_Value), 2) AS Philadelphia, ROUND(SUM((pay.Amount - pay.Amount * clt.Escrow)\n" +
+                                                              "- (pay.Amount - pay.Amount * clt.Escrow) * cnty.County_Value), 2) AS County\n" +
+                                                              "FROM dbo.tblPayments AS pay INNER JOIN\n" +
+                                                              "dbo.tblClaim AS clm ON pay.Claim_Number = clm.Claim_Number INNER JOIN\n" +
+                                                              "dbo.tblClient AS clt ON clm.Reference_Number = clt.id INNER JOIN\n" +
+                                                              "dbo.tblCounty AS cnty ON clt.County = cnty.County INNER JOIN\n" +
+                                                              "dbo.tblAttyDesc AS atty ON clm.Attorney_Breakdown = atty.Combo_Indicator\n" +
+                                                              "WHERE(pay.Input_Date >= '{0}') AND(pay.Input_Date <= '{1}') AND(pay.Posted_Indicator = 0)\n" + 
+                                                              "GROUP BY atty.Combo_Description order by deposit_breakdown", fromDate, toDate), connection);
+            SqlDataReader reader = command.ExecuteReader();
+
             ClientInfoModel model = new ClientInfoModel
             {
-                DailyDetails =
-                (from clt in db.tblClients
-                 join cla in db.tblClaims on clt.id equals cla.Reference_Number
-                 join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
-                 join cnty in db.tblCounties on clt.County equals cnty.County
-                 join atty in db.tblAttyDescs on cla.Attorney_Breakdown equals (int)atty.Combo_Indicator
-                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Posted_Indicator == false
-                 select new DailyDetail()
-                 {
-                     Claim_Number = cla.Claim_Number,
-                     Client_Name = clt.Client_Name,
-                     Payment_Date = pay.Payment_Date,
-                     Handling_Atty = clt.Handling_Atty,
-                     Credit_Atty = clt.Credit_Atty,
-                     Amount = pay.Amount,
-                     Escrow = clt.Escrow,
-                     Status_Code = cla.Status_Code,
-                     Input_Date = pay.Input_Date
-                 }
-                ).ToList()
+                DailyDeposits = new List<DailyDeposits>()
             };
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    System.Diagnostics.Debug.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}",
+                        reader.GetString(0),
+                        reader.GetSqlMoney(1),
+                        reader.GetDouble(2),
+                        reader.GetDouble(3),
+                        reader.GetDouble(4));
+
+                    DailyDeposits dep = new DailyDeposits()
+                    {
+                        Deposit_Breakdown = reader.GetString(0),
+                        Total = (Decimal)reader.GetSqlMoney(1),
+                        Escrow = reader.GetDouble(2),
+                        Philadelphia = reader.GetDouble(3),
+                        County = reader.GetDouble(4)
+                    };
+
+                    model.DailyDeposits.Add(dep);
+                }
+            }
+
+            reader.Close();
 
             return model;
         }
@@ -66,6 +88,45 @@ namespace FeesPackage.Controllers
 
             return model;
         }
+
+        // GET: DailyDetailPrint
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult DailyDepositsPrint(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            return PartialView(GetDepositModel(fromDate, toDate));
+        }
+#else
+        // render as PDF for download/print
+        public void DailyDepositsPrint(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Portrait
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/DailyPayments/DailyDepositsPrint.cshtml", GetDepositModel(fromDate, toDate), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", "attachment; filename=DailyDepositsPrint.pdf");
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
 
         // GET: DailyDetailPrint
 #if DEBUG
