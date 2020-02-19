@@ -11,7 +11,7 @@ namespace FeesPackage.Controllers
 {
     public class DailyPaymentsController : BaseController
     {
-        private ClientInfoModel GetModel(DateTime fromDate, DateTime toDate)
+        private ClientInfoModel GetDepositModel(DateTime fromDate, DateTime toDate)
         {
             ClientInfoModel model = new ClientInfoModel
             {
@@ -19,7 +19,36 @@ namespace FeesPackage.Controllers
                 (from clt in db.tblClients
                  join cla in db.tblClaims on clt.id equals cla.Reference_Number
                  join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
-                 where pay.Payment_Date >= fromDate && pay.Payment_Date <= toDate
+                 join cnty in db.tblCounties on clt.County equals cnty.County
+                 join atty in db.tblAttyDescs on cla.Attorney_Breakdown equals (int)atty.Combo_Indicator
+                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Posted_Indicator == false
+                 select new DailyDetail()
+                 {
+                     Claim_Number = cla.Claim_Number,
+                     Client_Name = clt.Client_Name,
+                     Payment_Date = pay.Payment_Date,
+                     Handling_Atty = clt.Handling_Atty,
+                     Credit_Atty = clt.Credit_Atty,
+                     Amount = pay.Amount,
+                     Escrow = clt.Escrow,
+                     Status_Code = cla.Status_Code,
+                     Input_Date = pay.Input_Date
+                 }
+                ).ToList()
+            };
+
+            return model;
+        }
+
+        private ClientInfoModel GetDetailModel(DateTime fromDate, DateTime toDate)
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                DailyDetails =
+                (from clt in db.tblClients
+                 join cla in db.tblClaims on clt.id equals cla.Reference_Number
+                 join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
+                 where pay.Payment_Date >= fromDate && pay.Payment_Date <= toDate && pay.Posted_Indicator == false
                  select new DailyDetail()
                  {
                      Claim_Number = cla.Claim_Number,
@@ -46,7 +75,7 @@ namespace FeesPackage.Controllers
             ViewBag.fromDate = fromDate;
             ViewBag.toDate = toDate;
 
-            return PartialView(GetModel(fromDate, toDate));
+            return PartialView(GetDetailModel(fromDate, toDate));
         }
 #else
         // render as PDF for download/print
@@ -65,7 +94,7 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Landscape
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/DailyPayments/DailyDetailPrint.cshtml", GetModel(fromDate, toDate), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/DailyPayments/DailyDetailPrint.cshtml", GetDetailModel(fromDate, toDate), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;

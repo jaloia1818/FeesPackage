@@ -145,9 +145,6 @@
     <Compile Include="Controllers\MasterTablesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SpecialTasksController.cs" />
-    <Compile Include="Data_Access\Banks_H__Martin__C__Pd_thru_date.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data_Access\FeesPackage.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

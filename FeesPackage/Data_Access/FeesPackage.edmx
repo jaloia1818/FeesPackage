@@ -158,19 +158,6 @@
           <Property Name="Status_Code" Type="nchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.Banks(H) Martin (C) Pd thru date' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Banks(H) Martin (C) Pd thru date">
-          <Key>
-            <PropertyRef Name="Handling_Atty" />
-            <PropertyRef Name="Reference_Number" />
-          </Key>
-          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
-          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
-          <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
-          <Property Name="Reference_Number" Type="int" Nullable="false" />
-          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="qryClaims">
           <Key>
@@ -237,15 +224,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="tblPayments" EntityType="Self.tblPayments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferral" EntityType="Self.tblReferral" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStatusCode" EntityType="Self.tblStatusCode" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Banks(H) Martin (C) Pd thru date" EntityType="Self.Banks(H) Martin (C) Pd thru date" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Banks(H) Martin (C) Pd thru date].[Handling_Atty] AS [Handling_Atty], 
-    [Banks(H) Martin (C) Pd thru date].[Credit_Atty] AS [Credit_Atty], 
-    [Banks(H) Martin (C) Pd thru date].[Status_Code] AS [Status_Code], 
-    [Banks(H) Martin (C) Pd thru date].[Reference_Number] AS [Reference_Number], 
-    [Banks(H) Martin (C) Pd thru date].[Client_Name] AS [Client_Name]
-    FROM [dbo].[Banks(H) Martin (C) Pd thru date] AS [Banks(H) Martin (C) Pd thru date]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="qryClaims" EntityType="Self.qryClaims" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [qryClaims].[Claim_Number] AS [Claim_Number], 
@@ -319,17 +297,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="C_RDate" Type="DateTime" Precision="0" />
         </EntityType>
-        <EntityType Name="Banks_H__Martin__C__Pd_thru_date">
-          <Key>
-            <PropertyRef Name="Handling_Atty" />
-            <PropertyRef Name="Reference_Number" />
-          </Key>
-          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
-          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="tblClient_Query__PL_HANDLING">
           <Key>
             <PropertyRef Name="Reference_Number" />
@@ -364,7 +331,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="ReferralwithClients" EntityType="Self.ReferralwithClient" />
           <EntitySet Name="tbl_PMTS_with_Comments" EntityType="Self.tbl_PMTS_with_Comment" />
           <EntitySet Name="tblC_R" EntityType="Self.tblC_R" />
-          <EntitySet Name="Banks_H__Martin__C__Pd_thru_date" EntityType="Self.Banks_H__Martin__C__Pd_thru_date" />
           <EntitySet Name="tblClient_Query__PL_HANDLING" EntityType="Self.tblClient_Query__PL_HANDLING" />
           <EntitySet Name="tblClient_Without_Matching_tblClientReferrals" EntityType="Self.tblClient_Without_Matching_tblClientReferral" />
           <EntitySet Name="tblInsurances" EntityType="FeesPackageModel.tblInsurance" />
@@ -550,17 +516,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
                 <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
                 <ScalarProperty Name="C_RDate" ColumnName="C_RDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Banks_H__Martin__C__Pd_thru_date">
-            <EntityTypeMapping TypeName="FeesPackageModel.Banks_H__Martin__C__Pd_thru_date">
-              <MappingFragment StoreEntitySet="Banks(H) Martin (C) Pd thru date">
-                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
-                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
-                <ScalarProperty Name="Status_Code" ColumnName="Status_Code" />
-                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
-                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
