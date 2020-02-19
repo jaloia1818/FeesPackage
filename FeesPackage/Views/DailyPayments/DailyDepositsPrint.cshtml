@@ -37,15 +37,23 @@
             padding-bottom: 10px;
             padding-top: 10px;
         }
-        tr:nth-last-child(-n+3) td,
+        tr:nth-last-child(-n+2) td {
+            border: none;
+        }
+        tr:last-child td {
+            min-width: 150px;
+            border-top: 4px double #555;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
         tr td:first-child {
             border: none;
-            padding: 0;
         }
         td.right,
         th.right {
             text-align: right;
         }
+
         td.left,
         th.left {
             text-align: left;
@@ -81,13 +89,6 @@
                     <td class="right">@string.Format("{0:C}", row.County)</td>
                 </tr>
             }
-            <tr>
-                <td></td>
-                <td>══════════════</td>
-                <td>══════════════</td>
-                <td>══════════════</td>
-                <td>══════════════</td>
-            </tr>
             <tr>
                 <td></td>
                 <td class="right">@string.Format("{0:C}", Model.DailyDeposits.Sum(x => x.Total))</td>
