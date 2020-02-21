@@ -70,7 +70,7 @@ namespace FeesPackage.Controllers
                 (from clt in db.tblClients
                  join cla in db.tblClaims on clt.id equals cla.Reference_Number
                  join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
-                 where pay.Payment_Date >= fromDate && pay.Payment_Date <= toDate && pay.Posted_Indicator == false
+                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Posted_Indicator == false
                  select new DailyDetail()
                  {
                      Claim_Number = cla.Claim_Number,
