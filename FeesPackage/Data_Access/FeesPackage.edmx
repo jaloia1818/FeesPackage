@@ -14,20 +14,6 @@
           <Property Name="Referral_Tax_ID" Type="nvarchar" MaxLength="15" />
           <Property Name="Referral_Credit_Atty" Type="nvarchar" MaxLength="4" />
         </EntityType>
-        <EntityType Name="tbl PMTS with Comment">
-          <Key>
-            <PropertyRef Name="Claim_Number" />
-            <PropertyRef Name="Date_Payment" />
-          </Key>
-          <Property Name="Reference_Number" Type="int" />
-          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Date_Payment" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="Period_From" Type="datetime2" Precision="0" />
-          <Property Name="Period_To" Type="datetime2" Precision="0" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="Input_Date" Type="datetime2" Precision="0" />
-          <Property Name="Item_Comment" Type="nvarchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="tblAttorney">
           <Key>
             <PropertyRef Name="id" />
@@ -51,15 +37,6 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Combo_Indicator" Type="float" Nullable="false" />
           <Property Name="Combo_Description" Type="nvarchar" MaxLength="20" />
-        </EntityType>
-        <EntityType Name="tblC&amp;R">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Reference_Number" Type="int" />
-          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" />
-          <Property Name="C_RDate" Type="datetime2" Precision="0" />
         </EntityType>
         <EntityType Name="tblClaim">
           <Key>
@@ -157,8 +134,6 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status_Code" Type="nchar" MaxLength="1" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="qryClaims">
           <Key>
             <PropertyRef Name="Claim_Number" />
@@ -171,50 +146,11 @@ warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary
           <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
           <Property Name="Reference_Number" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.tblClient Query- PL HANDLING' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="tblClient Query- PL HANDLING">
-          <Key>
-            <PropertyRef Name="Reference_Number" />
-            <PropertyRef Name="Handling_Atty" />
-            <PropertyRef Name="Claim_Number" />
-          </Key>
-          <Property Name="Reference_Number" Type="int" Nullable="false" />
-          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
-          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
-          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
-          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.tblClient Without Matching tblClientReferral' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="tblClient Without Matching tblClientReferral">
-          <Key>
-            <PropertyRef Name="Reference_Number" />
-            <PropertyRef Name="Handling_Atty" />
-          </Key>
-          <Property Name="Reference_Number" Type="int" Nullable="false" />
-          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" />
-          <Property Name="Employer_Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Escrow_%" Type="float" />
-          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
-          <Property Name="Handling_%" Type="float" />
-          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" />
-          <Property Name="Credit_%" Type="float" />
-          <Property Name="Is_County" Type="bit" />
-          <Property Name="County" Type="nvarchar" MaxLength="5" />
-          <Property Name="Accident_Desc" Type="nvarchar(max)" />
-          <Property Name="Selection_Control" Type="smallint" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_tblReferral_tblAttorney" />-->
         <EntityContainer Name="FeesPackageModelStoreContainer">
           <EntitySet Name="ReferralwithClient" EntityType="Self.ReferralwithClient" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl PMTS with Comment" EntityType="Self.tbl PMTS with Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorney" EntityType="Self.tblAttorney" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttyDesc" EntityType="Self.tblAttyDesc" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblC&amp;R" EntityType="Self.tblC&amp;R" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblClaim" EntityType="Self.tblClaim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblClient" EntityType="Self.tblClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblClientReferral" EntityType="Self.tblClientReferral" Schema="dbo" store:Type="Tables" />
@@ -235,31 +171,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
     [qryClaims].[Reference_Number] AS [Reference_Number]
     FROM [dbo].[qryClaims] AS [qryClaims]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tblClient Query- PL HANDLING" EntityType="Self.tblClient Query- PL HANDLING" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblClient Query- PL HANDLING].[Reference_Number] AS [Reference_Number], 
-    [tblClient Query- PL HANDLING].[Client_Name] AS [Client_Name], 
-    [tblClient Query- PL HANDLING].[Handling_Atty] AS [Handling_Atty], 
-    [tblClient Query- PL HANDLING].[Credit_Atty] AS [Credit_Atty], 
-    [tblClient Query- PL HANDLING].[Claim_Number] AS [Claim_Number]
-    FROM [dbo].[tblClient Query- PL HANDLING] AS [tblClient Query- PL HANDLING]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblClient Without Matching tblClientReferral" EntityType="Self.tblClient Without Matching tblClientReferral" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblClient Without Matching tblClientReferral].[Reference_Number] AS [Reference_Number], 
-    [tblClient Without Matching tblClientReferral].[Client_Name] AS [Client_Name], 
-    [tblClient Without Matching tblClientReferral].[Employer_Name] AS [Employer_Name], 
-    [tblClient Without Matching tblClientReferral].[Escrow_%] AS [Escrow_%], 
-    [tblClient Without Matching tblClientReferral].[Handling_Atty] AS [Handling_Atty], 
-    [tblClient Without Matching tblClientReferral].[Handling_%] AS [Handling_%], 
-    [tblClient Without Matching tblClientReferral].[Credit_Atty] AS [Credit_Atty], 
-    [tblClient Without Matching tblClientReferral].[Credit_%] AS [Credit_%], 
-    [tblClient Without Matching tblClientReferral].[Is_County] AS [Is_County], 
-    [tblClient Without Matching tblClientReferral].[County] AS [County], 
-    [tblClient Without Matching tblClientReferral].[Accident_Desc] AS [Accident_Desc], 
-    [tblClient Without Matching tblClientReferral].[Selection_Control] AS [Selection_Control]
-    FROM [dbo].[tblClient Without Matching tblClientReferral] AS [tblClient Without Matching tblClientReferral]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -274,65 +185,8 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Referral_Tax_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Referral_Credit_Atty" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tbl_PMTS_with_Comment">
-          <Key>
-            <PropertyRef Name="Claim_Number" />
-            <PropertyRef Name="Date_Payment" />
-          </Key>
-          <Property Name="Reference_Number" Type="Int32" />
-          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Date_Payment" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Period_From" Type="DateTime" Precision="0" />
-          <Property Name="Period_To" Type="DateTime" Precision="0" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Input_Date" Type="DateTime" Precision="0" />
-          <Property Name="Item_Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblC_R">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Reference_Number" Type="Int32" />
-          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="C_RDate" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="tblClient_Query__PL_HANDLING">
-          <Key>
-            <PropertyRef Name="Reference_Number" />
-            <PropertyRef Name="Handling_Atty" />
-            <PropertyRef Name="Claim_Number" />
-          </Key>
-          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
-          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Claim_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblClient_Without_Matching_tblClientReferral">
-          <Key>
-            <PropertyRef Name="Reference_Number" />
-            <PropertyRef Name="Handling_Atty" />
-          </Key>
-          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
-          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Employer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Escrow__" Type="Double" />
-          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Handling__" Type="Double" />
-          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Credit__" Type="Double" />
-          <Property Name="Is_County" Type="Boolean" />
-          <Property Name="County" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="Accident_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Selection_Control" Type="Int16" />
-        </EntityType>
         <EntityContainer Name="FeesPackageEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ReferralwithClients" EntityType="Self.ReferralwithClient" />
-          <EntitySet Name="tbl_PMTS_with_Comments" EntityType="Self.tbl_PMTS_with_Comment" />
-          <EntitySet Name="tblC_R" EntityType="Self.tblC_R" />
-          <EntitySet Name="tblClient_Query__PL_HANDLING" EntityType="Self.tblClient_Query__PL_HANDLING" />
-          <EntitySet Name="tblClient_Without_Matching_tblClientReferrals" EntityType="Self.tblClient_Without_Matching_tblClientReferral" />
           <EntitySet Name="tblInsurances" EntityType="FeesPackageModel.tblInsurance" />
           <EntitySet Name="tblAttorneys" EntityType="FeesPackageModel.tblAttorney" />
           <EntitySet Name="tblAttorneyCombos" EntityType="FeesPackageModel.tblAttorneyCombo" />
@@ -492,59 +346,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Referral_Firm" ColumnName="Referral_Firm" />
                 <ScalarProperty Name="Referral_Tax_ID" ColumnName="Referral_Tax_ID" />
                 <ScalarProperty Name="Referral_Credit_Atty" ColumnName="Referral_Credit_Atty" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_PMTS_with_Comments">
-            <EntityTypeMapping TypeName="FeesPackageModel.tbl_PMTS_with_Comment">
-              <MappingFragment StoreEntitySet="tbl PMTS with Comment">
-                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
-                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
-                <ScalarProperty Name="Date_Payment" ColumnName="Date_Payment" />
-                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
-                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
-                <ScalarProperty Name="Item_Comment" ColumnName="Item_Comment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblC_R">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblC_R">
-              <MappingFragment StoreEntitySet="tblC&amp;R">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
-                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
-                <ScalarProperty Name="C_RDate" ColumnName="C_RDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblClient_Query__PL_HANDLING">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblClient_Query__PL_HANDLING">
-              <MappingFragment StoreEntitySet="tblClient Query- PL HANDLING">
-                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
-                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
-                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
-                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
-                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblClient_Without_Matching_tblClientReferrals">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblClient_Without_Matching_tblClientReferral">
-              <MappingFragment StoreEntitySet="tblClient Without Matching tblClientReferral">
-                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
-                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
-                <ScalarProperty Name="Employer_Name" ColumnName="Employer_Name" />
-                <ScalarProperty Name="Escrow__" ColumnName="Escrow_%" />
-                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
-                <ScalarProperty Name="Handling__" ColumnName="Handling_%" />
-                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
-                <ScalarProperty Name="Credit__" ColumnName="Credit_%" />
-                <ScalarProperty Name="Is_County" ColumnName="Is_County" />
-                <ScalarProperty Name="County" ColumnName="County" />
-                <ScalarProperty Name="Accident_Desc" ColumnName="Accident_Desc" />
-                <ScalarProperty Name="Selection_Control" ColumnName="Selection_Control" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

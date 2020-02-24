@@ -26,10 +26,6 @@ namespace FeesPackage.Data_Access
         }
     
         public virtual DbSet<ReferralwithClient> ReferralwithClients { get; set; }
-        public virtual DbSet<tbl_PMTS_with_Comment> tbl_PMTS_with_Comments { get; set; }
-        public virtual DbSet<tblC_R> tblC_R { get; set; }
-        public virtual DbSet<tblClient_Query__PL_HANDLING> tblClient_Query__PL_HANDLING { get; set; }
-        public virtual DbSet<tblClient_Without_Matching_tblClientReferral> tblClient_Without_Matching_tblClientReferrals { get; set; }
         public virtual DbSet<tblInsurance> tblInsurances { get; set; }
         public virtual DbSet<tblAttorney> tblAttorneys { get; set; }
         public virtual DbSet<tblAttorneyCombo> tblAttorneyCombos { get; set; }

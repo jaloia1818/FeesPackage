@@ -184,16 +184,7 @@
     <Compile Include="Data_Access\tblClientReferral.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data_Access\tblClient_Query__PL_HANDLING.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\tblClient_Without_Matching_tblClientReferral.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data_Access\tblCounty.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\tblC_R.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
     <Compile Include="Data_Access\tblInsurance.cs">
@@ -209,9 +200,6 @@
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
     <Compile Include="Data_Access\tblStatusCode.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data_Access\tbl_PMTS_with_Comment.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
