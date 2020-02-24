@@ -47,6 +47,10 @@
         th {
             border-bottom: 1px solid #555;
         }
+        td.underscore {
+            border-bottom: 1px solid #000;
+
+        }
     </style>
 
     <div style="max-width: 1294px;">
@@ -83,7 +87,7 @@
                 <td class="right">@string.Format("{0:C}", row.Amount)</td>
                 <td>@row.Payment_Frequency</td>
                 <td class="right">@string.Format("{0:C}", row.Payment_Amount)</td>
-                <td class="left">@row.Comment</td>
+                <td class="left underscore" style="min-width:250px">@row.Comment</td>
             </tr>
         }
         </table>

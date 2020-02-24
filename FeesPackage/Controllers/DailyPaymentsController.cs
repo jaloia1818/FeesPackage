@@ -32,7 +32,7 @@ namespace FeesPackage.Controllers
                      Amount = pay.Amount,
                      Payment_Frequency = cla.Payment_Frequency,
                      Payment_Amount = cla.Payment_Amount,
-                     Comment = "______________________"
+                     Comment = ""
                  }
                 ).ToList()
             };
