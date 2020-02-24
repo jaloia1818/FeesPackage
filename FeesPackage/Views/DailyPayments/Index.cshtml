@@ -119,7 +119,7 @@
         });
 
         // prepare the Attorney list dropdown data
-        var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.Claims));
+        var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.AttyCombos));
 
         var locallistaSource = {
             datatype: "array",
@@ -183,8 +183,10 @@
             return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
         }
 
+        var addRow = false;
         // create new row.
         $("#addrowbutton").on('click', function () {
+            addRow = true;
             // add empty row in first position
             $("#jqxgrid").jqxGrid('addrow', null, {}, 'first');
             // begin editting newly added row, first column
@@ -215,7 +217,29 @@
                 { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
                 { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c2', align: 'center' },
                 { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
-                { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', align: 'center' },
+                {
+                    text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', align: 'center',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor) {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 200,
+                            source: locallistaAdapter,
+                            displayMember: 'Id',
+                            valueMember: 'Name',
+                            filterable: false,
+                            placeHolder: 'Choose ...',
+                            renderer: function (index, label, value) {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return label + ' - ' + value;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            setTimeout(function () { $("#jqxgrid").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                        });
+                    }
+                },
                 { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center', columntype: 'checkbox', editable: false, hidden: true },
                 { text: 'Comment', datafield: 'Comment', filtertype: 'checkedlist', align: 'center' }
             ]
@@ -224,7 +248,7 @@
         $("#jqxgrid").on('cellendedit', function (event) 
         {
             // column data field.
-            if (event.args.datafield == 'Comment')
+            if (event.args.datafield == 'Comment' && addRow)
                 setTimeout(function () { $("#addrowbutton").click(); }, 1);
         });
 

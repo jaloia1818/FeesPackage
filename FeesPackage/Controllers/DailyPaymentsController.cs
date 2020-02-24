@@ -290,14 +290,13 @@ namespace FeesPackage.Controllers
                 Payments = db.tblPayments.Where(x => x.Posted_Indicator == false)
                                          .OrderByDescending(x => x.Payment_Date).ToList(),
 
-                Attys = db.tblAttorneys
-                .ToArray()
+                AttyCombos = db.tblAttorneyCombos.ToArray()
                 .Select(c => new ListClass
                 {
-                    Id = c.Atty_Initials.ToString(),
-                    Name = c.Atty_Name.ToString()
+                    Id = c.Deposit_Options.ToString(),
+                    Name = c.Attorney_Combinations
                 })
-                .ToList()
+                .ToList(),
             };
 
             return View(model);
