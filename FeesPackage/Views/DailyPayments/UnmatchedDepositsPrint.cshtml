@@ -1,0 +1,89 @@
+﻿@using FeesPackage.Models;
+@model ClientInfoModel
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <style>
+        .title {
+            font-size: larger;
+            font-weight: bold;
+            float: left;
+        }
+        .date {
+            float: right;
+            font-style: italic;
+        }
+        .label {
+            min-width: 246px;
+            text-align: right;
+            font-weight: bold
+        }
+        .value {
+            min-width: 200px;
+        }
+        table.center {
+            margin: auto;
+            text-align: center;
+        }
+        td {
+            min-width: 100px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        td.right,
+        th.right {
+            text-align: right;
+        }
+        td.left,
+        th.left {
+            text-align: left;
+        }
+        th {
+            border-bottom: 1px solid #555;
+        }
+    </style>
+
+    <div style="max-width: 1294px;">
+        <h2>MARTIN LLC</h2>
+        <div class="title">Daily Deposits that Do Not Match Expected Amounts: @string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        <br />
+        <br />
+        <table class="center">
+            <tr>
+                <th>Input Date</th>
+                <th>Claim Number</th>
+                <th>Client Name</th>
+                <th>FP#</th>
+                <th>From</th>
+                <th>To</th>
+                <th>#Wks</th>
+                <th>Amount</th>
+                <th>pmt Freq</th>
+                <th>Expected Amount</th>
+                <th>Comment</th>
+            </tr>
+        @foreach (var row in Model.UnmatchedDeposits)
+        {
+            <tr>
+                <td>@string.Format("{0:MM/dd/yyyy}", @row.Input_Date)</td>
+                <td class="left">@row.Claim_Number</td>
+                <td class="left" style="min-width:200px">@row.Client_Name</td>
+                <td class="left">@row.Reference_Number</td>
+                <td>@string.Format("{0:MM/dd/yyyy}", row.Period_From)</td>
+                <td>@string.Format("{0:MM/dd/yyyy}", row.Period_To)</td>
+            @{var Wks = ((DateTime)@row.Period_To).Subtract((DateTime)row.Period_From).Add(new TimeSpan(1, 0, 0, 0)).Days / 7.0; }
+                <td style="font-weight: bold">@Math.Round(Wks, 2)</td>
+                <td class="right">@string.Format("{0:C}", row.Amount)</td>
+                <td>@row.Payment_Frequency</td>
+                <td class="right">@string.Format("{0:C}", row.Payment_Amount)</td>
+                <td class="left">@row.Comment</td>
+            </tr>
+        }
+        </table>
+    </div>
+</body>
+</html>

@@ -20,5 +20,6 @@ namespace FeesPackage.Models
         public List<tblClientReferral> ClientReferrals { get; set; }
         public List<DailyDetail> DailyDetails { get; set; }
         public List<DailyDeposits> DailyDeposits { get; set; }
+        public List<UnmatchedDeposits> UnmatchedDeposits { get; set; }
     }
 }

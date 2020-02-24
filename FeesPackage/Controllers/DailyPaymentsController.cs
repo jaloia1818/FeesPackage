@@ -11,6 +11,35 @@ namespace FeesPackage.Controllers
 {
     public class DailyPaymentsController : BaseController
     {
+        private ClientInfoModel GetUnmatchedDepositsModel(DateTime fromDate, DateTime toDate)
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                UnmatchedDeposits =
+                (from clt in db.tblClients
+                 join cla in db.tblClaims on clt.id equals cla.Reference_Number
+                 join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
+                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Amount != cla.Payment_Amount
+                 orderby cla.Claim_Number
+                 select new UnmatchedDeposits()
+                 {
+                     Input_Date = pay.Input_Date,
+                     Claim_Number = cla.Claim_Number,
+                     Client_Name = clt.Client_Name,
+                     Reference_Number = clt.id,
+                     Period_From = pay.Period_From,
+                     Period_To = pay.Period_To,
+                     Amount = pay.Amount,
+                     Payment_Frequency = cla.Payment_Frequency,
+                     Payment_Amount = cla.Payment_Amount,
+                     Comment = "___________________________"
+                 }
+                ).ToList()
+            };
+
+            return model;
+        }
+
         private ClientInfoModel GetDepositModel(DateTime fromDate, DateTime toDate)
         {
             var connection = db.Database.Connection as SqlConnection;
@@ -88,6 +117,45 @@ namespace FeesPackage.Controllers
 
             return model;
         }
+
+        // GET: DailyDetailPrint
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult UnmatchedDepositsPrint(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            return PartialView(GetUnmatchedDepositsModel(fromDate, toDate));
+        }
+#else
+        // render as PDF for download/print
+        public void UnmatchedDepositsPrint(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Landscape
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/DailyPayments/UnmatchedDepositsPrint.cshtml", GetUnmatchedDepositsModel(fromDate, toDate), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} UnmatchedDepositsPrint.pdf", fromDate.ToString("MM/dd/yy")));
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
 
         // GET: DailyDetailPrint
 #if DEBUG

@@ -219,6 +219,7 @@
     </Compile>
     <Compile Include="Models\ClientInfoModel.cs" />
     <Compile Include="Models\DailyDeposits.cs" />
+    <Compile Include="Models\UnmatchedDeposits.cs" />
     <Compile Include="Models\DailyDetail.cs" />
     <Compile Include="Models\ListClass.cs" />
     <Compile Include="Models\ReferralModel.cs" />
@@ -628,6 +629,7 @@
     <Content Include="Views\ClientInfo\Print.cshtml" />
     <Content Include="Views\DailyPayments\DailyDetailPrint.cshtml" />
     <Content Include="Views\DailyPayments\DailyDepositsPrint.cshtml" />
+    <Content Include="Views\DailyPayments\UnmatchedDepositsPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
