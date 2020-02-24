@@ -24,12 +24,15 @@
         .value {
             min-width: 200px;
         }
+        table {
+            font-size: larger;
+        }
         table.center {
             margin: auto;
             text-align: center;
         }
         td {
-            min-width: 100px;
+            min-width: 80px;
             padding-bottom: 10px;
             padding-top: 10px;
         }
@@ -71,7 +74,7 @@
             <tr>
                 <td>@string.Format("{0:MM/dd/yyyy}", @row.Input_Date)</td>
                 <td class="left">@row.Claim_Number</td>
-                <td class="left" style="min-width:200px">@row.Client_Name</td>
+                <td class="left" style="min-width:250px">@row.Client_Name</td>
                 <td class="left">@row.Reference_Number</td>
                 <td>@string.Format("{0:MM/dd/yyyy}", row.Period_From)</td>
                 <td>@string.Format("{0:MM/dd/yyyy}", row.Period_To)</td>
