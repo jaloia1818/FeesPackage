@@ -32,7 +32,7 @@ namespace FeesPackage.Controllers
                      Amount = pay.Amount,
                      Payment_Frequency = cla.Payment_Frequency,
                      Payment_Amount = cla.Payment_Amount,
-                     Comment = ""
+                     Comment = pay.Comment
                  }
                 ).ToList()
             };
@@ -266,6 +266,7 @@ namespace FeesPackage.Controllers
                     record.Inputter_Name = model.Inputter_Name;
                     record.Deposit_Indicator = model.Deposit_Indicator;
                     record.Posted_Indicator = model.Posted_Indicator;
+                    record.Comment = model.Comment;
 
                     // Update record
                     db.Entry(record).State = System.Data.Entity.EntityState.Modified;

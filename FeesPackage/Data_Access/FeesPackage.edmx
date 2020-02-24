@@ -116,6 +116,7 @@
           <Property Name="Inputter_Name" Type="nvarchar" MaxLength="3" />
           <Property Name="Deposit_Indicator" Type="int" />
           <Property Name="Posted_Indicator" Type="bit" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblReferral">
           <Key>
@@ -134,6 +135,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status_Code" Type="nchar" MaxLength="1" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="qryClaims">
           <Key>
             <PropertyRef Name="Claim_Number" />
@@ -146,6 +149,9 @@
           <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
           <Property Name="Reference_Number" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_tblReferral_tblAttorney" />-->
         <EntityContainer Name="FeesPackageModelStoreContainer">
           <EntitySet Name="ReferralwithClient" EntityType="Self.ReferralwithClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorney" EntityType="Self.tblAttorney" Schema="dbo" store:Type="Tables" />
@@ -332,6 +338,7 @@
           <Property Name="Inputter_Name" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="Deposit_Indicator" Type="Int32" />
           <Property Name="Posted_Indicator" Type="Boolean" />
+          <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -480,6 +487,7 @@
           <EntitySetMapping Name="tblPayments">
             <EntityTypeMapping TypeName="FeesPackageModel.tblPayment">
               <MappingFragment StoreEntitySet="tblPayments">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
                 <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
                 <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
