@@ -32,7 +32,7 @@
             text-align: center;
         }
         td {
-            min-width: 80px;
+            min-width: 90px;
             padding-bottom: 10px;
             padding-top: 10px;
         }
@@ -72,12 +72,12 @@
         @foreach (var row in Model.UnmatchedDeposits)
         {
             <tr>
-                <td>@string.Format("{0:MM/dd/yyyy}", @row.Input_Date)</td>
+                <td>@string.Format("{0:MM/dd/yy}", @row.Input_Date)</td>
                 <td class="left">@row.Claim_Number</td>
                 <td class="left" style="min-width:250px">@row.Client_Name</td>
                 <td class="left">@row.Reference_Number</td>
-                <td>@string.Format("{0:MM/dd/yyyy}", row.Period_From)</td>
-                <td>@string.Format("{0:MM/dd/yyyy}", row.Period_To)</td>
+                <td>@string.Format("{0:MM/dd/yy}", row.Period_From)</td>
+                <td>@string.Format("{0:MM/dd/yy}", row.Period_To)</td>
             @{var Wks = ((DateTime)@row.Period_To).Subtract((DateTime)row.Period_From).Add(new TimeSpan(1, 0, 0, 0)).Days / 7.0; }
                 <td style="font-weight: bold">@Math.Round(Wks, 2)</td>
                 <td class="right">@string.Format("{0:C}", row.Amount)</td>
