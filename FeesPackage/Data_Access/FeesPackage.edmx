@@ -135,11 +135,9 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status_Code" Type="nchar" MaxLength="1" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="qryClaims">
           <Key>
-            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
           </Key>
           <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Insurance_Contact" Type="nvarchar" MaxLength="35" />
@@ -147,7 +145,7 @@ warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary
           <Property Name="Payment_Amount" Type="money" />
           <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
           <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
-          <Property Name="Reference_Number" Type="int" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -290,7 +288,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
         </EntityType>
         <EntityType Name="qryClaim">
           <Key>
-            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Reference_Number" />
           </Key>
           <Property Name="Claim_Number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Insurance_Contact" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
@@ -298,7 +296,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="Status_Code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="Reference_Number" Type="Int32" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPaymentFrequency">
           <Key>

@@ -1,0 +1,85 @@
+﻿@using FeesPackage.Models;
+@model ClientInfoModel
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <style>
+        .title {
+            font-size: larger;
+            font-weight: bold;
+            float: left;
+        }
+        .date {
+            float: right;
+            font-style: italic;
+        }
+        .label {
+            min-width: 246px;
+            text-align: right;
+            font-weight: bold
+        }
+        .value {
+            min-width: 200px;
+        }
+        table.center {
+            margin: auto;
+            text-align: center;
+        }
+        td {
+            min-width: 100px;
+        }
+        td.right,
+        th.right {
+            text-align: right;
+        }
+        td.left,
+        th.left {
+            text-align: left;
+        }
+        th {
+            border-bottom: 1px solid #555;
+        }
+    </style>
+
+    <div style="max-width: 1294px;">
+        <h2>MARTIN LLC</h2>
+        <div class="title">Referral Escrow Detail @string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        <br />
+        <br />
+        <table class="center">
+            <tr>
+                <th>Escrow Account</th>
+                <th>Client</th>
+                <th></th>
+                <th></th>
+                <th>From</th>
+                <th>To</th>
+                <th>Payment Amount</th>
+                <th>Referral Amount</th>
+                <th></th>
+            </tr>
+    @foreach (var group in Model.ReferralEscrowDetail)
+    {
+        foreach (var row in group.OrderBy(x => x.Referral_Firm).ThenBy(x => x.Client_Referral_Atty).ThenBy(x => x.Client_Name))
+        {
+            <tr>
+                <td class="left">@row.Escrow_Account</td>
+                <td class="left">@row.Referral_Firm</td>
+                <td class="left">@row.Client_Referral_Atty</td>
+                <td class="left">@row.Client_Name</td>
+                <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_From)</td>
+                <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_To)</td>
+                <td class="right">@string.Format("{0:C}", row.Amount)</td>
+                <td class="right">@string.Format("{0:P}", row.Client_Referral)</td>
+                <td class="right">@string.Format("{0:C}", row.Sub_Total)</td>
+            </tr>
+        }
+    }
+        </table>
+    </div>
+</body>
+</html>

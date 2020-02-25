@@ -118,7 +118,7 @@ namespace FeesPackage.Controllers
             return model;
         }
 
-        // GET: DailyDetailPrint
+        // GET: UnmatchedDepositsPrint
 #if DEBUG
         // render to a new tab for debugging
         public ActionResult UnmatchedDepositsPrint(DateTime fromDate, DateTime toDate)
@@ -157,7 +157,7 @@ namespace FeesPackage.Controllers
         }
 #endif
 
-        // GET: DailyDetailPrint
+        // GET: DailyDepositsPrint
 #if DEBUG
         // render to a new tab for debugging
         public ActionResult DailyDepositsPrint(DateTime fromDate, DateTime toDate)

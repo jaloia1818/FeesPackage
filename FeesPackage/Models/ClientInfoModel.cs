@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FeesPackage.Data_Access;
 
 namespace FeesPackage.Models
@@ -21,5 +22,6 @@ namespace FeesPackage.Models
         public List<DailyDetail> DailyDetails { get; set; }
         public List<DailyDeposits> DailyDeposits { get; set; }
         public List<UnmatchedDeposits> UnmatchedDeposits { get; set; }
+        public List<IGrouping<string, ReferralEscrowDetail>> ReferralEscrowDetail { get; set; }
     }
 }

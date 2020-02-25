@@ -20,6 +20,6 @@ namespace FeesPackage.Data_Access
         public Nullable<decimal> Payment_Amount { get; set; }
         public string Payment_Frequency { get; set; }
         public string Status_Code { get; set; }
-        public Nullable<int> Reference_Number { get; set; }
+        public int Reference_Number { get; set; }
     }
 }
