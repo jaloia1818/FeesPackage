@@ -27,12 +27,16 @@
         .value {
             min-width: 200px;
         }
+        body, table {
+            font-size: larger;
+        }
         table.center {
             margin: auto;
             text-align: center;
         }
         td {
-            min-width: 80px;
+            min-width: 90px;
+            white-space: nowrap;
         }
         td.right,
         th.right {
@@ -58,7 +62,7 @@
         }
     </style>
 
-    <div style="max-width: 1000px;">
+    <div style="max-width: 1200px;">
         ══════════════════════════════════════════════════════════════════════════════════════════
         <div class="title">Referral Escrow Detail @string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
@@ -89,8 +93,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="totals">@acct</td>
-                <td></td>
+                <td colspan="2" class="totals">@acct</td>
                 <td></td>
                 <td></td>
                 <td class="right totals superscore">@string.Format("{0:C}", total)</td>
@@ -135,8 +138,8 @@
                 <td class="left"></td>
                 <td class="left"></td>
                 <td class="left">@row.Client_Name</td>
-                <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_From)</td>
-                <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_To)</td>
+                <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_From)</td>
+                <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_To)</td>
                 <td class="right">@string.Format("{0:C}", row.Amount)</td>
                 <td class="right">@string.Format("{0:P}", row.Client_Referral)</td>
                 <td class="right">@string.Format("{0:C}", row.Sub_Total)</td>
@@ -149,8 +152,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="totals">@acct</td>
-                <td></td>
+                <td colspan="2" class="totals">@acct</td>
                 <td></td>
                 <td></td>
                 <td class="right totals superscore">@string.Format("{0:C}", total)</td>
