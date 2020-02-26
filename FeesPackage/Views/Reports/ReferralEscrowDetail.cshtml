@@ -52,8 +52,9 @@
         tr.lineitems {
             font-size: smaller;
         }
-        tr.superscore td {
-            border-top: 5px double #000;
+        tr.superscore td,
+        td.superscore {
+            border-top: 1px solid #000;
         }
     </style>
 
@@ -75,9 +76,27 @@
                 <th>Referral %</th>
                 <th>Referral Amount</th>
             </tr>
-    @{  var acct = ""; }
+    @{ 
+        var acct = "";
+        var total = 0.0;
+    }
     @foreach (var group in Model.ReferralEscrowDetail)
     {
+        if (!string.IsNullOrEmpty(acct) && acct != group.First().Escrow_Account)
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="right totals superscore">@string.Format("{0:C}", total)</td>
+            </tr>
+            total = 0.0;
+        }
         if (acct != group.First().Escrow_Account)
         {
             <tr class="superscore">
@@ -92,6 +111,7 @@
             </tr>
         }
         acct = group.First().Escrow_Account;
+        total += (double)group.Sum(x => x.Sub_Total);
             <tr>
                 <td></td>
                 <td colspan="2" class="left overflow totals">@group.First().Referral_Firm</td>
@@ -124,6 +144,17 @@
         }
             <tr><td>&nbsp;</td></tr>
     }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="right totals superscore">@string.Format("{0:C}", total)</td>
+            </tr>
         </table>
     </div>
 </body>
