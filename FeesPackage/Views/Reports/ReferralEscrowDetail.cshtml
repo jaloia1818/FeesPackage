@@ -42,13 +42,17 @@
         th {
             border-bottom: 1px solid #555;
         }
+        td.overflow {
+            white-space: nowrap;
+            max-width: 10px;
+        }
     </style>
 
-    <div style="max-width: 1294px;">
-        <h2>MARTIN LLC</h2>
+    <div style="max-width: 1000px;">
+        ══════════════════════════════════════════════════════════════════════════════════════════
         <div class="title">Referral Escrow Detail @string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
-        <br />
+        ══════════════════════════════════════════════════════════════════════════════════════════
         <br />
         <table class="center">
             <tr>
@@ -59,26 +63,41 @@
                 <th>From</th>
                 <th>To</th>
                 <th>Payment Amount</th>
+                <th>Referral %</th>
                 <th>Referral Amount</th>
-                <th></th>
             </tr>
-    @foreach (var group in Model.ReferralEscrowDetail)
-    {
-        foreach (var row in group.OrderBy(x => x.Referral_Firm).ThenBy(x => x.Client_Referral_Atty).ThenBy(x => x.Client_Name))
-        {
-            <tr>
-                <td class="left">@row.Escrow_Account</td>
-                <td class="left">@row.Referral_Firm</td>
-                <td class="left">@row.Client_Referral_Atty</td>
-                <td class="left">@row.Client_Name</td>
-                <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_From)</td>
-                <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_To)</td>
-                <td class="right">@string.Format("{0:C}", row.Amount)</td>
-                <td class="right">@string.Format("{0:P}", row.Client_Referral)</td>
-                <td class="right">@string.Format("{0:C}", row.Sub_Total)</td>
-            </tr>
-        }
-    }
+            @foreach (var group in Model.ReferralEscrowDetail)
+            {
+                    <tr>
+                        <td colspan="2" class="left overflow">@group.First().Escrow_Account</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2" class="left overflow">@group.First().Referral_Firm</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td colspan="2" class="left overflow">@group.First().Client_Referral_Atty</td>
+                        <td></td>
+                    </tr>
+                foreach (var row in group.OrderBy(x => x.Referral_Firm).ThenBy(x => x.Client_Referral_Atty).ThenBy(x => x.Client_Name))
+                {
+                    <tr>
+                        <td class="left"></td>
+                        <td class="left"></td>
+                        <td class="left"></td>
+                        <td class="left">@row.Client_Name</td>
+                        <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_From)</td>
+                        <td class="right">@string.Format("{0:MM/dd/yyyy}", row.Period_To)</td>
+                        <td class="right">@string.Format("{0:C}", row.Amount)</td>
+                        <td class="right">@string.Format("{0:P}", row.Client_Referral)</td>
+                        <td class="right">@string.Format("{0:C}", row.Sub_Total)</td>
+                    </tr>
+                }
+            }
         </table>
     </div>
 </body>

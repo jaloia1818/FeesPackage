@@ -29,6 +29,7 @@ namespace FeesPackage.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.NotFound, ex.Message);
         }
 
+        [Obsolete]
         static protected void RenderToPDF(ControllerContext ctx, string pathToView)
         {
             Report report = new Report(new PdfFormatter());

@@ -4,6 +4,13 @@ using FeesPackage.Data_Access;
 
 namespace FeesPackage.Models
 {
+    public class Groupings
+    {
+        public string Escrow_Account;
+        public string Referral_Firm;
+        public string Client_Referral_Atty;
+    }
+
     public class ClientInfoModel
     {
         public List<ListClass> Counties { get; set; }
@@ -22,6 +29,6 @@ namespace FeesPackage.Models
         public List<DailyDetail> DailyDetails { get; set; }
         public List<DailyDeposits> DailyDeposits { get; set; }
         public List<UnmatchedDeposits> UnmatchedDeposits { get; set; }
-        public List<IGrouping<string, ReferralEscrowDetail>> ReferralEscrowDetail { get; set; }
+        public List<IGrouping<Groupings, ReferralEscrowDetail>> ReferralEscrowDetail { get; set; }
     }
 }
