@@ -68,21 +68,20 @@
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         ══════════════════════════════════════════════════════════════════════════════════════════
         <br />
-        <table class="center">
-            <tr>
-                <th>Escrow Account</th>
-                <th>Client</th>
-                <th></th>
-                <th></th>
-                <th>From</th>
-                <th>To</th>
-                <th>Payment Amount</th>
-                <th>Referral %</th>
-                <th>Referral Amount</th>
-            </tr>
-
-            @foreach (var grp in Model.ReferralEscrowDetail.OrderBy(x => x.Key))
-            {
+        @foreach (var grp in Model.ReferralEscrowDetail.OrderBy(x => x.Key))
+        {
+            <table class="center">
+                <tr>
+                    <th>Escrow Account</th>
+                    <th>Client</th>
+                    <th></th>
+                    <th></th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Payment Amount</th>
+                    <th>Referral %</th>
+                    <th>Referral Amount</th>
+                </tr>
                 <tr class="superscore">
                     <td colspan="2" class="left overflow totals">@grp.First().Escrow_Account</td>
                     <td></td>
@@ -93,7 +92,7 @@
                     <td></td>
                     <td></td>
                 </tr>
-                foreach (var frm in grp.GroupBy(x => x.Referral_Firm).OrderBy(x => x.Key))
+                @foreach (var frm in grp.GroupBy(x => x.Referral_Firm).OrderBy(x => x.Key))
                 {
                     <tr>
                         <td></td>
@@ -140,8 +139,9 @@
                     <td></td>
                     <td class="right totals superscore">@string.Format("{0:C}", (double)grp.Sum(x => x.Sub_Total))</td>
                 </tr>
-            }
-        </table>
+            </table>
+            <div style="page-break-after:always"></div>
+        }
     </div>
 </body>
 </html>
