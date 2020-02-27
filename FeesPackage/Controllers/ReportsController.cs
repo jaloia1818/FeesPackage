@@ -32,7 +32,7 @@ namespace FeesPackage.Controllers
 					 Client_Referral = cltref.Client_Referral,
 					 Sub_Total = (Double?)pay.Amount * cltref.Client_Referral
 				 }
-				).GroupBy(x => new Groupings { Escrow_Account = x.Escrow_Account, Referral_Firm = x.Referral_Firm, Client_Referral_Atty = x.Client_Referral_Atty }).ToList()
+				).GroupBy(x => x.Escrow_Account).ToList()
 			};
 
 			return model;

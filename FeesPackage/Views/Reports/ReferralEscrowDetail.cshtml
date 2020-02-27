@@ -80,83 +80,67 @@
                 <th>Referral %</th>
                 <th>Referral Amount</th>
             </tr>
-    @{ 
-        var acct = "";
-        var total = 0.0;
-    }
-    @foreach (var group in Model.ReferralEscrowDetail)
-    {
-        if (!string.IsNullOrEmpty(acct) && acct != group.First().Escrow_Account)
-        {
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td colspan="2" class="totals">@acct</td>
-                <td></td>
-                <td></td>
-                <td class="right totals superscore">@string.Format("{0:C}", total)</td>
-            </tr>
-            total = 0.0;
-        }
-        if (acct != group.First().Escrow_Account)
-        {
-            <tr class="superscore">
-                <td colspan="2" class="left overflow totals">@group.First().Escrow_Account</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        }
-        acct = group.First().Escrow_Account;
-        total += (double)group.Sum(x => x.Sub_Total);
-            <tr>
-                <td></td>
-                <td colspan="2" class="left overflow totals">@group.First().Referral_Firm</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="right totals">@string.Format("{0:C}", group.Sum(x => x.Sub_Total))</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td colspan="2" class="left overflow totals">@group.First().Client_Referral_Atty</td>
-                <td></td>
-            </tr>
-        foreach (var row in group.OrderBy(x => x.Referral_Firm).ThenBy(x => x.Client_Referral_Atty).ThenBy(x => x.Client_Name))
-        {
-            <tr class="lineitems">
-                <td class="left"></td>
-                <td class="left"></td>
-                <td class="left"></td>
-                <td class="left">@row.Client_Name</td>
-                <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_From)</td>
-                <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_To)</td>
-                <td class="right">@string.Format("{0:C}", row.Amount)</td>
-                <td class="right">@string.Format("{0:P}", row.Client_Referral)</td>
-                <td class="right">@string.Format("{0:C}", row.Sub_Total)</td>
-            </tr>
-        }
-            <tr><td>&nbsp;</td></tr>
-    }
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td colspan="2" class="totals">@acct</td>
-                <td></td>
-                <td></td>
-                <td class="right totals superscore">@string.Format("{0:C}", total)</td>
-            </tr>
+
+            @foreach (var grp in Model.ReferralEscrowDetail.OrderBy(x => x.Key))
+            {
+                <tr class="superscore">
+                    <td colspan="2" class="left overflow totals">@grp.First().Escrow_Account</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                foreach (var frm in grp.GroupBy(x => x.Referral_Firm).OrderBy(x => x.Key))
+                {
+                    <tr>
+                        <td></td>
+                        <td colspan="2" class="left overflow totals">@frm.First().Referral_Firm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="right totals">@string.Format("{0:C}", frm.Sum(x => x.Sub_Total))</td>
+                    </tr>
+                    foreach (var attny in frm.GroupBy(x => x.Client_Referral_Atty))
+                    {
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td colspan="2" class="left overflow totals">@attny.First().Client_Referral_Atty</td>
+                            <td></td>
+                        </tr>
+                        foreach (var line_item in attny.GroupBy(x => new { x.Client_Name, x.Period_From, x.Period_To, x.Amount, x.Client_Referral, x.Sub_Total }))
+                        {
+                            <tr class="lineitems">
+                                <td class="left"></td>
+                                <td class="left"></td>
+                                <td class="left"></td>
+                                <td class="left">@line_item.Key.Client_Name</td>
+                                <td class="right">@string.Format("{0:MM/dd/yy}", line_item.Key.Period_From)</td>
+                                <td class="right">@string.Format("{0:MM/dd/yy}", line_item.Key.Period_To)</td>
+                                <td class="right">@string.Format("{0:C}", line_item.Key.Amount)</td>
+                                <td class="right">@string.Format("{0:P}", line_item.Key.Client_Referral)</td>
+                                <td class="right">@string.Format("{0:C}", line_item.Key.Sub_Total)</td>
+                            </tr>
+                        }
+                    }
+                    <tr><td>&nbsp;</td></tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2" class="totals">@grp.First().Escrow_Account</td>
+                    <td></td>
+                    <td></td>
+                    <td class="right totals superscore">@string.Format("{0:C}", (double)grp.Sum(x => x.Sub_Total))</td>
+                </tr>
+            }
         </table>
     </div>
 </body>
