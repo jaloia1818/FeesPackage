@@ -73,7 +73,7 @@
         <br />
         @foreach (var grp in Model.ReferralEscrow.OrderBy(x => x.Key))
         {
-            <table class="center">
+            <table class="center" style="width:100%">
                 <tr>
                     <th>Escrow Account</th>
                     <th>Client</th>
@@ -103,7 +103,8 @@
                         <tr>
                             <td></td>
                             <td></td>
-                            <td colspan="2" class="left overflow totals" style="min-width:550px">@frm.First().Client_Referral_Atty</td>
+                            <td class="left overflow totals" style="width:550px">@frm.First().Client_Referral_Atty</td>
+                            <td></td>
                             <td class="right">@string.Format("{0:C}", frm.Sum(x => x.Amount))</td>
                             <td class="right totals">@string.Format("{0:C}", frm.Sum(x => x.Sub_Total))</td>
                         </tr>
