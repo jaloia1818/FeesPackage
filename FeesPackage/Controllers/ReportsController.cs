@@ -7,11 +7,11 @@ namespace FeesPackage.Controllers
 {
     public class ReportsController : BaseController
     {
-		private ClientInfoModel GetReferralEscrowDetailModel(DateTime fromDate, DateTime toDate)
+		private ClientInfoModel GetReferralEscrowModel(DateTime fromDate, DateTime toDate)
 		{
 			ClientInfoModel model = new ClientInfoModel
 			{
-				ReferralEscrowDetail =
+				ReferralEscrow =
 				(from clt in db.tblClients
 				 join cla in db.tblClaims on clt.id equals cla.Reference_Number
 				 join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
@@ -41,13 +41,52 @@ namespace FeesPackage.Controllers
 		// GET: ReferralEscrowDetail
 #if DEBUG
 		// render to a new tab for debugging
-		public ActionResult ReferralEscrowDetail(DateTime fromDate, DateTime toDate)
+		public ActionResult ReferralEscrowSummary(DateTime fromDate, DateTime toDate)
 		{
 			ViewBag.fromDate = fromDate;
 			ViewBag.toDate = toDate;
 
-			return PartialView(GetReferralEscrowDetailModel(fromDate, toDate));
+			return PartialView(GetReferralEscrowModel(fromDate, toDate));
 		}
+#else
+        // render as PDF for download/print
+        public void ReferralEscrowSummary(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Portrait
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ReferralEscrowSummary.cshtml", GetReferralEscrowModel(fromDate, toDate), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} ReferralEscrowSummary.pdf", fromDate.ToString("MM/dd/yy")));
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
+
+        // GET: ReferralEscrowDetail
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult ReferralEscrowDetail(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            return PartialView(GetReferralEscrowModel(fromDate, toDate));
+        }
 #else
         // render as PDF for download/print
         public void ReferralEscrowDetail(DateTime fromDate, DateTime toDate)
@@ -65,7 +104,7 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Portrait
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ReferralEscrowDetail.cshtml", GetReferralEscrowDetailModel(fromDate, toDate), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ReferralEscrowDetail.cshtml", GetReferralEscrowModel(fromDate, toDate), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;
@@ -77,8 +116,8 @@ namespace FeesPackage.Controllers
         }
 #endif
 
-		// GET: Reports
-		public ActionResult Index()
+        // GET: Reports
+        public ActionResult Index()
         {
             return View();
         }
