@@ -64,7 +64,7 @@
 
     <div style="max-width: 1200px;">
         ══════════════════════════════════════════════════════════════════════════════════════════
-        <div class="title">Referral Escrow Detail @string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)</div>
+        <div class="title">Referral Escrow Detail [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         ══════════════════════════════════════════════════════════════════════════════════════════
         <br />
@@ -104,7 +104,7 @@
                         <td></td>
                         <td class="right totals">@string.Format("{0:C}", frm.Sum(x => x.Sub_Total))</td>
                     </tr>
-                    foreach (var attny in frm.GroupBy(x => x.Client_Referral_Atty))
+                    foreach (var attny in frm.GroupBy(x => x.Client_Referral_Atty).OrderBy(x => x.Key))
                     {
                         <tr>
                             <td></td>
@@ -112,7 +112,7 @@
                             <td colspan="2" class="left overflow totals">@attny.First().Client_Referral_Atty</td>
                             <td></td>
                         </tr>
-                        foreach (var line_item in attny.GroupBy(x => new { x.Client_Name, x.Period_From, x.Period_To, x.Amount, x.Client_Referral, x.Sub_Total }))
+                        foreach (var line_item in attny.OrderBy(x => x.Client_Name).GroupBy(x => new { x.Client_Name, x.Period_From, x.Period_To, x.Amount, x.Client_Referral, x.Sub_Total }))
                         {
                             <tr class="lineitems">
                                 <td class="left"></td>
