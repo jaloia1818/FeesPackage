@@ -9,7 +9,7 @@
                                 <i class="fas fa-file-alt"></i><b>Referral Escrow Detail</b>
                             </a><a onclick="ReferralEscrowSummary()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Referral Escrow Summary</b>
-                            </a><a href="/reports" class="btn-box small span4">
+                            </a><a onclick="ReferralStatement()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Referral Report</b>
                             </a>
                         </div>
@@ -85,6 +85,26 @@
                 "id": "run",
                 click: function () {
                     window.open('/Reports/ReferralEscrowSummary?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                    $('#ToFromDlg').dialog('close')
+                }
+            }],
+            open: function() {
+                $('#fromDate').datepicker({title:'From Date'}).blur();
+                $('#toDate').datepicker({title:'To Date'}).blur();
+            },
+            close: function() {
+                $('#fromDate').datepicker('destroy');
+                $('#toDate').datepicker('destroy');
+            },
+        });
+    }
+    function ReferralStatement() {
+        $('#ToFromDlg').dialog({
+            buttons: [{
+                text: "Run",
+                "id": "run",
+                click: function () {
+                    window.open('/Reports/ReferralStatement?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
                     $('#ToFromDlg').dialog('close')
                 }
             }],

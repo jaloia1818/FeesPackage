@@ -38,16 +38,55 @@ namespace FeesPackage.Controllers
 			return model;
 		}
 
-		// GET: ReferralEscrowDetail
+        // GET: ReferralStatement
 #if DEBUG
-		// render to a new tab for debugging
-		public ActionResult ReferralEscrowSummary(DateTime fromDate, DateTime toDate)
-		{
-			ViewBag.fromDate = fromDate;
-			ViewBag.toDate = toDate;
+        // render to a new tab for debugging
+        public ActionResult ReferralStatement(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
 
-			return PartialView(GetReferralEscrowModel(fromDate, toDate));
-		}
+            return PartialView(GetReferralEscrowModel(fromDate, toDate));
+        }
+#else
+        // render as PDF for download/print
+        public void ReferralStatement(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Landscape
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ReferralStatement.cshtml", GetReferralEscrowModel(fromDate, toDate), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} ReferralStatement.pdf", fromDate.ToString("MM/dd/yy")));
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
+
+        // GET: ReferralEscrowDetail
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult ReferralEscrowSummary(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            return PartialView(GetReferralEscrowModel(fromDate, toDate));
+        }
 #else
         // render as PDF for download/print
         public void ReferralEscrowSummary(DateTime fromDate, DateTime toDate)

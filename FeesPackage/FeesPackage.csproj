@@ -621,6 +621,7 @@
     <Content Include="Views\DailyPayments\UnmatchedDepositsPrint.cshtml" />
     <Content Include="Views\Reports\ReferralEscrowDetail.cshtml" />
     <Content Include="Views\Reports\ReferralEscrowSummary.cshtml" />
+    <Content Include="Views\Reports\ReferralStatement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
