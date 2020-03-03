@@ -36,7 +36,7 @@
             float: none;
         }
         td {
-            min-width: 90px;
+            width: 50px;
             white-space: nowrap;
         }
         td.right,
@@ -52,89 +52,100 @@
         }
         td.overflow {
             white-space: nowrap;
-            max-width: 10px;
+            overflow: hidden;
         }
         tr.lineitems {
             font-size: smaller;
         }
         tr.superscore td,
-        td.superscore {
+        td.superscore,
+        table.superscore {
             border-top: 1px solid #000;
         }
         span.huge {
             font-size: 50pt;
         }
+        td:nth-child(1),
+        td:nth-child(2),
+        td:nth-child(3) {
+            min-width: 250px;
+        }
+        td:nth-child(4),
+        td:nth-child(5) {
+            min-width: 120px;
+        }
     </style>
 
     <div style="max-width: 1200px;">
-        <div class="title center"><span class="huge">Martin</span>LLC</div>
-        ══════════════════════════════════════════════════════════════════════════════════════════
-        <div class="title">Referral Statement [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
-        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
-        <br />
         @foreach (var grp in Model.ReferralEscrow.OrderBy(x => x.Key))
         {
-            <table class="center" style="width:100%;padding-top:50px;">
+            <div class="title center"><span class="huge">Martin</span>LLC</div>
+            @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
+            <div class="title">
+                Referral Statement[@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
+            </div>
+            <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+            <br />
+            <table class="center" style="width:100%;margin-top:50px;">
                 <tr class="superscore">
-                    <td colspan="2" class="left overflow totals">@grp.First().Escrow_Account</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                @foreach (var frm in grp.GroupBy(x => x.Referral_Firm).OrderBy(x => x.Key))
-                {
-                    <tr>
-                        <td></td>
-                        <td colspan="2" class="left overflow totals">@frm.First().Referral_Firm</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="right totals">@string.Format("{0:C}", frm.Sum(x => x.Sub_Total))</td>
-                    </tr>
-                    foreach (var attny in frm.GroupBy(x => x.Client_Referral_Atty).OrderBy(x => x.Key))
-                    {
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td colspan="2" class="left overflow totals">@attny.First().Client_Referral_Atty</td>
-                            <td></td>
-                        </tr>
-                        foreach (var line_item in attny.OrderBy(x => x.Client_Name).GroupBy(x => new { x.Client_Name, x.Period_From, x.Period_To, x.Amount, x.Client_Referral, x.Sub_Total }))
-                        {
-                            <tr class="lineitems">
-                                <td class="left"></td>
-                                <td class="left"></td>
-                                <td class="left"></td>
-                                <td class="left">@line_item.Key.Client_Name</td>
-                                <td class="right">@string.Format("{0:MM/dd/yy}", line_item.Key.Period_From)</td>
-                                <td class="right">@string.Format("{0:MM/dd/yy}", line_item.Key.Period_To)</td>
-                                <td class="right">@string.Format("{0:C}", line_item.Key.Amount)</td>
-                                <td class="right">@string.Format("{0:P}", line_item.Key.Client_Referral)</td>
-                                <td class="right">@string.Format("{0:C}", line_item.Key.Sub_Total)</td>
-                            </tr>
-                        }
-                    }
-                    <tr><td>&nbsp;</td></tr>
-                }
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td colspan="2" class="totals">@grp.First().Escrow_Account</td>
-                    <td></td>
+                    <td class="left overflow totals">@grp.First().Escrow_Account</td>
                     <td></td>
                     <td class="right totals superscore">@string.Format("{0:C}", (double)grp.Sum(x => x.Sub_Total))</td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
             <div style="page-break-after:always"></div>
+            foreach (var frm in grp.GroupBy(x => x.Referral_Firm).OrderBy(x => x.Key))
+            {
+                <div class="title center"><span class="huge">Martin</span>LLC</div>
+                @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
+                <div class="title">
+                    Referral Statement[@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
+                </div>
+                <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+                <br />
+                foreach (var attny in frm.GroupBy(x => x.Client_Referral_Atty).OrderBy(x => x.Key))
+                {
+                    <table class="center superscore" style="width:100%;margin-top:50px;">
+                        @foreach (var line_item in attny.OrderBy(x => x.Client_Name).GroupBy(x => new { x.Client_Name, x.Period_From, x.Period_To, x.Amount, x.Client_Referral, x.Sub_Total }))
+                        {
+                            <tr class="lineitems">
+                                <td class="left overflow">@frm.First().Referral_Firm</td>
+                                <td class="left overflow">@attny.First().Client_Referral_Atty</td>
+                                <td class="left">@line_item.Key.Client_Name</td>
+                                <td class="right">@string.Format("{0:MM/dd/yy}", line_item.Key.Period_To)</td>
+                                <td class="right">@string.Format("{0:C}", line_item.Key.Sub_Total)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="right totals superscore">@string.Format("{0:C}", frm.Sum(x => x.Sub_Total))</td>
+                        </tr>
+                    </table>
+                    <div style="page-break-after:always"></div>
+                }
+            }
         }
+        <div class="title center"><span class="huge">Martin</span>LLC</div>
+        @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
+        <div class="title">
+            Referral Statement[@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
+        </div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        <br />
+        <table class="center superscore" style="width:100%;margin-top:50px;">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.ReferralEscrow.SelectMany(n => n).GroupBy(n => n.Referral_Firm).Select(x => new { Name = x.Key, Sum = x.Sum(y => y.Sub_Total) }).Sum(z => z.Sum))</td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
