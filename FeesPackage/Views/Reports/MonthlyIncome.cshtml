@@ -28,6 +28,7 @@
         }
         body, table {
             font-size: larger;
+            line-height: 150%;
         }
         table.center {
             margin: auto;
@@ -46,7 +47,7 @@
             text-align: left;
         }
         th {
-            border-bottom: 1px solid #555;
+            border-bottom: 4px double #000;
         }
         td.overflow {
             white-space: nowrap;
@@ -57,13 +58,16 @@
         }
         tr.superscore td,
         td.superscore {
-            border-top: 1px solid #000;
+            border-top: 4px double #000;
         }
         td.underscore {
             text-decoration: underline;
         }
         span.huge {
             font-size: 25pt;
+        }
+        td.indent {
+            padding-left: 50px;
         }
     </style>
 
@@ -83,27 +87,33 @@
             </tr>
             @foreach (var grp in Model.MonthlyIncome.OrderBy(x => x.Key))
             {
-                <tr class="superscore">
+                <tr>
                     <td class="left overflow totals">@grp.Key</td>
-                    <td>@grp.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow)</td>
-                    <td>@grp.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow)</td>
-                    <td>@grp.Sum(x => x.Amt_AmtXEscrow)</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => x.Amt_AmtXEscrow))</td>
                 </tr>
                 foreach (var atty in grp.GroupBy(x => x.Combo_Name).OrderBy(x => x.Key))
                 {
                     <tr>
-                        <td>@atty.Key</td>
-                        <td>@atty.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow)</td>
-                        <td>@atty.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow)</td>
-                        <td>@atty.Sum(x => x.Amt_AmtXEscrow)</td>
+                        <td class="left overflow indent">@atty.Key</td>
+                        <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow))</td>
+                        <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow))</td>
+                        <td class="right">@string.Format("{0:C}", (double)atty.Sum(x => x.Amt_AmtXEscrow))</td>
                     </tr>
                 }
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
             }
             <tr>
-                <td>Grand Total:</td>
-                <td>@Model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow)</td>
-                <td>@Model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow)</td>
-                <td>@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Sum(x => x.Amt_AmtXEscrow))</td>
+                <td class="right totals">Grand Total:</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow))</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow))</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Sum(x => x.Amt_AmtXEscrow))</td>
             </tr>
         </table>
     </div>

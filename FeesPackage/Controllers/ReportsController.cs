@@ -29,30 +29,6 @@ namespace FeesPackage.Controllers
                 ).GroupBy(x => x.Combo_Description).ToList()
             };
 
-            foreach(var grp in model.MonthlyIncome.OrderBy(x => x.Key))
-            {
-                System.Diagnostics.Debug.WriteLine(string.Format("===> {0} {1} {2} {3}", 
-                    grp.Key,
-                    grp.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow), 
-                    grp.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow),
-                    grp.Sum(x => x.Amt_AmtXEscrow)));
-
-                foreach (var atty in grp.GroupBy(x => x.Combo_Name).OrderBy(x => x.Key))
-                {
-                    System.Diagnostics.Debug.WriteLine(string.Format("{0} {1} {2} {3}", 
-                        atty.Key, 
-                        atty.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow), 
-                        atty.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow),
-                        atty.Sum(x => x.Amt_AmtXEscrow)));
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine(string.Format("===> {0} {1} {2} {3}",
-                "Grand Total:",
-                model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow),
-                model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow),
-                model.MonthlyIncome.SelectMany(n => n).Sum(x => x.Amt_AmtXEscrow)));
-
             return model;
         }
 
@@ -111,7 +87,7 @@ namespace FeesPackage.Controllers
                 PageFooterHtml = footerHtml,
                 Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
                 Size = NReco.PdfGenerator.PageSize.Letter,
-                Orientation = NReco.PdfGenerator.PageOrientation.Landscape
+                Orientation = NReco.PdfGenerator.PageOrientation.Portrait
             };
 
             var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/MonthlyIncome.cshtml", GetMonthlyIncomeModel(fromDate, toDate), true);
