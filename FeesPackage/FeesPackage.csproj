@@ -208,6 +208,7 @@
     <Compile Include="Models\ClientInfoModel.cs" />
     <Compile Include="Models\DailyDeposits.cs" />
     <Compile Include="Models\ReferralEscrowModel.cs" />
+    <Compile Include="Models\MonthlyIncome.cs" />
     <Compile Include="Models\UnmatchedDeposits.cs" />
     <Compile Include="Models\DailyDetail.cs" />
     <Compile Include="Models\ListClass.cs" />
@@ -622,6 +623,7 @@
     <Content Include="Views\Reports\ReferralEscrowDetail.cshtml" />
     <Content Include="Views\Reports\ReferralEscrowSummary.cshtml" />
     <Content Include="Views\Reports\ReferralStatement.cshtml" />
+    <Content Include="Views\Reports\MonthlyIncome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
