@@ -624,6 +624,7 @@
     <Content Include="Views\Reports\ReferralEscrowSummary.cshtml" />
     <Content Include="Views\Reports\ReferralStatement.cshtml" />
     <Content Include="Views\Reports\MonthlyIncome.cshtml" />
+    <Content Include="Views\Reports\MonthlyIncomeDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

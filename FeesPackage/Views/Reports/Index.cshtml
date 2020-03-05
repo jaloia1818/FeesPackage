@@ -18,7 +18,7 @@
                         <div class="span12">
                             <a onclick="MonthlyIncome()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Monthly Income Report</b>
-                            </a><a href="/reports" class="btn-box small span4">
+                            </a><a onclick="MonthlyIncomeDetail()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Monthly Income Detail</b>
                             </a>
                         </div>
@@ -125,6 +125,26 @@
                 "id": "run",
                 click: function () {
                     window.open('/Reports/MonthlyIncome?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                    $('#ToFromDlg').dialog('close')
+                }
+            }],
+            open: function() {
+                $('#fromDate').datepicker({title:'From Date'}).blur();
+                $('#toDate').datepicker({title:'To Date'}).blur();
+            },
+            close: function() {
+                $('#fromDate').datepicker('destroy');
+                $('#toDate').datepicker('destroy');
+            },
+        });
+    }
+    function MonthlyIncomeDetail() {
+        $('#ToFromDlg').dialog({
+            buttons: [{
+                text: "Run",
+                "id": "run",
+                click: function () {
+                    window.open('/Reports/MonthlyIncomeDetail?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
                     $('#ToFromDlg').dialog('close')
                 }
             }],
