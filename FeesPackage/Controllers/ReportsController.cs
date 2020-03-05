@@ -21,12 +21,11 @@ namespace FeesPackage.Controllers
                  orderby atty.Combo_Description
                  select new MonthlyIncome()
                  {
-                     Combo_Description = atty.Combo_Description,
-                     Amt_AmtXEscrow = (double?)pay.Amount - ((double?)pay.Amount * clt.Escrow),
-                     Combo_Name = clt.Credit_Atty + "/" + clt.Handling_Atty,
-                     County = clt.County
+                     Client = clt,
+                     Attorney = atty,
+                     Payment = pay
                  }
-                ).GroupBy(x => x.Combo_Description).ToList()
+                ).GroupBy(x => x.Attorney.Combo_Description).ToList()
             };
 
             return model;

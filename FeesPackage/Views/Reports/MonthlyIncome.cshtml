@@ -89,17 +89,17 @@
             {
                 <tr>
                     <td class="left overflow totals">@grp.Key</td>
-                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow))</td>
-                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow))</td>
-                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => x.Amt_AmtXEscrow))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
                 </tr>
-                foreach (var atty in grp.GroupBy(x => x.Combo_Name).OrderBy(x => x.Key))
+                foreach (var atty in grp.GroupBy(x => x.Client.Credit_Atty + "/" + x.Client.Handling_Atty).OrderBy(x => x.Key))
                 {
                     <tr>
                         <td class="left overflow indent">@atty.Key</td>
-                        <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow))</td>
-                        <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow))</td>
-                        <td class="right">@string.Format("{0:C}", (double)atty.Sum(x => x.Amt_AmtXEscrow))</td>
+                        <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right">@string.Format("{0:C}", (double)atty.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
                     </tr>
                 }
                 <tr>
@@ -111,9 +111,9 @@
             }
             <tr>
                 <td class="right totals">Grand Total:</td>
-                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Phila").Sum(x => x.Amt_AmtXEscrow))</td>
-                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.County == "Cty").Sum(x => x.Amt_AmtXEscrow))</td>
-                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Sum(x => x.Amt_AmtXEscrow))</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
             </tr>
         </table>
     </div>

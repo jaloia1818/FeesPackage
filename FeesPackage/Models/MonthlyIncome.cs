@@ -1,7 +1,8 @@
+using FeesPackage.Data_Access;
+
 public class MonthlyIncome
 {
-    public string Combo_Description { get; set; }
-    public double? Amt_AmtXEscrow { get; set; }
-    public string Combo_Name { get; set; }
-    public string County { get; set; }
+    public tblClient Client { get; set; }
+    public tblAttyDesc Attorney { get; set; }
+    public tblPayment Payment { get; set; }
 }
