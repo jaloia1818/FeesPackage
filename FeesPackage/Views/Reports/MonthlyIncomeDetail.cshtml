@@ -11,79 +11,76 @@
             font-size: larger;
             font-weight: bold;
         }
-
         .date {
             float: right;
             font-style: italic;
         }
-
         .label {
             min-width: 246px;
             text-align: right;
             font-weight: bold
         }
-
         .totals {
             font-weight: bold
         }
-
         .value {
             min-width: 200px;
         }
-
         body, table {
             font-size: larger;
             line-height: 150%;
         }
-
-            table.center {
-                margin: auto;
-                text-align: center;
-            }
-
+        table.center {
+            margin: auto;
+            text-align: center;
+        }
         td {
             min-width: 80px;
             white-space: nowrap;
         }
-
-            td.right,
-            th.right {
-                text-align: right;
-            }
-
-            td.left,
-            th.left {
-                text-align: left;
-            }
-
+        td.right,
+        th.right {
+            text-align: right;
+        }
+        td.left,
+        th.left {
+            text-align: left;
+        }
         th {
             border-bottom: 4px double #000;
         }
-
         td.overflow {
             white-space: nowrap;
-            max-width: 10px;
+            overflow: hidden;
         }
-
         tr.lineitems {
             font-size: smaller;
         }
-
         tr.superscore td,
         td.superscore {
-            border-top: 4px double #000;
+            border-top: 1px solid #000;
         }
-
         td.underscore {
             text-decoration: underline;
         }
-
         span.huge {
             font-size: 25pt;
         }
-
         td.indent {
             padding-left: 50px;
+        }
+        td.indent2 {
+            padding-left: 25px;
+        }
+        td:nth-child(1) {
+            min-width: 460px;
+        }
+        td:nth-child(2),
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5),
+        td:nth-child(6) {
+            min-width: 130px;
         }
     </style>
 
@@ -100,7 +97,7 @@
                 <br />
                 <table class="center" style="width:100%">
                     <tr>
-                        <td>@grp.Key</td>
+                        <td class="left totals">@grp.Key</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -108,7 +105,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td>@atty.Key</td>
+                        <td class="left totals indent2">@atty.Key</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -119,33 +116,41 @@
                     {
                         <tr>
                             <td class="left overflow indent">@line_item.Client.Client_Name</td>
-                            <td>@line_item.Payment.Period_From</td>
-                            <td>@line_item.Payment.Period_To</td>
-                            <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-                            <td class="right">@string.Format("{0:C}", (double)atty.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-                            <td class="right">@string.Format("{0:C}", (double)atty.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                            <td>@string.Format("{0:MM/dd/yy}", line_item.Payment.Period_From)</td>
+                            <td>@string.Format("{0:MM/dd/yy}", line_item.Payment.Period_To)</td>
+                            <td class="right">@string.Format("{0:C}", (line_item.Client.County == "Phila") ? (double?)line_item.Payment.Amount - ((double?)line_item.Payment.Amount * line_item.Client.Escrow) : 0.0)</td>
+                            <td class="right">@string.Format("{0:C}", (line_item.Client.County == "Cty") ? (double?)line_item.Payment.Amount - ((double?)line_item.Payment.Amount * line_item.Client.Escrow) : 0.0)</td>
+                            <td class="right">@string.Format("{0:C}", (double?)line_item.Payment.Amount - ((double?)line_item.Payment.Amount * line_item.Client.Escrow))</td>
                         </tr>
                     }
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-                        <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-                        <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right superscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right superscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right superscore totals">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
                     </tr>
                 </table>
                 <div style="page-break-after:always"></div>
             }
         }
-    <table>
-        <tr>
-            <td class="right totals">Grand Total:</td>
-            <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-            <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-            <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-        </tr>
-    </table>
+        @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
+        <div class="title"><span class="huge">Martin</span>LLC</div>
+        <div class="title">Income Detail Report [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
+        <br />
+        <table>
+            <tr>
+                <td></td>
+                <td colspan="2" class="right totals">Report Control Totals:</td>
+                <td></td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                <td class="right totals superscore">@string.Format("{0:C}", (double)Model.MonthlyIncome.SelectMany(n => n).Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

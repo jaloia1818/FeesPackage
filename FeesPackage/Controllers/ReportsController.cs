@@ -89,13 +89,13 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Portrait
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/MonthlyIncome.cshtml", GetMonthlyIncomeModel(fromDate, toDate), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/MonthlyIncomeDetail.cshtml", GetMonthlyIncomeModel(fromDate, toDate), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;
             Response.Clear();
             Response.ContentType = string.Empty;
-            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} MonthlyIncome.pdf", fromDate.ToString("MM/dd/yy")));
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} MonthlyIncomeDetail.pdf", fromDate.ToString("MM/dd/yy")));
             Response.BinaryWrite(pdfBytes);
             Response.Flush();
         }
