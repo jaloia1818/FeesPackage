@@ -7,6 +7,28 @@ namespace FeesPackage.Controllers
 {
     public class ReportsController : BaseController
     {
+        private ClientInfoModel ClaimsWithNoPaymentsModel()
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                ClaimsWithNoPayments =
+                (from cla in db.tblClaims
+                 join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number into claPay
+                 from cp in claPay.DefaultIfEmpty()
+                 join clt in db.tblClients on cla.Reference_Number equals clt.id
+                 where cp.Claim_Number == null && cla.Status_Code != "C"
+                 orderby clt.Handling_Atty, clt.Credit_Atty, clt.Client_Name
+                 select new ClaimsWithNoPayments()
+                 {
+                     Client = clt,
+                     Claim = cla
+                 }
+                ).ToList()
+            };
+
+            return model;
+        }
+
         private ClientInfoModel GetMonthlyIncomeModel(DateTime fromDate, DateTime toDate)
         {
             ClientInfoModel model = new ClientInfoModel
@@ -61,6 +83,39 @@ namespace FeesPackage.Controllers
 
             return model;
         }
+
+        // GET: ClaimsWithNoPayments
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult ClaimsWithNoPayments()
+        {
+            return PartialView(ClaimsWithNoPaymentsModel());
+        }
+#else
+        // render as PDF for download/print
+        public void ClaimsWithNoPayments()
+        {
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Landscape
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsWithNoPayments.cshtml", ClaimsWithNoPaymentsModel(), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} ClaimsWithNoPayments.pdf", DateTime.Now.ToString("MM/dd/yy")));
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
 
         // GET: MonthlyIncome
 #if DEBUG

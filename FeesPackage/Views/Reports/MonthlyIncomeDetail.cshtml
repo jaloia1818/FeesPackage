@@ -127,9 +127,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="right superscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-                        <td class="right superscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-                        <td class="right superscore totals">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right superscore totals">@string.Format("{0:C}", (double)atty.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right superscore totals">@string.Format("{0:C}", (double)atty.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                        <td class="right superscore totals">@string.Format("{0:C}", (double)atty.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
                     </tr>
                 </table>
                 <div style="page-break-after:always"></div>

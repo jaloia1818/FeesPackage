@@ -24,5 +24,6 @@ namespace FeesPackage.Models
         public List<UnmatchedDeposits> UnmatchedDeposits { get; set; }
         public List<IGrouping<string, ReferralEscrowDetail>> ReferralEscrow { get; set; }
         public List<IGrouping<string, MonthlyIncome>> MonthlyIncome { get; set; }
+        public List<ClaimsWithNoPayments> ClaimsWithNoPayments { get; set; }
     }
 }

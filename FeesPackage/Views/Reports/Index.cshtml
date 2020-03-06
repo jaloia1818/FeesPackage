@@ -25,7 +25,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <a href="/reports" class="btn-box small span4">
+                            <a onclick="ClaimsWithNoPayments()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Claims w/ No Payments</b>
                             </a><a href="/reports" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Claims w/ No Payments Over 30 Days</b>
@@ -157,5 +157,8 @@
                 $('#toDate').datepicker('destroy');
             },
         });
+    }
+    function ClaimsWithNoPayments() {
+        window.open('/Reports/ClaimsWithNoPayments');
     }
 </script>

@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="Models\ClientInfoModel.cs" />
     <Compile Include="Models\DailyDeposits.cs" />
+    <Compile Include="Models\ClaimsWithNoPayments.cs" />
     <Compile Include="Models\ReferralEscrowModel.cs" />
     <Compile Include="Models\MonthlyIncome.cs" />
     <Compile Include="Models\UnmatchedDeposits.cs" />
@@ -625,6 +626,7 @@
     <Content Include="Views\Reports\ReferralStatement.cshtml" />
     <Content Include="Views\Reports\MonthlyIncome.cshtml" />
     <Content Include="Views\Reports\MonthlyIncomeDetail.cshtml" />
+    <Content Include="Views\Reports\ClaimsWithNoPayments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

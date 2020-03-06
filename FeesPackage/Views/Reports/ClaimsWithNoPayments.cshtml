@@ -1,0 +1,86 @@
+﻿@using FeesPackage.Models;
+@model ClientInfoModel
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <style>
+        .title {
+            font-size: larger;
+            font-weight: bold;
+            float: left;
+        }
+        .date {
+            float: right;
+            font-style: italic;
+        }
+        .label {
+            min-width: 246px;
+            text-align: right;
+            font-weight: bold
+        }
+        .value {
+            min-width: 200px;
+        }
+        table {
+            font-size: larger;
+        }
+        table.center {
+            margin: auto;
+            text-align: center;
+        }
+        td {
+            min-width: 90px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        td.right,
+        th.right {
+            text-align: right;
+        }
+        td.left,
+        th.left {
+            text-align: left;
+        }
+        th {
+            border-bottom: 1px solid #555;
+        }
+        td.underscore {
+            border-bottom: 1px solid #000;
+        }
+    </style>
+
+    <div style="max-width: 1000px;">
+        <h2>MARTIN LLC</h2>
+        <div class="title">Claims with No Payments To Date</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        <br />
+        <br />
+        <table class="center">
+            <tr>
+                <th>H</th>
+                <th>C</th>
+                <th>Ref#</th>
+                <th>Client Name</th>
+                <th>Claim Number</th>
+                <th>Amount</th>
+                <th>Freq</th>
+            </tr>
+        @foreach (var row in Model.ClaimsWithNoPayments)
+        {
+            <tr>
+                <td class="left">@row.Client.Handling_Atty</td>
+                <td class="left">@row.Client.Credit_Atty</td>
+                <td class="left">@row.Claim.Reference_Number</td>
+                <td class="left">@row.Client.Client_Name</td>
+                <td class="left">@row.Claim.Claim_Number</td>
+                <td class="right">@string.Format("{0:C}", row.Claim.Payment_Amount)</td>
+                <td class="center">@row.Claim.Payment_Frequency</td>
+            </tr>
+        }
+        </table>
+    </div>
+</body>
+</html>
