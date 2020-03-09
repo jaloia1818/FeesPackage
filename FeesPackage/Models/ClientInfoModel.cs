@@ -25,5 +25,6 @@ namespace FeesPackage.Models
         public List<IGrouping<string, ReferralEscrowDetail>> ReferralEscrow { get; set; }
         public List<IGrouping<string, MonthlyIncome>> MonthlyIncome { get; set; }
         public List<ClaimsWithNoPayments> ClaimsWithNoPayments { get; set; }
+        public List<qryClaims_30Days2> ClaimsWithNoPaymentsOver30Days { get; set; }
     }
 }

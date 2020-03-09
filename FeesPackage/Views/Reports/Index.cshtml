@@ -27,7 +27,7 @@
                         <div class="span12">
                             <a onclick="ClaimsWithNoPayments()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Claims w/ No Payments</b>
-                            </a><a href="/reports" class="btn-box small span4">
+                            </a><a onclick="ClaimsWithNoPaymentsOver30Days()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Claims w/ No Payments Over 30 Days</b>
                             </a><a href="/reports" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Dormant Claims Report</b>
@@ -160,5 +160,8 @@
     }
     function ClaimsWithNoPayments() {
         window.open('/Reports/ClaimsWithNoPayments');
+    }
+    function ClaimsWithNoPaymentsOver30Days() {
+        window.open('/Reports/ClaimsWithNoPaymentsOver30Days');
     }
 </script>

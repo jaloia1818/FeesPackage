@@ -135,7 +135,10 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status_Code" Type="nchar" MaxLength="1" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="qryClaims">
+          
           <Key>
             <PropertyRef Name="Reference_Number" />
           </Key>
@@ -146,6 +149,42 @@
           <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
           <Property Name="Status_Code" Type="nvarchar" MaxLength="1" />
           <Property Name="Reference_Number" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaims>30Days' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaims&gt;30Days">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaxOfInput_Date" Type="datetime2" Precision="0" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Reference_Number" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FeesPackage.dbo.qryClaims>30Days2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qryClaims&gt;30Days2">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Credit_Atty" />
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Client_Name" />
+            <PropertyRef Name="Period_From" />
+            <PropertyRef Name="Period_To" />
+          </Key>
+          <Property Name="Handling_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Credit_Atty" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Reference_Number" Type="int" Nullable="false" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Claim_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Payment_Frequency" Type="nvarchar" MaxLength="1" />
+          <Property Name="Payment_Amount" Type="money" />
+          <Property Name="Period_From" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Period_To" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="LastDepositDate" Type="datetime2" Precision="0" />
+          <Property Name="Amount" Type="money" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -174,6 +213,30 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
     [qryClaims].[Status_Code] AS [Status_Code], 
     [qryClaims].[Reference_Number] AS [Reference_Number]
     FROM [dbo].[qryClaims] AS [qryClaims]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaims&gt;30Days" EntityType="Self.qryClaims&gt;30Days" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaims&gt;30Days].[Claim_Number] AS [Claim_Number], 
+    [qryClaims&gt;30Days].[MaxOfInput_Date] AS [MaxOfInput_Date], 
+    [qryClaims&gt;30Days].[Payment_Amount] AS [Payment_Amount], 
+    [qryClaims&gt;30Days].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaims&gt;30Days].[Reference_Number] AS [Reference_Number]
+    FROM [dbo].[qryClaims&gt;30Days] AS [qryClaims&gt;30Days]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="qryClaims&gt;30Days2" EntityType="Self.qryClaims&gt;30Days2" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qryClaims&gt;30Days2].[Handling_Atty] AS [Handling_Atty], 
+    [qryClaims&gt;30Days2].[Credit_Atty] AS [Credit_Atty], 
+    [qryClaims&gt;30Days2].[Reference_Number] AS [Reference_Number], 
+    [qryClaims&gt;30Days2].[Client_Name] AS [Client_Name], 
+    [qryClaims&gt;30Days2].[Claim_Number] AS [Claim_Number], 
+    [qryClaims&gt;30Days2].[Payment_Frequency] AS [Payment_Frequency], 
+    [qryClaims&gt;30Days2].[Payment_Amount] AS [Payment_Amount], 
+    [qryClaims&gt;30Days2].[Period_From] AS [Period_From], 
+    [qryClaims&gt;30Days2].[Period_To] AS [Period_To], 
+    [qryClaims&gt;30Days2].[LastDepositDate] AS [LastDepositDate], 
+    [qryClaims&gt;30Days2].[Amount] AS [Amount]
+    FROM [dbo].[qryClaims&gt;30Days2] AS [qryClaims&gt;30Days2]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -204,7 +267,9 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="tblStatusCodes" EntityType="FeesPackageModel.tblStatusCode" />
           <EntitySet Name="tblClientReferrals" EntityType="FeesPackageModel.tblClientReferral" />
           <EntitySet Name="tblPayments" EntityType="FeesPackageModel.tblPayment" />
-        </EntityContainer>
+          <EntitySet Name="qryClaims_30Days" EntityType="FeesPackageModel.qryClaims_30Days" />
+          <EntitySet Name="qryClaims_30Days2" EntityType="FeesPackageModel.qryClaims_30Days2" />
+          </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
             <PropertyRef Name="id" />
@@ -338,7 +403,39 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Posted_Indicator" Type="Boolean" />
           <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        <EntityType Name="qryClaims_30Days">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+          </Key>
+          <Property Name="Claim_Number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MaxOfInput_Date" Type="DateTime" Precision="0" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Reference_Number" Type="Int32" />
+        </EntityType>
+        <EntityType Name="qryClaims_30Days2">
+          <Key>
+            <PropertyRef Name="Claim_Number" />
+            <PropertyRef Name="Handling_Atty" />
+            <PropertyRef Name="Credit_Atty" />
+            <PropertyRef Name="Reference_Number" />
+            <PropertyRef Name="Client_Name" />
+            <PropertyRef Name="Period_From" />
+            <PropertyRef Name="Period_To" />
+          </Key>
+          <Property Name="Handling_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credit_Atty" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Claim_Number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Payment_Frequency" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Payment_Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Period_From" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="Period_To" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="LastDepositDate" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -496,6 +593,34 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
                 <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaims_30Days">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaims_30Days">
+              <MappingFragment StoreEntitySet="qryClaims&gt;30Days">
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="MaxOfInput_Date" ColumnName="MaxOfInput_Date" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qryClaims_30Days2">
+            <EntityTypeMapping TypeName="FeesPackageModel.qryClaims_30Days2">
+              <MappingFragment StoreEntitySet="qryClaims&gt;30Days2">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="LastDepositDate" ColumnName="LastDepositDate" />
+                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
+                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
+                <ScalarProperty Name="Payment_Amount" ColumnName="Payment_Amount" />
+                <ScalarProperty Name="Payment_Frequency" ColumnName="Payment_Frequency" />
+                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="Credit_Atty" ColumnName="Credit_Atty" />
+                <ScalarProperty Name="Handling_Atty" ColumnName="Handling_Atty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
