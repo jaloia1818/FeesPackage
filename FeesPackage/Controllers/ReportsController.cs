@@ -7,7 +7,21 @@ namespace FeesPackage.Controllers
 {
     public class ReportsController : BaseController
     {
-        public ClientInfoModel ClaimsWithNoPaymentsOver30DaysModel()
+        private ClientInfoModel ClaimsDormantModel()
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                ClaimsDormant =
+                (from cla in db.qryClaimsDormant2
+                 orderby cla.Handling_Atty, cla.Credit_Atty, cla.Client_Name
+                 select cla
+                ).ToList()
+            };
+
+            return model;
+        }
+
+        private ClientInfoModel ClaimsWithNoPaymentsOver30DaysModel()
         {
             ClientInfoModel model = new ClientInfoModel
             {
@@ -98,7 +112,40 @@ namespace FeesPackage.Controllers
             return model;
         }
 
-        // GET: ClaimsWithNoPayments
+        // GET: ClaimsDormant
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult ClaimsDormant()
+        {
+            return PartialView(ClaimsDormantModel());
+        }
+#else
+        // render as PDF for download/print
+        public void ClaimsDormant()
+        {
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Landscape
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsDormant.cshtml", ClaimsDormantModel(), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} ClaimsDormant.pdf", DateTime.Now.ToString("MM/dd/yy")));
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
+
+        // GET: ClaimsWithNoPaymentsOver30Days
 #if DEBUG
         // render to a new tab for debugging
         public ActionResult ClaimsWithNoPaymentsOver30Days()

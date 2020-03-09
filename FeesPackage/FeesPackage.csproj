@@ -163,6 +163,12 @@
     <Compile Include="Data_Access\qryClaim.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data_Access\qryClaimsDormant.cs">
+      <DependentUpon>FeesPackage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data_Access\qryClaimsDormant2.cs">
+      <DependentUpon>FeesPackage.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data_Access\qryClaims_30Days.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
@@ -634,6 +640,7 @@
     <Content Include="Views\Reports\MonthlyIncomeDetail.cshtml" />
     <Content Include="Views\Reports\ClaimsWithNoPayments.cshtml" />
     <Content Include="Views\Reports\ClaimsWithNoPaymentsOver30Days.cshtml" />
+    <Content Include="Views\Reports\ClaimsDormant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

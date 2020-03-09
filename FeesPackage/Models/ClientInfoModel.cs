@@ -26,5 +26,6 @@ namespace FeesPackage.Models
         public List<IGrouping<string, MonthlyIncome>> MonthlyIncome { get; set; }
         public List<ClaimsWithNoPayments> ClaimsWithNoPayments { get; set; }
         public List<qryClaims_30Days2> ClaimsWithNoPaymentsOver30Days { get; set; }
+        public List<qryClaimsDormant2> ClaimsDormant { get; set; }
     }
 }

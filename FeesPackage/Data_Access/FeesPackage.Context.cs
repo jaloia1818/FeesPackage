@@ -41,5 +41,7 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<tblPayment> tblPayments { get; set; }
         public virtual DbSet<qryClaims_30Days> qryClaims_30Days { get; set; }
         public virtual DbSet<qryClaims_30Days2> qryClaims_30Days2 { get; set; }
+        public virtual DbSet<qryClaimsDormant> qryClaimsDormants { get; set; }
+        public virtual DbSet<qryClaimsDormant2> qryClaimsDormant2 { get; set; }
     }
 }

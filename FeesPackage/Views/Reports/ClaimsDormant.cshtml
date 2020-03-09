@@ -1,0 +1,123 @@
+﻿@using FeesPackage.Models;
+@model ClientInfoModel
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <style>
+        .title {
+            font-size: larger;
+            font-weight: bold;
+            float: left;
+        }
+        .date {
+            float: right;
+            font-style: italic;
+        }
+        .label {
+            min-width: 246px;
+            text-align: right;
+            font-weight: bold
+        }
+        .value {
+            min-width: 200px;
+        }
+        table {
+            font-size: larger;
+        }
+        table.center {
+            margin: auto;
+            text-align: center;
+        }
+        td {
+            min-width: 60px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        td.right,
+        th.right {
+            text-align: right;
+        }
+        td.left,
+        th.left {
+            text-align: left;
+        }
+        th {
+            border-bottom: 1px solid #555;
+        }
+        td.underscore {
+            border-bottom: 1px solid #000;
+        }
+        td:nth-child(1),
+        td:nth-child(2) {
+            min-width: 50px;
+        }
+        td:nth-child(3) {
+            min-width: 100px;
+        }
+        td:nth-child(4) {
+            min-width: 300px;
+        }
+        td:nth-child(8),
+        td:nth-child(9),
+        td:nth-child(10) {
+            min-width: 100px;
+        }
+    </style>
+
+    <div style="max-width: 1294px;">
+        <h2>MARTIN LLC</h2>
+        <div class="title">Dormant Claims Report</div>
+        <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
+        <br />
+        <br />
+        <table class="center">
+            <tr>
+                <th colspan="2">Handling / Credit</th>
+                <th>Ref#</th>
+                <th>Client Name</th>
+                <th>Claim Number</th>
+                <th>Freq</th>
+                <th>Scheduled Amount</th>
+                <th colspan="2">Payment Range</th>
+                <th>Last Deposit Date</th>
+                <th>Last Deposit</th>
+            </tr>
+            @foreach (var grp in Model.ClaimsDormant.GroupBy(x => x.Handling_Atty).OrderBy(x => x.Key))
+            {
+                foreach (var row in grp)
+                {
+                    <tr>
+                        <td class="left">@row.Handling_Atty</td>
+                        <td class="left">@row.Credit_Atty</td>
+                        <td class="left">@row.Reference_Number</td>
+                        <td class="left">@row.Client_Name</td>
+                        <td class="left">@row.Claim_Number</td>
+                        <td class="center">@row.Payment_Frequency</td>
+                        <td class="right">@string.Format("{0:C}", row.Payment_Amount)</td>
+                        <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_From)</td>
+                        <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_To)</td>
+                        <td class="right">@string.Format("{0:MM/dd/yy}", row.LastDepositDate)</td>
+                        <td class="right">@string.Format("{0:C}", row.Amount)</td>
+                    </tr>
+                }
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
