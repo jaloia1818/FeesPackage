@@ -32,7 +32,7 @@
             text-align: center;
         }
         td {
-            min-width: 90px;
+            min-width: 60px;
             padding-bottom: 10px;
             padding-top: 10px;
         }
@@ -50,9 +50,24 @@
         td.underscore {
             border-bottom: 1px solid #000;
         }
+        td:nth-child(1),
+        td:nth-child(2) {
+            min-width: 50px;
+        }
+        td:nth-child(3) {
+            min-width: 100px;
+        }
+        td:nth-child(4) {
+            min-width: 300px;
+        }
+        td:nth-child(8),
+        td:nth-child(9),
+        td:nth-child(10) {
+            min-width: 100px;
+        }
     </style>
 
-    <div style="max-width: 1000px;">
+    <div style="max-width: 1294px;">
         <h2>MARTIN LLC</h2>
         <div class="title">Claims With No Payments Received in the Last 30 Days</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
@@ -60,29 +75,31 @@
         <br />
         <table class="center">
             <tr>
-                <th>H</th>
-                <th>C</th>
+                <th colspan="2">Handling / Credit</th>
                 <th>Ref#</th>
                 <th>Client Name</th>
                 <th>Claim Number</th>
-                <th>Amount</th>
                 <th>Freq</th>
+                <th>Scheduled Amount</th>
+                <th colspan="2">Payment Range</th>
+                <th>Last Deposit Date</th>
+                <th>Last Deposit</th>
             </tr>
         @foreach (var row in Model.ClaimsWithNoPaymentsOver30Days)
         {
-        <tr>
-            <td class="left">@row.Handling_Atty</td>
-            <td class="left">@row.Credit_Atty</td>
-            <td class="left">@row.Reference_Number</td>
-            <td class="left">@row.Client_Name</td>
-            <td class="left">@row.Claim_Number</td>
-            <td class="left">@row.Payment_Frequency</td>
-            <td class="right">@string.Format("{0:C}", row.Payment_Amount)</td>
-            <td class="center">@row.Period_From</td>
-            <td class="center">@row.Period_To</td>
-            <td class="center">@row.LastDepositDate</td>
-            <td class="center">@row.Amount</td>
-        </tr>
+            <tr>
+                <td class="left">@row.Handling_Atty</td>
+                <td class="left">@row.Credit_Atty</td>
+                <td class="left">@row.Reference_Number</td>
+                <td class="left">@row.Client_Name</td>
+                <td class="left">@row.Claim_Number</td>
+                <td class="center">@row.Payment_Frequency</td>
+                <td class="right">@string.Format("{0:C}", row.Payment_Amount)</td>
+                <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_From)</td>
+                <td class="right">@string.Format("{0:MM/dd/yy}", row.Period_To)</td>
+                <td class="right">@string.Format("{0:MM/dd/yy}", row.LastDepositDate)</td>
+                <td class="right">@string.Format("{0:C}", row.Amount)</td>
+            </tr>
         }
         </table>
     </div>

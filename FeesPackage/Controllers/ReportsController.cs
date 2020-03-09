@@ -119,7 +119,7 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Landscape
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsWithNoPayments.cshtml", ClaimsWithNoPaymentsOver30DaysModel(), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsWithNoPaymentsOver30Days.cshtml", ClaimsWithNoPaymentsOver30DaysModel(), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;
