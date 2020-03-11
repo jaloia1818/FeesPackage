@@ -112,6 +112,45 @@ namespace FeesPackage.Controllers
             return model;
         }
 
+        // GET: PostedDeposits
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult PostedDeposits(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            return PartialView(GetMonthlyIncomeModel(fromDate, toDate));
+        }
+#else
+        // render as PDF for download/print
+        public void PostedDeposits(DateTime fromDate, DateTime toDate)
+        {
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Portrait
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/PostedDeposits.cshtml", GetMonthlyIncomeModel(fromDate, toDate), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} PostedDeposits.pdf", fromDate.ToString("MM/dd/yy")));
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
+
         // GET: ClaimsDormant
 #if DEBUG
         // render to a new tab for debugging
