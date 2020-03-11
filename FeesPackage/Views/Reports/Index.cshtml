@@ -38,7 +38,7 @@
                         <div class="span12">
                             <a onclick="PostedDeposits()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Print Range Posted Deposits</b>
-                            </a><a href="/reports" class="btn-box small span4">
+                            </a><a onclick="RefAttyFeesByFP()" class="btn-box small span4">
                                 <i class="fas fa-file-alt"></i><b>Ref Atty Fees by FP</b>
                             </a>
                         </div>
@@ -186,5 +186,8 @@
                 $('#toDate').datepicker('destroy');
             },
         });
+    }
+    function RefAttyFeesByFP() {
+        window.open('/Reports/RefAttyFeesByFP');
     }
 </script>

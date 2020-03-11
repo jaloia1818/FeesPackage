@@ -7,6 +7,29 @@ namespace FeesPackage.Controllers
 {
     public class ReportsController : BaseController
     {
+        private ClientInfoModel GetReferralFeesModel()
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                MonthlyIncome =
+                (from clt in db.tblClients
+                 join cla in db.tblClaims on clt.id equals cla.Reference_Number
+                 join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
+                 join atty in db.tblAttyDescs on cla.Attorney_Breakdown equals (int)atty.Combo_Indicator
+                 join cty in db.tblCounties on clt.County equals cty.County
+                 orderby atty.Combo_Description
+                 select new MonthlyIncome()
+                 {
+                     Client = clt,
+                     Attorney = atty,
+                     Payment = pay
+                 }
+                ).GroupBy(x => x.Attorney.Combo_Description).ToList()
+            };
+
+            return model;
+        }
+
         private ClientInfoModel ClaimsDormantModel()
         {
             ClientInfoModel model = new ClientInfoModel
@@ -111,6 +134,39 @@ namespace FeesPackage.Controllers
 
             return model;
         }
+
+        // GET: RefAttyFeesByFP
+#if DEBUG
+        // render to a new tab for debugging
+        public ActionResult RefAttyFeesByFP()
+        {
+            return PartialView(GetReferralFeesModel());
+        }
+#else
+        // render as PDF for download/print
+        public void RefAttyFeesByFP()
+        {
+            var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
+
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
+            {
+                PageFooterHtml = footerHtml,
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
+                Size = NReco.PdfGenerator.PageSize.Letter,
+                Orientation = NReco.PdfGenerator.PageOrientation.Portrait
+            };
+
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/RefAttyFeesByFP.cshtml", GetReferralFeesModel(), true);
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = string.Empty;
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} RefAttyFeesByFP.pdf", fromDate.ToString("MM/dd/yy")));
+            Response.BinaryWrite(pdfBytes);
+            Response.Flush();
+        }
+#endif
 
         // GET: PostedDeposits
 #if DEBUG
@@ -288,7 +344,6 @@ namespace FeesPackage.Controllers
             Response.Flush();
         }
 #endif
-
 
         // GET: MonthlyIncome
 #if DEBUG

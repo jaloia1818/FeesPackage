@@ -642,6 +642,7 @@
     <Content Include="Views\Reports\ClaimsWithNoPaymentsOver30Days.cshtml" />
     <Content Include="Views\Reports\ClaimsDormant.cshtml" />
     <Content Include="Views\Reports\PostedDeposits.cshtml" />
+    <Content Include="Views\Reports\RefAttyFeesByFP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
