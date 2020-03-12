@@ -16,15 +16,17 @@ namespace FeesPackage.Controllers
                  join cla in db.tblClaims on clt.id equals cla.Reference_Number
                  join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
                  join atty in db.tblAttyDescs on cla.Attorney_Breakdown equals (int)atty.Combo_Indicator
-                 join cty in db.tblCounties on clt.County equals cty.County
-                 orderby atty.Combo_Description
+                 join cltref in db.tblClientReferrals on clt.id equals cltref.Reference_Number
+                 //where cltref.Client_Referral_Atty == "Zonies, Daniel"
+                 orderby cltref.Client_Referral_Atty, clt.Client_Name, pay.Period_From, pay.Period_To
                  select new MonthlyIncome()
                  {
                      Client = clt,
                      Attorney = atty,
-                     Payment = pay
+                     Payment = pay,
+                     RefAtty = cltref
                  }
-                ).GroupBy(x => x.Attorney.Combo_Description).ToList()
+                ).GroupBy(x => x.RefAtty.Client_Referral_Atty).ToList()
             };
 
             return model;
@@ -162,7 +164,7 @@ namespace FeesPackage.Controllers
             Response.Buffer = true;
             Response.Clear();
             Response.ContentType = string.Empty;
-            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} RefAttyFeesByFP.pdf", fromDate.ToString("MM/dd/yy")));
+            Response.AddHeader("content-disposition", string.Format("attachment; filename={0} RefAttyFeesByFP.pdf", DateTime.Now.ToString("MM/dd/yy")));
             Response.BinaryWrite(pdfBytes);
             Response.Flush();
         }
