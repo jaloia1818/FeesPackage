@@ -7,7 +7,28 @@ namespace FeesPackage.Controllers
 {
     public class ReportsController : BaseController
     {
-        private ClientInfoModel GetReferralFeesModel()
+        private ClientInfoModel GetModel()
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                Clients = db.tblClients
+                            .Where(x => x.Client_Name != null)
+                            .OrderBy(x => x.Client_Name).ToList(),
+
+                Attys = db.tblClientReferrals//.GroupBy(x => x.Client_Referral_Atty)
+                .Select(c => new ListClass
+                {
+                    Id = c.Client_Referral_Atty,
+                    Name = c.Client_Referral_Atty
+                }).Distinct()
+                .OrderBy(x => x.Name)
+                .ToList(),
+            };
+
+            return model;
+        }
+
+        private ClientInfoModel GetReferralFeesModel(string attorney, string client)
         {
             ClientInfoModel model = new ClientInfoModel
             {
@@ -17,7 +38,6 @@ namespace FeesPackage.Controllers
                  join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
                  join atty in db.tblAttyDescs on cla.Attorney_Breakdown equals (int)atty.Combo_Indicator
                  join cltref in db.tblClientReferrals on clt.id equals cltref.Reference_Number
-                 //where cltref.Client_Referral_Atty == "Zonies, Daniel"
                  orderby cltref.Client_Referral_Atty, clt.Client_Name, pay.Period_From, pay.Period_To
                  select new MonthlyIncome()
                  {
@@ -26,7 +46,8 @@ namespace FeesPackage.Controllers
                      Payment = pay,
                      RefAtty = cltref
                  }
-                ).GroupBy(x => x.RefAtty.Client_Referral_Atty).ToList()
+                ).Where(x => x.RefAtty.Client_Referral_Atty == attorney || x.Client.Client_Name == client)
+                .GroupBy(x => x.RefAtty.Client_Referral_Atty).ToList()
             };
 
             return model;
@@ -140,9 +161,9 @@ namespace FeesPackage.Controllers
         // GET: RefAttyFeesByFP
 #if DEBUG
         // render to a new tab for debugging
-        public ActionResult RefAttyFeesByFP()
+        public ActionResult RefAttyFeesByFP(string atty, string client)
         {
-            return PartialView(GetReferralFeesModel());
+            return PartialView(GetReferralFeesModel(atty, client));
         }
 #else
         // render as PDF for download/print
@@ -158,7 +179,7 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Portrait
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/RefAttyFeesByFP.cshtml", GetReferralFeesModel(), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/RefAttyFeesByFP.cshtml", GetReferralFeesModel(atty, client), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;
@@ -506,7 +527,7 @@ namespace FeesPackage.Controllers
         // GET: Reports
         public ActionResult Index()
         {
-            return View();
+            return View(GetModel());
         }
     }
 }
