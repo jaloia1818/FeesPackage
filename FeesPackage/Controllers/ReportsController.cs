@@ -167,7 +167,7 @@ namespace FeesPackage.Controllers
         }
 #else
         // render as PDF for download/print
-        public void RefAttyFeesByFP()
+        public void RefAttyFeesByFP(string atty, string client)
         {
             var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
 

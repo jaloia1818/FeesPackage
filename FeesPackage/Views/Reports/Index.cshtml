@@ -1,6 +1,19 @@
 ﻿@using FeesPackage.Models;
 @model ClientInfoModel
 
+<style>
+    .btn-enabled {
+        cursor: default;
+        pointer-events: auto;
+        background-color: lightgreen;
+    }
+    .btn-disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: #ededed;
+    }
+</style>
+
 <div class="span9">
     <div class="content">
         <div class="btn-controls">
@@ -212,13 +225,30 @@
                 }
             }],
             open: function () {
-                //$('#atty').datepicker({ title: 'Attorney' }).blur();
-                //$('#client').datepicker({ title: 'Client' }).blur();
+                setRunBtn();
+
+                $('#atty').change(function () {
+                    setRunBtn();
+                })
+
+                $('#client').change(function () {
+                    setRunBtn();
+                })
             },
             close: function () {
-                $('#atty').datepicker('destroy');
-                $('#client').datepicker('destroy');
             },
         });
+    }
+    function setRunBtn() {
+        if ($('#atty option:selected').val() == '' && $('#client option:selected').val() == '') {
+            $('#run').prop('disabled', true);
+            $('#run').removeClass('btn-enabled');
+            $('#run').addClass('btn-disabled');
+        }
+        else {
+            $('#run').prop('disabled', false);
+            $('#run').removeClass('btn-disabled');
+            $('#run').addClass('btn-enabled');
+        }
     }
 </script>
