@@ -24,6 +24,7 @@
                 <span>Search: </span>
                 <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
                 <button id="addrowbutton" style="float: right">+</button>
+                <button id="PostPayments" style="float: right">Post Payments</button>
                 <button id="UnmatchedDepositsPrint" style="float: right">Unmatched Deposits</button>
                 <button id="DailyDepositsPrint" style="float: right">Daily Deposits</button>
                 <button id="DailyDetailPrint" style="float: right">Daily Detail</button>
@@ -68,6 +69,8 @@
                 open: function() {
                     $('#fromDate').datepicker({title:'From Date'}).blur();
                     $('#toDate').datepicker({title:'To Date'}).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
                 },
                 close: function() {
                     $('#fromDate').datepicker('destroy');
@@ -89,6 +92,8 @@
                 open: function() {
                     $('#fromDate').datepicker({title:'From Date'}).blur();
                     $('#toDate').datepicker({title:'To Date'}).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
                 },
                 close: function() {
                     $('#fromDate').datepicker('destroy');
@@ -110,6 +115,31 @@
                 open: function() {
                     $('#fromDate').datepicker({title:'From Date'}).blur();
                     $('#toDate').datepicker({title:'To Date'}).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
+                },
+                close: function() {
+                    $('#fromDate').datepicker('destroy');
+                    $('#toDate').datepicker('destroy');
+                },
+            });
+        });
+
+        $('#PostPayments').click(function () {
+            $('#ToFromDlg').dialog({
+                buttons: [{
+                    text: "Run",
+                    "id": "run",
+                    click: function () {
+                        window.open('/DailyPayments/PostPayments?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                        $('#ToFromDlg').dialog('close')
+                    }
+                }],
+                open: function() {
+                    $('#fromDate').datepicker({title:'From Date'}).blur();
+                    $('#toDate').datepicker({ title: 'To Date' }).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
                 },
                 close: function() {
                     $('#fromDate').datepicker('destroy');

@@ -118,6 +118,26 @@ namespace FeesPackage.Controllers
             return model;
         }
 
+        private ClientInfoModel DoPostPayments(DateTime fromDate, DateTime toDate)
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                Payments =
+                (from pay in db.tblPayments
+                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Posted_Indicator == false
+                 select pay
+                ).ToList()
+            };
+
+            return model;
+        }
+
+        // GET: PostPayments
+        public ActionResult PostPayments(DateTime fromDate, DateTime toDate)
+        {
+            return PartialView(DoPostPayments(fromDate, toDate));
+        }
+
         // GET: UnmatchedDepositsPrint
 #if DEBUG
         // render to a new tab for debugging
