@@ -131,7 +131,11 @@
                     text: "Run",
                     "id": "run",
                     click: function () {
-                        window.open('/DailyPayments/PostPayments?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                        $.post('/DailyPayments/PostPayments', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
+                            alert(data.Cnt + ', ' + data.Amt);
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus + ': ' + errorThrown);
+                        });
                         $('#ToFromDlg').dialog('close')
                     }
                 }],

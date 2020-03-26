@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Data.Entity.Core.Objects;
 
 namespace FeesPackage.Controllers
 {
@@ -118,24 +119,17 @@ namespace FeesPackage.Controllers
             return model;
         }
 
-        private ClientInfoModel DoPostPayments(DateTime fromDate, DateTime toDate)
+        // POST: PostPayments
+        [HttpPost]
+        public JsonResult PostPayments(DateTime fromDate, DateTime toDate)
         {
-            ClientInfoModel model = new ClientInfoModel
-            {
-                Payments =
-                (from pay in db.tblPayments
-                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Posted_Indicator == false
-                 select pay
-                ).ToList()
-            };
+            ObjectParameter cnt = new ObjectParameter("cnt", 5);
+            ObjectParameter amt = new ObjectParameter("amt", 6.0);
+            db.sp_PostPayments(fromDate, toDate, cnt, amt).ToList();
+            var Cnt = int.Parse(cnt.Value.ToString());
+            var Amt = double.Parse(amt.Value.ToString());
 
-            return model;
-        }
-
-        // GET: PostPayments
-        public ActionResult PostPayments(DateTime fromDate, DateTime toDate)
-        {
-            return PartialView(DoPostPayments(fromDate, toDate));
+            return Json(new { Cnt = Cnt, Amt = Amt });
         }
 
         // GET: UnmatchedDepositsPrint

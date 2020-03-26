@@ -12,6 +12,8 @@ namespace FeesPackage.Data_Access
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class FeesPackageEntities : DbContext
     {
@@ -43,5 +45,18 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<qryClaims_30Days2> qryClaims_30Days2 { get; set; }
         public virtual DbSet<qryClaimsDormant> qryClaimsDormants { get; set; }
         public virtual DbSet<qryClaimsDormant2> qryClaimsDormant2 { get; set; }
+    
+        public virtual ObjectResult<sp_PostPayments_Result> sp_PostPayments(Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, ObjectParameter cnt, ObjectParameter amt)
+        {
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PostPayments_Result>("sp_PostPayments", fromDateParameter, toDateParameter, cnt, amt);
+        }
     }
 }
