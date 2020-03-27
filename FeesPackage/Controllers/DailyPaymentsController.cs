@@ -129,7 +129,7 @@ namespace FeesPackage.Controllers
             ObjectParameter rowCount = new ObjectParameter("rowCount", 0);  // int
             
             // call sproc with 2 input and 3 output params
-            db.sp_PostPayments(fromDate, toDate, cnt, amt, rowCount).ToList();
+            db.sp_PostPayments(fromDate, toDate, cnt, amt, rowCount);
             
             // convert
             int Cnt = int.Parse(cnt.Value.ToString());

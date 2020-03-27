@@ -178,9 +178,6 @@
     <Compile Include="Data_Access\ReferralwithClient.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data_Access\sp_PostPayments_Result.cs">
-      <DependentUpon>FeesPackage.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data_Access\tblAttorney.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>

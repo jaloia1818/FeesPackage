@@ -338,7 +338,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="qryClaims_30Days2" EntityType="FeesPackageModel.qryClaims_30Days2" />
           <EntitySet Name="qryClaimsDormants" EntityType="FeesPackageModel.qryClaimsDormant" />
           <EntitySet Name="qryClaimsDormant2" EntityType="FeesPackageModel.qryClaimsDormant2" />
-          <FunctionImport Name="sp_PostPayments" ReturnType="Collection(FeesPackageModel.sp_PostPayments_Result)">
+          <FunctionImport Name="sp_PostPayments">
             <Parameter Name="fromDate" Mode="In" Type="DateTime" />
             <Parameter Name="toDate" Mode="In" Type="DateTime" />
             <Parameter Name="cnt" Mode="InOut" Type="Int32" />
@@ -543,19 +543,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="LastDepositDate" Type="DateTime" Precision="0" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
-        <ComplexType Name="sp_PostPayments_Result">
-          <Property Type="Int32" Name="id" Nullable="false" />
-          <Property Type="String" Name="Claim_Number" Nullable="false" MaxLength="20" />
-          <Property Type="DateTime" Name="Payment_Date" Nullable="true" />
-          <Property Type="DateTime" Name="Period_From" Nullable="true" />
-          <Property Type="DateTime" Name="Period_To" Nullable="true" />
-          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="19" />
-          <Property Type="DateTime" Name="Input_Date" Nullable="true" />
-          <Property Type="String" Name="Inputter_Name" Nullable="true" MaxLength="3" />
-          <Property Type="Int32" Name="Deposit_Indicator" Nullable="true" />
-          <Property Type="Boolean" Name="Posted_Indicator" Nullable="true" />
-          <Property Type="String" Name="Comment" Nullable="true" MaxLength="50" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -773,23 +760,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_PostPayments" FunctionName="FeesPackageModel.Store.sp_PostPayments">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FeesPackageModel.sp_PostPayments_Result">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Claim_Number" ColumnName="Claim_Number" />
-                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
-                <ScalarProperty Name="Period_From" ColumnName="Period_From" />
-                <ScalarProperty Name="Period_To" ColumnName="Period_To" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
-                <ScalarProperty Name="Inputter_Name" ColumnName="Inputter_Name" />
-                <ScalarProperty Name="Deposit_Indicator" ColumnName="Deposit_Indicator" />
-                <ScalarProperty Name="Posted_Indicator" ColumnName="Posted_Indicator" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PostPayments" FunctionName="FeesPackageModel.Store.sp_PostPayments" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
