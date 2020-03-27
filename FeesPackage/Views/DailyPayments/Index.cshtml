@@ -44,6 +44,11 @@
     <p>End date: <input type="text" id="toDate" /></p>
 </div>
 
+<div id="StatsDlg" style="display:none">
+    <p style="padding-left:20px;font-weight:bold"># of Payments: <span id="numPayments"></span></p>
+    <p style="font-weight:bold">Total of Payments: <span id="totalPayments"></span></p>
+</div>
+
 <style>
     .jqx-grid-cell {
         text-align: center;
@@ -132,7 +137,21 @@
                     "id": "run",
                     click: function () {
                         $.post('/DailyPayments/PostPayments', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
-                            alert(data.Cnt + ', ' + data.Amt + ', ' + data.RowCount);
+                            $('#StatsDlg').dialog({
+                                buttons: [{
+                                    text: "Close",
+                                    "id": "close",
+                                    click: function () {
+                                        $('#StatsDlg').dialog('close')
+                                    }
+                                }],
+                                open: function () {
+                                    $('#numPayments').text(data.row_count);
+                                    $('#totalPayments').text(data.amount);
+                                },
+                                close: function() {
+                                },
+                            });
                         }).fail(function (jqXHR, textStatus, errorThrown) {
                             alert(textStatus + ': ' + errorThrown);
                         });
@@ -279,7 +298,7 @@
             ]
             });
 
-        $("#jqxgrid").on('cellendedit', function (event) 
+        $("#jqxgrid").on('cellendedit', function (event)
         {
             // column data field.
             if (event.args.datafield == 'Comment' && addRow)

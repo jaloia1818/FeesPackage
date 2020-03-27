@@ -123,17 +123,20 @@ namespace FeesPackage.Controllers
         [HttpPost]
         public JsonResult PostPayments(DateTime fromDate, DateTime toDate)
         {
-            ObjectParameter cnt = new ObjectParameter("cnt", 0);
-            ObjectParameter amt = new ObjectParameter("amt", 0.0);
-            ObjectParameter rowCount = new ObjectParameter("rowCount", 0);
+            // output params
+            ObjectParameter cnt = new ObjectParameter("cnt", 0);            // int
+            ObjectParameter amt = new ObjectParameter("amt", 0.0);          // double
+            ObjectParameter rowCount = new ObjectParameter("rowCount", 0);  // int
+            
+            // call sproc with 2 input and 3 output params
             db.sp_PostPayments(fromDate, toDate, cnt, amt, rowCount).ToList();
-            var Cnt = int.Parse(cnt.Value.ToString());
-            var Amt = double.Parse(amt.Value.ToString());
-            var RowCount = int.Parse(rowCount.Value.ToString());
+            
+            // convert
+            int Cnt = int.Parse(cnt.Value.ToString());
+            double Amt = double.Parse(amt.Value.ToString());
+            int RowCount = int.Parse(rowCount.Value.ToString());
 
-#pragma warning disable IDE0037 // Use inferred member name
-            return Json(new { Cnt = Cnt, Amt = Amt, RowCount = RowCount });
-#pragma warning restore IDE0037 // Use inferred member name
+            return Json(new { count = Cnt, amount = Amt.ToString("C"), row_count = RowCount });
         }
 
         // GET: UnmatchedDepositsPrint
