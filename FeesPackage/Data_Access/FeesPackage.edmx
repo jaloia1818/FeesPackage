@@ -230,6 +230,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Parameter Name="toDate" Type="datetime" Mode="In" />
           <Parameter Name="cnt" Type="int" Mode="InOut" />
           <Parameter Name="amt" Type="money" Mode="InOut" />
+          <Parameter Name="rowCount" Type="int" Mode="InOut" />
         </Function>
         <EntityContainer Name="FeesPackageModelStoreContainer">
           <EntitySet Name="ReferralwithClient" EntityType="Self.ReferralwithClient" Schema="dbo" store:Type="Tables" />
@@ -342,6 +343,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
             <Parameter Name="toDate" Mode="In" Type="DateTime" />
             <Parameter Name="cnt" Mode="InOut" Type="Int32" />
             <Parameter Name="amt" Mode="InOut" Type="Decimal" />
+            <Parameter Name="rowCount" Mode="InOut" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="tblInsurance">

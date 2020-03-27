@@ -132,7 +132,7 @@
                     "id": "run",
                     click: function () {
                         $.post('/DailyPayments/PostPayments', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
-                            alert(data.Cnt + ', ' + data.Amt);
+                            alert(data.Cnt + ', ' + data.Amt + ', ' + data.RowCount);
                         }).fail(function (jqXHR, textStatus, errorThrown) {
                             alert(textStatus + ': ' + errorThrown);
                         });
