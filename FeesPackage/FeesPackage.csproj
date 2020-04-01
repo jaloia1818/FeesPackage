@@ -144,7 +144,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MasterTablesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
-    <Compile Include="Controllers\SpecialTasksController.cs" />
     <Compile Include="Data_Access\FeesPackage.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -622,7 +621,6 @@
     <Content Include="Views\DailyPayments\Index.cshtml" />
     <Content Include="Views\MasterTables\Index.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
-    <Content Include="Views\SpecialTasks\Index.cshtml" />
     <Content Include="Views\MasterTables\Attorney.cshtml" />
     <Content Include="Views\MasterTables\AttorneyCombo.cshtml" />
     <Content Include="Views\MasterTables\DepositTitleDescription.cshtml" />
