@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Configuration;
+using System.Web.Mvc;
 using Sap.Data.SQLAnywhere;
 
 namespace FeesPackage.Controllers
@@ -7,11 +8,13 @@ namespace FeesPackage.Controllers
     {
         public ActionResult Index()
         {
-            SAConnection myConnection = new SAConnection("Data Source=Needles;UID=DBA;PWD=sql");
+            SAConnection myConnection = new SAConnection(ConfigurationManager.ConnectionStrings["Needles"].ConnectionString);
             myConnection.Open();
+
             GetCheckListCount(myConnection);
             GetCheckList(myConnection);
             GetOpenCheckList(myConnection);
+
             myConnection.Close();
 
             return View();
