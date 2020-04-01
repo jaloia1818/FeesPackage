@@ -546,6 +546,7 @@
     <Content Include="Content\jqwidgets\css\images\wp_check_white.png" />
     <Content Include="Content\jqwidgets\css\jqx.base.css" />
     <Content Include="Content\jqwidgets\css\jqx.energyblue.css" />
+    <Content Include="Content\jqwidgets\js\globalize.js" />
     <Content Include="Content\jqwidgets\js\jqx-all.js" />
     <Content Include="Content\scripts\common.js" />
     <Content Include="Content\scripts\datatables\jquery.dataTables.js" />
