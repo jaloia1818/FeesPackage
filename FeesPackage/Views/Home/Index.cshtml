@@ -1,15 +1,19 @@
 ﻿@using FeesPackage.Data_Access;
+@using Newtonsoft.Json;
 @model List<tblAttorney>
 
 @{
     ViewBag.Title_Section1 = "Needles Checklist";
 }
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        ready();
+    });
+</script>
+
 <div class="span9">
     <div class="content">
-        <h2>Count of Total case_checklist: @ViewBag.CNT.ToString("N0")</h2>
-        <h2>Count of Kalai's case_checklist: @ViewBag.CNT2.ToString("N0")</h2>
-        <h2>Count of Kalai's Open case_checklist: @ViewBag.CNT3.ToString("N0")</h2>
         <div class="module">
             <div class="module-head">
                 <h3>
@@ -27,3 +31,168 @@
     <!--/.content-->
 </div>
 <!--/.span9-->
+
+<script>
+    var groups = [];
+    var id;
+
+    function ready() {
+        // prepare the data
+        var data = @Html.Raw(JsonConvert.SerializeObject(ViewBag.checklist));
+        var inUpdate = false;
+
+        var source =
+        {
+            dataType: "json",
+            updaterow: function (rowid, rowdata, commit) {
+                if (!inUpdate) {
+                    $.post('/ClientInfo', rowdata, function (data, status, jqXHR) {
+                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
+                            inUpdate = true;
+                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
+                            inUpdate = false;
+                        }
+                        commit(true);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ': ' + errorThrown);
+                    });
+                }
+            },
+            dataFields: [
+                { name: 'case', type: 'int' },
+                { name: 'party_name', type: 'string' },
+                { name: 'code', type: 'int' },
+                { name: 'description', type: 'string' },
+                { name: 'assigned', type: 'string' },
+                { name: 'due_date', type: 'date' },
+                { name: 'status', type: 'string' },
+                { name: 'repeat_period', type: 'string' },
+                { name: 'lim', type: 'string' }
+            ],
+            id: 'insurance',
+            localdata: data
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) { },
+            loadComplete: function (data) { },
+            beforeLoadComplete: function (records) { },
+            loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
+        });
+
+        var cellsrenderer_center = function (row, column, value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        var columnrenderer_center = function (value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        $("#jqxgrid").jqxGrid(
+        {
+            theme: 'energyblue',
+            width: '100%',
+            height: '50%',
+            autowidth: false,
+            source: dataAdapter,
+            showfilterrow: true,
+            filterable: true,
+            pageable: true,
+            pagesize: 50,
+            groupable: false,
+            editable: false,
+            sortable: true,
+            ready: function () { setup(); },
+            columnsresize: true,
+            columns: [
+                { text: 'Case', datafield: 'case', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Party Name', datafield: 'party_name', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Code', datafield: 'code', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Description', datafield: 'description', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Assigned', datafield: 'assigned', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Due Date', datafield: 'due_date', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Status', datafield: 'status', filtertype: 'checkedlist', align: 'center' },
+                { text: 'S/R', datafield: 'repeat_period', filtertype: 'checkedlist', align: 'center', cellsalign: 'center' },
+                { text: 'Lim', datafield: 'date_limcreated', filtertype: 'checkedlist', align: 'center' }
+            ]
+        });
+
+        $("#jqxgrid").on("celldoubleclick", function (event) {
+            var args = event.args;
+            var rowBoundIndex = args.rowindex;
+            //var rowVisibleIndex = args.visibleindex;
+            //var rightClick = args.rightclick;
+            //var ev = args.originalEvent;
+            //var columnIndex = args.columnindex;
+            //var dataField = args.datafield;
+            //var value = args.value;
+
+            // get 'id' value of row dblclk'd on
+            id = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value;
+
+            // render view/show dialog
+            $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
+                $('#ClientDlg').html(data);
+                $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
+                $("#ClientDlg").dialog("open");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+        });
+
+        var options = {
+            callback: function (value) {
+                var datafield = "Client_Name";
+                var searchText = value;
+                var filter_or_operator = 1;
+                var filtervalue = searchText;
+                var filtercondition = 'CONTAINS';
+
+                var filtergroup = new $.jqx.filter();
+                var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+                filtergroup.addfilter(filter_or_operator, filter);
+
+                $("#jqxgrid").jqxGrid('clearfilters');
+                $("#jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
+                $("#jqxgrid").jqxGrid('applyfilters');
+            },
+            wait: 750,
+            highlight: true,
+            allowSubmit: false,
+            captureLength: 2
+        }
+
+        $("#search").typeWatch(options);
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setup() {
+        $("#jqxgrid").jqxGrid('autoresizecolumns');
+
+        $(window).bind('resize', function () {
+            $("#jqxgrid").jqxGrid(
+            {
+                // set height of grid to available space
+                height: $(window).height() - ($('.navbar').height()
+                                            + $('.module').height()
+                                            + $('.footer').height()
+                                            + 100 // fudge factor for padding/margins
+                                             )
+            });
+        }).trigger('resize');
+    }
+</script>
