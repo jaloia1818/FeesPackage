@@ -83,7 +83,8 @@ namespace FeesPackage.Controllers
                     inner join cases on cases.casenum = cl.case_id
                     inner join party on party.case_id = cases.casenum
                     inner join names on names.names_id = party.party_id and names.name_location = party.party_id_location and party.our_client = 'Y'
-                    where cl.staff_assigned = 'KALAI' and cl.status = 'Open'";
+                    where cl.staff_assigned = 'KALAI' and cl.status = 'Open'
+                    order by cl.due_date desc";
             SADataReader myDataReader = myCommand.ExecuteReader();
 
             DataSet dsChecklist = new DataSet();
