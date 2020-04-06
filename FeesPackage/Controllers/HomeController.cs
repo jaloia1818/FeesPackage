@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Web.Mvc;
+using FeesPackage.Models;
 using Newtonsoft.Json;
 using Sap.Data.SQLAnywhere;
 
@@ -13,59 +14,14 @@ namespace FeesPackage.Controllers
             SAConnection myConnection = new SAConnection(ConfigurationManager.ConnectionStrings["Needles"].ConnectionString);
             myConnection.Open();
 
-            GetOpenCheckListKalaiOpen(myConnection);
+            ClientInfoModel model = GetOpenCheckList(myConnection);
 
             myConnection.Close();
 
-            return View();
+            return View(model);
         }
 
-        private void GetCheckListCount(SAConnection myConnection)
-        {
-            SACommand myCommand = myConnection.CreateCommand();
-            myCommand.CommandText = "SELECT count(*) as cnt FROM case_checklist";
-            SADataReader myDataReader = myCommand.ExecuteReader();
-
-            while (myDataReader.Read())
-            {
-                System.Diagnostics.Debug.WriteLine("cnt: {0}", myDataReader["cnt"]);
-                ViewBag.CNT = myDataReader["cnt"];
-            }
-
-            myDataReader.Close();
-        }
-
-        private void GetCheckListCountKalai(SAConnection myConnection)
-        {
-            SACommand myCommand = myConnection.CreateCommand();
-            myCommand.CommandText = "select count(*) as cnt from case_checklist where staff_assigned = 'KALAI'";
-            SADataReader myDataReader = myCommand.ExecuteReader();
-
-            while (myDataReader.Read())
-            {
-                System.Diagnostics.Debug.WriteLine("cnt: {0}", myDataReader["cnt"]);
-                ViewBag.CNT2 = myDataReader["cnt"];
-            }
-
-            myDataReader.Close();
-        }
-
-        private void GetOpenCheckListCountKalaiOpen(SAConnection myConnection)
-        {
-            SACommand myCommand = myConnection.CreateCommand();
-            myCommand.CommandText = "select count(*) as cnt from case_checklist where staff_assigned = 'KALAI' and status = 'Open'";
-            SADataReader myDataReader = myCommand.ExecuteReader();
-
-            while (myDataReader.Read())
-            {
-                System.Diagnostics.Debug.WriteLine("cnt: {0}", myDataReader["cnt"]);
-                ViewBag.CNT3 = myDataReader["cnt"];
-            }
-
-            myDataReader.Close();
-        }
-
-        private void GetOpenCheckListKalaiOpen(SAConnection myConnection)
+        private ClientInfoModel GetOpenCheckList(SAConnection myConnection)
         {
             SACommand myCommand = myConnection.CreateCommand();
             myCommand.CommandText =
@@ -91,9 +47,15 @@ namespace FeesPackage.Controllers
             dsChecklist.Tables.Add("Checklist");
             dsChecklist.Tables[0].Load(myDataReader);
 
-            ViewBag.checklist = JsonConvert.SerializeObject(dsChecklist);
+            ClientInfoModel model = new ClientInfoModel
+            {
+                CheckListCount = dsChecklist.Tables[0].Rows.Count,
+                CheckList = JsonConvert.SerializeObject(dsChecklist)
+            };
 
             myDataReader.Close();
+
+            return model;
         }
     }
 }

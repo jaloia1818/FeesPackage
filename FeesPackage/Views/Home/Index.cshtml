@@ -1,6 +1,7 @@
 ﻿@using FeesPackage.Data_Access;
+@using FeesPackage.Models;
 @using Newtonsoft.Json;
-@model List<tblAttorney>
+@model ClientInfoModel
 
 @{
     ViewBag.Title_Section1 = "Needles Checklist";
@@ -17,7 +18,7 @@
         <div class="module">
             <div class="module-head">
                 <h3>
-                    <i>@ViewBag.Title_Section1</i>
+                    <i>@ViewBag.Title_Section1</i> [@Model.CheckListCount]
                 </h3>
             </div>
             <div class="module-body table">
@@ -38,7 +39,7 @@
 
     function ready() {
         // prepare the data
-        var data = @Html.Raw(JsonConvert.SerializeObject(ViewBag.checklist));
+        var data = @Html.Raw(JsonConvert.SerializeObject(Model.CheckList));
         var inUpdate = false;
 
         var source =
@@ -87,6 +88,9 @@
         var columnrenderer_center = function (value) {
             return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
         }
+
+        $('#jqxgrid').on('bindingcomplete', function (event) {
+        });
 
         $("#jqxgrid").jqxGrid(
         {
