@@ -12,6 +12,21 @@ namespace FeesPackage.Controllers
 {
     public class DailyPaymentsController : BaseController
     {
+        [HttpPost]
+        public JsonResult GetAttyBreakdown(String ClaimNumber)
+        {
+            var attyBreakdown =
+            (from cla in db.tblClaims
+             where cla.Claim_Number == ClaimNumber
+             select new
+             {
+                 cla.Attorney_Breakdown
+             }
+            ).ToList()[0].Attorney_Breakdown;
+
+            return Json(new { attyBreakdown });
+        }
+
         private ClientInfoModel GetUnmatchedDepositsModel(DateTime fromDate, DateTime toDate)
         {
             ClientInfoModel model = new ClientInfoModel
@@ -309,7 +324,7 @@ namespace FeesPackage.Controllers
             ClientInfoModel model = new ClientInfoModel
             {
                 Payments = db.tblPayments.Where(x => x.Posted_Indicator == false)
-                                         .OrderByDescending(x => x.Payment_Date).ToList(),
+                                         .OrderByDescending(x => x.id).ToList(),
 
                 AttyCombos = db.tblAttorneyCombos.ToArray()
                 .Select(c => new ListClass
@@ -318,6 +333,16 @@ namespace FeesPackage.Controllers
                     Name = c.Attorney_Combinations
                 })
                 .ToList(),
+
+                ClaimNumbers = (from cla in db.tblClaims
+                                join clt in db.tblClients on cla.Reference_Number equals clt.id
+                                orderby cla.Claim_Number
+                                select new ListClass()
+                                {
+                                    Id = cla.Claim_Number,
+                                    Name = clt.Client_Name
+                                }
+                ).ToList()
             };
 
             return View(model);

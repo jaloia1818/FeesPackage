@@ -18,6 +18,7 @@ namespace FeesPackage.Models
         public List<tblPayment> Payments { get; set; }
         public tblClaim Claim { get; set; }
         public List<qryClaim> Claims { get; set; }
+        public List<ListClass> ClaimNumbers { get; set; }
         public List<tblClientReferral> ClientReferrals { get; set; }
         public List<DailyDetail> DailyDetails { get; set; }
         public List<DailyDeposits> DailyDeposits { get; set; }
