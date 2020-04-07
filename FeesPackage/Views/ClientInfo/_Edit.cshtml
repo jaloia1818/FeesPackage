@@ -294,7 +294,12 @@
     // create new row.
     $("#addclaimrowbutton").on('click', function () {
         // add empty row in first position
-        $("#claims").jqxGrid('addrow', null, {}, 'first');
+        $("#claims").jqxGrid('addrow', null, { /*Payment_Frequency: 'W', Status_Code: 'A'*/ }, 'first');
+        // defaults
+        inUpdate = true;
+        $("#claims").jqxGrid('setcellvaluebyid', 0, 'Payment_Frequency', 'W');
+        $("#claims").jqxGrid('setcellvaluebyid', 0, 'Status_Code', 'A');
+        inUpdate = false;
         // begin editting newly added row, first column
         $("#claims").jqxGrid('begincelledit', 0, 'Claim_Number');
 

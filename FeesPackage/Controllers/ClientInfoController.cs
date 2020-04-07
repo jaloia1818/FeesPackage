@@ -71,7 +71,10 @@ namespace FeesPackage.Controllers
         {
             ClientInfoModel model = new ClientInfoModel
             {
-                Client = new tblClient(),
+                Client = new tblClient() {
+                    Handling = 0.67,
+                    Credit = 0.33
+                },
 
                 ClientReferrals = new List<tblClientReferral>(),
 
@@ -94,6 +97,30 @@ namespace FeesPackage.Controllers
                 }))
                 .ToList(),
 
+                ReferralwithClients = db.ReferralwithClients.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Referral_Name,
+                    Name = c.Referral_Name
+                })
+                .ToList(),
+
+                AttyCombos = db.tblAttorneyCombos.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.id.ToString(),
+                    Name = c.Attorney_Combinations
+                })
+                .ToList(),
+
+                Adjusters = db.tblInsurances.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Ins_Contact,
+                    Name = c.Ins_Co_Name
+                })
+                .ToList(),
+
                 Counties = new List<ListClass>
                 {
                     new ListClass() {
@@ -107,6 +134,22 @@ namespace FeesPackage.Controllers
                     Id = c.County,
                     Name = c.County + " - " + c.County_Desc
                 }))
+                .ToList(),
+
+                Frequencys = db.tblPaymentFrequencies.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Payment_Frequency,
+                    Name = c.Payment_Frequency
+                })
+                .ToList(),
+
+                StatusCodes = db.tblStatusCodes.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Status_Code,
+                    Name = c.Status_Code
+                })
                 .ToList()
             };
 
