@@ -105,7 +105,7 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', hidden: true },
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', editable: false },
                 { text: 'Combo Indicator', datafield: 'Combo_Indicator', filtertype: 'checkedlist', align: 'center' },
                 { text: 'Combo Description', datafield: 'Combo_Description', filtertype: 'checkedlist', align: 'center' }
             ]
@@ -113,24 +113,26 @@
 
         var options = {
             callback: function (value) {
-                var datafield = "Combo_Indicator";
                 var searchText = value;
                 var filter_or_operator = 1;
                 var filtervalue = searchText;
                 var filtercondition = 'CONTAINS';
 
                 var filtergroup = new $.jqx.filter();
+                filtergroup.operator = 'or';
                 var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
                 filtergroup.addfilter(filter_or_operator, filter);
 
                 $("#jqxgrid").jqxGrid('clearfilters');
-                $("#jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "id", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Combo_Indicator", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Combo_Description", filtergroup);
                 $("#jqxgrid").jqxGrid('applyfilters');
             },
-            wait: 750,
+            wait: 0,
             highlight: true,
             allowSubmit: false,
-            captureLength: 2
+            captureLength: 1
         }
         $("#search").typeWatch(options);
     }

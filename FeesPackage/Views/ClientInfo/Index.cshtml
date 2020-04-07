@@ -159,7 +159,7 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', hidden: true },
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', editable: false },
                 { text: 'Client Name', datafield: 'Client_Name', filtertype: 'checkedlist', align: 'center' },
                 { text: 'Employer Name', datafield: 'Employer_Name', filtertype: 'checkedlist', align: 'center' },
                 { text: 'Escrow %', datafield: 'Escrow', filtertype: 'checkedlist', align: 'center' },
@@ -197,24 +197,28 @@
 
         var options = {
             callback: function (value) {
-                var datafield = "Client_Name";
                 var searchText = value;
                 var filter_or_operator = 1;
                 var filtervalue = searchText;
                 var filtercondition = 'CONTAINS';
 
                 var filtergroup = new $.jqx.filter();
+                filtergroup.operator = 'or';
                 var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
                 filtergroup.addfilter(filter_or_operator, filter);
 
                 $("#jqxgrid").jqxGrid('clearfilters');
-                $("#jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "id", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Client_Name", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Employer_Name", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Handling_Atty", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Credit_Atty", filtergroup);
                 $("#jqxgrid").jqxGrid('applyfilters');
             },
-            wait: 750,
+            wait: 0,
             highlight: true,
             allowSubmit: false,
-            captureLength: 2
+            captureLength: 1
         }
 
         $("#search").typeWatch(options);

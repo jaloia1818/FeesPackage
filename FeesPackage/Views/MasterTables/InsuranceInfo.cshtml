@@ -113,24 +113,26 @@
 
         var options = {
             callback: function (value) {
-                var datafield = "Ins_Co_Name";
                 var searchText = value;
                 var filter_or_operator = 1;
                 var filtervalue = searchText;
                 var filtercondition = 'CONTAINS';
 
                 var filtergroup = new $.jqx.filter();
+                filtergroup.operator = 'or';
                 var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
                 filtergroup.addfilter(filter_or_operator, filter);
 
                 $("#insuranceContact").jqxGrid('clearfilters');
-                $("#insuranceContact").jqxGrid('addfilter', datafield, filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "id", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "Ins_Co_Name", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "Ins_Contact", filtergroup);
                 $("#insuranceContact").jqxGrid('applyfilters');
             },
-            wait: 750,
+            wait: 0,
             highlight: true,
             allowSubmit: false,
-            captureLength: 2
+            captureLength: 1
         }
         $("#searchIns").typeWatch(options);
     }

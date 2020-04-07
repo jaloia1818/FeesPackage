@@ -154,24 +154,28 @@
 
         var options = {
             callback: function (value) {
-                var datafield = "Referral_Name";
                 var searchText = value;
                 var filter_or_operator = 1;
                 var filtervalue = searchText;
                 var filtercondition = 'CONTAINS';
 
                 var filtergroup = new $.jqx.filter();
+                filtergroup.operator = 'or';
                 var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
                 filtergroup.addfilter(filter_or_operator, filter);
 
                 $("#referral").jqxGrid('clearfilters');
-                $("#referral").jqxGrid('addfilter', datafield, filtergroup);
+                $("#referral").jqxGrid('addfilter', "id", filtergroup);
+                $("#referral").jqxGrid('addfilter', "Referral_Name", filtergroup);
+                $("#referral").jqxGrid('addfilter', "Referral_Firm", filtergroup);
+                $("#referral").jqxGrid('addfilter', "Referral_Tax_ID", filtergroup);
+                $("#referral").jqxGrid('addfilter', "Referral_Credit_Atty", filtergroup);
                 $("#referral").jqxGrid('applyfilters');
             },
-            wait: 750,
+            wait: 0,
             highlight: true,
             allowSubmit: false,
-            captureLength: 2
+            captureLength: 1
         }
         $("#searchRef").typeWatch(options);
     }
