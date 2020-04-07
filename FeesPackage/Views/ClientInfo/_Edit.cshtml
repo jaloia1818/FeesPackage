@@ -417,7 +417,10 @@
                     createeditor: function (row, column, editor)
                     {
                         editor.jqxDropDownList({
-                            dropDownHeight: 200,
+                            dropDownHeight: 350,
+                            dropDownWidth: 500,
+                            incrementalSearch: true,
+                            searchMode: 'containsignorecase',
                             source: locallistbAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
@@ -441,7 +444,10 @@
                     createeditor: function (row, column, editor)
                     {
                         editor.jqxDropDownList({
-                            dropDownHeight: 200,
+                            dropDownHeight: 350,
+                            dropDownWidth: 150,
+                            incrementalSearch: true,
+                            searchMode: 'containsignorecase',
                             source: locallistaAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
@@ -664,7 +670,10 @@
                     createeditor: function (row, column, editor)
                     {
                         editor.jqxDropDownList({
-                            dropDownHeight: 200,
+                            dropDownHeight: 350,
+                            dropDownWidth: 350,
+                            incrementalSearch: true,
+                            searchMode: 'containsignorecase',
                             source: locallisteAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
