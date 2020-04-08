@@ -23,6 +23,15 @@ namespace FeesPackage.Controllers
                 }).Distinct()
                 .OrderBy(x => x.Name)
                 .ToList(),
+ 
+                Hand_Attys = db.tblAttorneys
+                .Select(c => new ListClass
+                {
+                    Id = c.Atty_Initials,
+                    Name = c.Atty_Name
+                }).Distinct()
+                .OrderBy(x => x.Name)
+                .ToList(),
             };
 
             return model;
@@ -53,12 +62,13 @@ namespace FeesPackage.Controllers
             return model;
         }
 
-        private ClientInfoModel ClaimsDormantModel()
+        private ClientInfoModel ClaimsDormantModel(string atty)
         {
             ClientInfoModel model = new ClientInfoModel
             {
                 ClaimsDormant =
                 (from cla in db.qryClaimsDormant2
+                 where ((string.IsNullOrEmpty(atty)) ? 1 == 1 : cla.Handling_Atty == atty)
                  orderby cla.Handling_Atty, cla.Credit_Atty, cla.Client_Name
                  select cla
                 ).ToList()
@@ -67,12 +77,13 @@ namespace FeesPackage.Controllers
             return model;
         }
 
-        private ClientInfoModel ClaimsWithNoPaymentsOver30DaysModel()
+        private ClientInfoModel ClaimsWithNoPaymentsOver30DaysModel(string atty)
         {
             ClientInfoModel model = new ClientInfoModel
             {
                 ClaimsWithNoPaymentsOver30Days =
                 (from cla in db.qryClaims_30Days2
+                 where ((string.IsNullOrEmpty(atty)) ? 1 == 1 : cla.Handling_Atty == atty)
                  orderby cla.Handling_Atty, cla.Credit_Atty, cla.Client_Name
                  select cla
                 ).ToList()
@@ -81,7 +92,7 @@ namespace FeesPackage.Controllers
             return model;
         }
 
-        private ClientInfoModel ClaimsWithNoPaymentsModel()
+        private ClientInfoModel ClaimsWithNoPaymentsModel(string atty)
         {
             ClientInfoModel model = new ClientInfoModel
             {
@@ -90,7 +101,7 @@ namespace FeesPackage.Controllers
                  join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number into claPay
                  from cp in claPay.DefaultIfEmpty()
                  join clt in db.tblClients on cla.Reference_Number equals clt.id
-                 where cp.Claim_Number == null && cla.Status_Code != "C"
+                 where cp.Claim_Number == null && cla.Status_Code != "C" && ((string.IsNullOrEmpty(atty)) ? 1 == 1 : clt.Handling_Atty == atty)
                  orderby clt.Handling_Atty, clt.Credit_Atty, clt.Client_Name
                  select new ClaimsWithNoPayments()
                  {
@@ -98,7 +109,7 @@ namespace FeesPackage.Controllers
                      Claim = cla
                  }
                 ).ToList()
-            };
+           };
 
             return model;
         }
@@ -233,9 +244,9 @@ namespace FeesPackage.Controllers
         // GET: ClaimsDormant
 #if DEBUG
         // render to a new tab for debugging
-        public ActionResult ClaimsDormant()
+        public ActionResult ClaimsDormant(string atty)
         {
-            return PartialView(ClaimsDormantModel());
+            return PartialView(ClaimsDormantModel(atty));
         }
 #else
         // render as PDF for download/print
@@ -251,7 +262,7 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Landscape
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsDormant.cshtml", ClaimsDormantModel(), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsDormant.cshtml", ClaimsDormantModel(atty), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;
@@ -266,9 +277,9 @@ namespace FeesPackage.Controllers
         // GET: ClaimsWithNoPaymentsOver30Days
 #if DEBUG
         // render to a new tab for debugging
-        public ActionResult ClaimsWithNoPaymentsOver30Days()
+        public ActionResult ClaimsWithNoPaymentsOver30Days(string atty)
         {
-            return PartialView(ClaimsWithNoPaymentsOver30DaysModel());
+            return PartialView(ClaimsWithNoPaymentsOver30DaysModel(atty));
         }
 #else
         // render as PDF for download/print
@@ -284,7 +295,7 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Landscape
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsWithNoPaymentsOver30Days.cshtml", ClaimsWithNoPaymentsOver30DaysModel(), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsWithNoPaymentsOver30Days.cshtml", ClaimsWithNoPaymentsOver30DaysModel(atty), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;
@@ -299,9 +310,9 @@ namespace FeesPackage.Controllers
         // GET: ClaimsWithNoPayments
 #if DEBUG
         // render to a new tab for debugging
-        public ActionResult ClaimsWithNoPayments()
+        public ActionResult ClaimsWithNoPayments(string atty)
         {
-            return PartialView(ClaimsWithNoPaymentsModel());
+            return PartialView(ClaimsWithNoPaymentsModel(atty));
         }
 #else
         // render as PDF for download/print
@@ -317,7 +328,7 @@ namespace FeesPackage.Controllers
                 Orientation = NReco.PdfGenerator.PageOrientation.Landscape
             };
 
-            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsWithNoPayments.cshtml", ClaimsWithNoPaymentsModel(), true);
+            var htmlContent = RenderViewToString(ControllerContext, "~/Views/Reports/ClaimsWithNoPayments.cshtml", ClaimsWithNoPaymentsModel(atty), true);
             var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
 
             Response.Buffer = true;

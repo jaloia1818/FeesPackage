@@ -10,6 +10,7 @@ namespace FeesPackage.Models
         public tblClient Client { get; set; }
         public List<tblClient> Clients { get; set; }
         public List<ListClass> Attys { get; set; }
+        public List<ListClass> Hand_Attys { get; set; }
         public List<ListClass> ReferralwithClients { get; set; }
         public List<ListClass> AttyCombos { get; set; }
         public List<ListClass> Adjusters { get; set; }

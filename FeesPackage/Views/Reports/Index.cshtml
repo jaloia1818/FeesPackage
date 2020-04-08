@@ -7,6 +7,7 @@
         pointer-events: auto;
         background-color: lightgreen;
     }
+
     .btn-disabled {
         cursor: not-allowed;
         pointer-events: none;
@@ -81,6 +82,13 @@
     <p>Client:</p>
     <p>
         @Html.DropDownList("Clients", new SelectList(Model.Clients, "Client_Name", "Client_Name"), "Select Client", new { @class = "form-control", id = "client" })
+    </p>
+</div>
+
+<div id="AttyDlg" style="display:none">
+    <p>Attorney: [NO SELECTION = ALL]</p>
+    <p>
+        @Html.DropDownList("Attorneys", new SelectList(Model.Hand_Attys, "Id", "Name"), "Select Attorney", new { @class = "form-control", id = "han_atty" })
     </p>
 </div>
 
@@ -196,13 +204,52 @@
         });
     }
     function ClaimsWithNoPayments() {
-        window.open('/Reports/ClaimsWithNoPayments');
+        $('#AttyDlg').dialog({
+            buttons: [{
+                text: "Run",
+                "id": "run",
+                click: function () {
+                    window.open('/Reports/ClaimsWithNoPayments?atty=' + $('#han_atty').val());
+                    $('#AttyDlg').dialog('close')
+                }
+            }],
+            open: function () {
+            },
+            close: function () {
+            },
+        });
     }
     function ClaimsWithNoPaymentsOver30Days() {
-        window.open('/Reports/ClaimsWithNoPaymentsOver30Days');
+        $('#AttyDlg').dialog({
+            buttons: [{
+                text: "Run",
+                "id": "run",
+                click: function () {
+                    window.open('/Reports/ClaimsWithNoPaymentsOver30Days?atty=' + $('#han_atty').val());
+                    $('#AttyDlg').dialog('close')
+                }
+            }],
+            open: function () {
+            },
+            close: function () {
+            },
+        });
     }
     function ClaimsDormant() {
-        window.open('/Reports/ClaimsDormant');
+        $('#AttyDlg').dialog({
+            buttons: [{
+                text: "Run",
+                "id": "run",
+                click: function () {
+                    window.open('/Reports/ClaimsDormant?atty=' + $('#han_atty').val());
+                    $('#AttyDlg').dialog('close')
+                }
+            }],
+            open: function () {
+            },
+            close: function () {
+            },
+        });
     }
     function PostedDeposits() {
         $('#ToFromDlg').dialog({
