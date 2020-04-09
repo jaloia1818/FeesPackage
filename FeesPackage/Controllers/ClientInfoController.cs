@@ -108,9 +108,10 @@ namespace FeesPackage.Controllers
                 AttyCombos = db.tblAttorneyCombos.ToArray()
                 .Select(c => new ListClass
                 {
-                    Id = c.id.ToString(),
+                    Id = c.Deposit_Options.ToString(),
                     Name = c.Attorney_Combinations
                 })
+                .OrderBy(x => x.Id).ThenBy(x => x.Name)
                 .ToList(),
 
                 Adjusters = db.tblInsurances.ToArray()

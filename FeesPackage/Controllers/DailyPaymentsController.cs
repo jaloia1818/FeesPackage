@@ -336,7 +336,7 @@ namespace FeesPackage.Controllers
 
                 ClaimNumbers = (from cla in db.tblClaims
                                 join clt in db.tblClients on cla.Reference_Number equals clt.id
-                                orderby cla.Claim_Number
+                                orderby clt.Client_Name
                                 select new ListClass()
                                 {
                                     Id = cla.Claim_Number,
