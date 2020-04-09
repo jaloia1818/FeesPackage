@@ -250,7 +250,7 @@ namespace FeesPackage.Controllers
         }
 #else
         // render as PDF for download/print
-        public void ClaimsDormant()
+        public void ClaimsDormant(string atty)
         {
             var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
 
@@ -283,7 +283,7 @@ namespace FeesPackage.Controllers
         }
 #else
         // render as PDF for download/print
-        public void ClaimsWithNoPaymentsOver30Days()
+        public void ClaimsWithNoPaymentsOver30Days(string atty)
         {
             var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
 
@@ -316,7 +316,7 @@ namespace FeesPackage.Controllers
         }
 #else
         // render as PDF for download/print
-        public void ClaimsWithNoPayments()
+        public void ClaimsWithNoPayments(string atty)
         {
             var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
 
