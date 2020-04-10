@@ -268,6 +268,10 @@
             $("#jqxgrid").jqxGrid('begincelledit', 0, 'Claim_Number');
         });
 
+        const sleep = (milliseconds) => {
+            return new Promise(resolve => setTimeout(resolve, milliseconds))
+        }
+
         $("#jqxgrid").jqxGrid(
         {
             theme: 'energyblue',
@@ -288,25 +292,32 @@
             columns: [
                 { text: 'id', datafield: 'id', filtertype: 'checkedlist', editable: false },
                 { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist',
-                    columntype: 'dropdownlist',
+                    columntype: 'combobox',
                     createeditor: function (row, column, editor) {
-                        editor.jqxDropDownList({
-                            dropDownHeight: 350,
-                            dropDownWidth: 350,
-                            incrementalSearch: true,
-                            searchMode: 'containsignorecase',
-                            source: locallistbAdapter,
-                            displayMember: 'Id',
-                            valueMember: 'Name',
-                            filterable: false,
-                            placeHolder: 'Choose ...',
-                            renderer: function (index, label, value) {
-                                var item = editor.jqxDropDownList('getSelectedItem');
-                                return label + ' - ' + value;
-                            }
-                        });
+                        $('html').css('cursor', 'wait');
+                        $("#jqxgrid").jqxGrid({ disabled: true});
+
+                        sleep(500).then(() => {
+                            editor.jqxComboBox({
+                                autoOpen: true,
+                                dropDownHeight: 350,
+                                dropDownWidth: 350,
+                                searchMode: 'startswithignorecase',
+                                source: locallistbAdapter,
+                                displayMember: 'Name',
+                                valueMember: 'Id',
+                                placeHolder: 'Choose ...',
+                                renderer: function (index, label, value) {
+                                    //var item = editor.jqxComboBox('getSelectedItem');
+                                    return label + ' - ' + value;
+                                }
+                            });
+
+                            $("#jqxgrid").jqxGrid({ disabled: false });
+                            $('html').css('cursor', 'default');
+                        }, 1000);
                         editor.on('close', function (event) {
-                            var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                            //var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
                             // this will lose focus on current dropdownlist, firing onChange event on this row
                             //setTimeout(function () { $("#jqxgrid").jqxGrid('begincelledit', sel, 'id'); }, 10);
                         });
@@ -343,7 +354,18 @@
                     }
                 },
                 { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center', columntype: 'checkbox', editable: false, hidden: true },
-                { text: 'Comment', datafield: 'Comment', filtertype: 'checkedlist', align: 'center' }
+                { text: 'Comment', datafield: 'Comment', filtertype: 'checkedlist', align: 'center' },
+/*                { text: 'Edit', datafield: 'Edit', columntype: 'button',
+			        cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+				        return 'Delete';
+			        },
+			        buttonclick: function () {
+				        var rowIndex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                        var rowId = $("#jqxgrid").jqxGrid('getrowid', rowIndex);
+                        alert(rowIndex + " - " + rowId);
+				        //$("#jqxgrid").jqxGrid('deleterow', rowId);
+			        }
+		        }*/
             ]
             });
 
