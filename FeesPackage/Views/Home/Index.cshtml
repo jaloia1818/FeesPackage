@@ -110,15 +110,15 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'Case', datafield: 'case', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Party Name', datafield: 'party_name', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Code', datafield: 'code', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Case', datafield: 'case', filtertype: 'checkedlist', cellsalign: 'center', width: 60, align: 'center' },
+                { text: 'Party Name', datafield: 'party_name', filtertype: 'checkedlist', width: 200, align: 'center' },
+                { text: 'Code', datafield: 'code', filtertype: 'checkedlist', width: 50, align: 'center' },
                 { text: 'Description', datafield: 'description', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Assigned', datafield: 'assigned', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Due Date', datafield: 'due_date', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Status', datafield: 'status', filtertype: 'checkedlist', align: 'center' },
-                { text: 'S/R', datafield: 'repeat_period', filtertype: 'checkedlist', align: 'center', cellsalign: 'center' },
-                { text: 'Lim', datafield: 'date_limcreated', filtertype: 'checkedlist', align: 'center' }
+                { text: 'Assigned', datafield: 'assigned', filtertype: 'checkedlist', width: 75, align: 'center' },
+                { text: 'Due Date', datafield: 'due_date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 95, align: 'center' },
+                { text: 'Status', datafield: 'status', filtertype: 'checkedlist', width: 60, align: 'center' },
+                { text: 'S/R', datafield: 'repeat_period', filtertype: 'checkedlist', width: 40, align: 'center', cellsalign: 'center' },
+                { text: 'Lim', datafield: 'date_limcreated', filtertype: 'checkedlist', width: 40, align: 'center' }
             ]
         });
 

@@ -159,15 +159,15 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', filtertype: 'checkedlist', editable: false },
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', width: 75, align: 'center', editable: false },
                 { text: 'Client Name', datafield: 'Client_Name', filtertype: 'checkedlist', align: 'center' },
                 { text: 'Employer Name', datafield: 'Employer_Name', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Escrow %', datafield: 'Escrow', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Handling Atty', datafield: 'Handling_Atty', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Handling %', datafield: 'Handling', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Credit Atty', datafield: 'Credit_Atty', filtertype: 'checkedlist', align: 'center' },
-                { text: 'Credit %', datafield: 'Credit', filtertype: 'checkedlist', align: 'center' },
-                { text: 'County', datafield: 'County', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Escrow %', datafield: 'Escrow', filtertype: 'checkedlist', width: 80, cellsalign: 'center', align: 'center' },
+                { text: 'Handling Atty', datafield: 'Handling_Atty', filtertype: 'checkedlist', width: 105, cellsalign: 'center', align: 'center' },
+                { text: 'Handling %', datafield: 'Handling', filtertype: 'checkedlist', width: 95, cellsalign: 'center', align: 'center' },
+                { text: 'Credit Atty', datafield: 'Credit_Atty', filtertype: 'checkedlist', width: 105, cellsalign: 'center', align: 'center' },
+                { text: 'Credit %', datafield: 'Credit', filtertype: 'checkedlist', width: 95, cellsalign: 'center', align: 'center' },
+                { text: 'County', datafield: 'County', filtertype: 'checkedlist', width: 65, cellsalign: 'center', align: 'center' },
                 { text: 'Accident Desc', datafield: 'Accident_Desc', filtertype: 'checkedlist', align: 'center' }
             ]
         });

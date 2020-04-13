@@ -21,8 +21,8 @@
                 </h3>
             </div>
             <div class="module-body table">
-                <span>Search: </span>
-                <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
+                <span style="margin-left: 10px; font-weight: bold; color: black">Search: </span>
+                <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" autofocus />
                 <button id="addrowbutton" style="float: right">+</button>
                 <button id="PostPayments" style="float: right">Post Payments</button>
                 <button id="UnmatchedDepositsPrint" style="float: right">Unmatched Deposits</button>
@@ -290,8 +290,8 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', filtertype: 'checkedlist', editable: false },
-                { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist',
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', align: 'center', width: 57, editable: false },
+                { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist', width: 180, align: 'center',
                     columntype: 'combobox',
                     createeditor: function (row, column, editor) {
                         $('html').css('cursor', 'wait');
@@ -323,12 +323,12 @@
                         });
                     }
                 },
-                { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
-                { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
-                { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
-                { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c2', align: 'center' },
-                { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
-                { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', align: 'center',
+                { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c2', width: 83, align: 'center' },
+                { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', width: 65, align: 'center',
                     columntype: 'combobox',
                     createeditor: function (row, column, editor) {
                         editor.jqxComboBox({
@@ -400,6 +400,7 @@
         }
 
         $("#search").typeWatch(options);
+        $("#search").focus();
     }
 
     function getCookie(cname) {
