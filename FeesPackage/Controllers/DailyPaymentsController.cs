@@ -327,6 +327,7 @@ namespace FeesPackage.Controllers
                                          .OrderByDescending(x => x.id).ToList(),
 
                 AttyCombos = db.tblAttorneyCombos.ToArray()
+                .OrderBy(x => x.Attorney_Combinations)
                 .Select(c => new ListClass
                 {
                     Id = c.Deposit_Options.ToString(),

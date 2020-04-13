@@ -329,25 +329,24 @@
                 { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c2', align: 'center' },
                 { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yy', align: 'center', columntype: 'datetimeinput' },
                 { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', align: 'center',
-                    columntype: 'dropdownlist',
+                    columntype: 'combobox',
                     createeditor: function (row, column, editor) {
-                        editor.jqxDropDownList({
+                        editor.jqxComboBox({
+                            autoOpen: true,
                             dropDownHeight: 350,
                             dropDownWidth: 150,
-                            incrementalSearch: true,
-                            searchMode: 'containsignorecase',
+                            searchMode: 'startswithignorecase',
                             source: locallistaAdapter,
-                            displayMember: 'Id',
-                            valueMember: 'Name',
-                            filterable: false,
+                            displayMember: 'Name',
+                            valueMember: 'Id',
                             placeHolder: 'Choose ...',
                             renderer: function (index, label, value) {
-                                var item = editor.jqxDropDownList('getSelectedItem');
+                                //var item = editor.jqxComboBox('getSelectedItem');
                                 return label + ' - ' + value;
                             }
                         });
                         editor.on('close', function (event) {
-                            var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                            //var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
                             // this will lose focus on current dropdownlist, firing onChange event on this row
                             //setTimeout(function () { $("#jqxgrid").jqxGrid('begincelledit', sel, 'id'); }, 10);
                         });
