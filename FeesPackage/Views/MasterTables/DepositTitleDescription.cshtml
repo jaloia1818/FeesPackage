@@ -49,9 +49,9 @@
             updaterow: function (rowid, rowdata, commit) {
                 if (!inUpdate) {
                     $.post('/masterTables/DepositTitleDescription', rowdata, function (data, status, jqXHR) {
-                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
+                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(data)) {
                             inUpdate = true;
-                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
+                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(data));
                             inUpdate = false;
                         }
                         commit(true);

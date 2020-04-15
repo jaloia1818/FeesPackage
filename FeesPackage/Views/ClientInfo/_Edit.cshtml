@@ -216,7 +216,7 @@
     // setup edit dialog
     $("#insuranceContactDlg").dialog({
         autoOpen: false,
-        width: 920,
+        width: 1350,
         position: 'center top',
         resizable: false,
         modal: true,
@@ -261,7 +261,7 @@
     // setup edit dialog
     $("#referralSrcDlg").dialog({
         autoOpen: false,
-        width: 920,
+        width: 1345,
         position: 'center top',
         resizable: false,
         modal: true,
@@ -293,12 +293,9 @@
 
     // create new row.
     $("#addclaimrowbutton").on('click', function () {
-        // add empty row in first position
-        $("#claims").jqxGrid('addrow', null, { /*Payment_Frequency: 'W', Status_Code: 'A'*/ }, 'first');
-        // defaults
+        // add empty row with defaults in first row
         inUpdate = true;
-        $("#claims").jqxGrid('setcellvaluebyid', 0, 'Payment_Frequency', 'W');
-        $("#claims").jqxGrid('setcellvaluebyid', 0, 'Status_Code', 'A');
+        $("#claims").jqxGrid('addrow', null, { Payment_Frequency: 'W', Status_Code: 'A' }, 'first');
         inUpdate = false;
         // begin editting newly added row, first column
         $("#claims").jqxGrid('begincelledit', 0, 'Claim_Number');
@@ -367,14 +364,14 @@
         updaterow: function (rowid, rowdata, commit) {
             if (!inUpdate) {
                 $.post('/ClientInfo/SaveClaim', { data: rowdata, ref_no: id }, function (data, status, jqXHR) {
-                    if ($("#claims").jqxGrid('getcellvaluebyid', rowid, 'Reference_Number') != jqXHR.statusText) {
+                    if ($("#claims").jqxGrid('getcellvaluebyid', rowid, 'Reference_Number') != parseInt(data)) {
                         inUpdate = true;
-                        $("#claims").jqxGrid('setcellvaluebyid', rowid, 'Reference_Number', jqXHR.statusText);
+                        $("#claims").jqxGrid('setcellvaluebyid', rowid, 'Reference_Number', parseInt(data));
                         inUpdate = false;
                     }
                     commit(true);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus + ': ' + errorThrown);
+                    alert(textStatus + ': ' + jqXHR.responseText);
                 });
             }
         },
@@ -625,14 +622,14 @@
         updaterow: function (rowid, rowdata, commit) {
             if (!inUpdate) {
                 $.post('/ClientInfo/SaveClientReferral', { data: rowdata, ref_no: id }, function (data, status, jqXHR) {
-                    if ($("#clientReferrals").jqxGrid('getcellvaluebyid', rowid, 'id') != jqXHR.statusText) {
+                    if ($("#clientReferrals").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(data)) {
                         inUpdate = true;
-                        $("#clientReferrals").jqxGrid('setcellvaluebyid', rowid, 'id', jqXHR.statusText);
+                        $("#clientReferrals").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(data));
                         inUpdate = false;
                     }
                     commit(true);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus + ': ' + errorThrown);
+                    alert(textStatus + ': ' + jqXHR.responseText);
                 });
             }
         },

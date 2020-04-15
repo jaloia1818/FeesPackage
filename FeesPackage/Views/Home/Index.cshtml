@@ -45,20 +45,7 @@
         var source =
         {
             dataType: "json",
-            updaterow: function (rowid, rowdata, commit) {
-                if (!inUpdate) {
-                    $.post('/ClientInfo', rowdata, function (data, status, jqXHR) {
-                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
-                            inUpdate = true;
-                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
-                            inUpdate = false;
-                        }
-                        commit(true);
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        alert(textStatus + ': ' + errorThrown);
-                    });
-                }
-            },
+            // NO UPDATEROW, Needles is read-only for now
             dataFields: [
                 { name: 'case', type: 'int' },
                 { name: 'party_name', type: 'string' },

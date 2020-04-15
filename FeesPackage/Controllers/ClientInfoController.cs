@@ -78,7 +78,7 @@ namespace FeesPackage.Controllers
 
                 ClientReferrals = new List<tblClientReferral>(),
 
-                Claims = new List<qryClaim>(),
+                Claims = new List<tblClaim>(),
 
                 Payments = new List<tblPayment>(),
 
@@ -193,7 +193,7 @@ namespace FeesPackage.Controllers
             }
 
             // refresh screen
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         [HttpPost]
@@ -236,7 +236,7 @@ namespace FeesPackage.Controllers
             }
 
             // refresh screen
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.Reference_Number.ToString());
+            return Content(model.Reference_Number.ToString());
         }
 
         [HttpPost]
@@ -288,7 +288,7 @@ namespace FeesPackage.Controllers
             {
                 Client = db.tblClients.SingleOrDefault(x => x.id == id),
 
-                Claims = db.qryClaims.Where(x => x.Reference_Number == id).ToList(),
+                Claims = db.tblClaims.SqlQuery("select * from tblClaim where reference_number = " + id).ToList(),
                 
                 ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
 

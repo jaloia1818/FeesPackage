@@ -49,9 +49,9 @@
             updaterow: function (rowid, rowdata, commit) {
                 if (!inUpdate) {
                     $.post('/masterTables/insuranceinfo', rowdata, function (data, status, jqXHR) {
-                        if ($("#insuranceContact").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
+                        if ($("#insuranceContact").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(data)) {
                             inUpdate = true;
-                            $("#insuranceContact").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
+                            $("#insuranceContact").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(data));
                             inUpdate = false;
                         }
                         commit(true);

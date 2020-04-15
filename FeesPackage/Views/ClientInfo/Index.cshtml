@@ -85,20 +85,7 @@
         var source =
         {
             dataType: "json",
-            updaterow: function (rowid, rowdata, commit) {
-                if (!inUpdate) {
-                    $.post('/ClientInfo', rowdata, function (data, status, jqXHR) {
-                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(jqXHR.statusText)) {
-                            inUpdate = true;
-                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(jqXHR.statusText));
-                            inUpdate = false;
-                        }
-                        commit(true);
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        alert(textStatus + ': ' + errorThrown);
-                    });
-                }
-            },
+            // NO UPDATEROW, posted from form
             dataFields: [
                 { name: 'id', type: 'int' },
                 { name: 'Client_Name', type: 'string' },

@@ -17,7 +17,7 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCodeResult Attorney(tblAttorney model)
+        public ActionResult Attorney(tblAttorney model)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace FeesPackage.Controllers
             }
 
             // return Status OK
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         [HttpGet]
@@ -59,7 +59,7 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCodeResult AttorneyCombo(tblAttorneyCombo model)
+        public ActionResult AttorneyCombo(tblAttorneyCombo model)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace FeesPackage.Controllers
             }
 
             // return Status OK
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         [HttpGet]
@@ -101,7 +101,7 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCodeResult DepositTitleDescription(tblAttyDesc model)
+        public ActionResult DepositTitleDescription(tblAttyDesc model)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace FeesPackage.Controllers
             }
 
             // return Status OK
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         [HttpGet]
@@ -143,7 +143,7 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCodeResult County(tblCounty model)
+        public ActionResult County(tblCounty model)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace FeesPackage.Controllers
             }
 
             // return Status OK
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         [HttpGet]
@@ -190,7 +190,7 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCodeResult Referral(tblReferral model)
+        public ActionResult Referral(tblReferral model)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace FeesPackage.Controllers
             }
 
             // return Status OK
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         [HttpGet]
@@ -256,8 +256,8 @@ namespace FeesPackage.Controllers
             {
                 Referrals = db.tblReferrals.OrderByDescending(x => x.id).ToList(),
 
-                Attys = db.tblAttorneys
-                .ToArray()
+                Attys = db.tblAttorneys.ToArray()
+                .OrderBy(x => x.Atty_Initials)
                 .Select(c => new ListClass
                 {
                     Id = c.Atty_Initials.ToString(),
@@ -270,7 +270,7 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCodeResult InsuranceInfo(tblInsurance model)
+        public ActionResult InsuranceInfo(tblInsurance model)
         {
             try
             {
@@ -304,7 +304,7 @@ namespace FeesPackage.Controllers
             }
 
             // return Status OK
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         [HttpGet]

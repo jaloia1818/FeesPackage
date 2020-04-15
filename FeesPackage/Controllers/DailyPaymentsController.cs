@@ -272,7 +272,7 @@ namespace FeesPackage.Controllers
 #endif
 
         [HttpPost]
-        public HttpStatusCodeResult Index(tblPayment model, FormCollection coll)
+        public ActionResult Index(tblPayment model, FormCollection coll)
         {
             model.Payment_Date = ToDate(coll["Payment_Date"]);
             model.Period_From = ToDate(coll["Period_From"]);
@@ -315,7 +315,7 @@ namespace FeesPackage.Controllers
             }
 
             // return Status OK
-            return new HttpStatusCodeResult(HttpStatusCode.OK, model.id.ToString());
+            return Content(model.id.ToString());
         }
 
         // GET: DailyPayments
