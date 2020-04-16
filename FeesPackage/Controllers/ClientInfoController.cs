@@ -278,7 +278,7 @@ namespace FeesPackage.Controllers
             }
 
             // refresh screen
-            return Redirect(Request.UrlReferrer.ToString());
+            return Content(model.id.ToString());    //Redirect(Request.UrlReferrer.ToString());
         }
 
         [HttpPost]

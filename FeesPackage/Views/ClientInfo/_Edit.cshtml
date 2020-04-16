@@ -8,7 +8,13 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Client.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Client.id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Client.Client_Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -123,7 +129,7 @@
 
         <div class="form-group" style="float:right">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input id="Save" type="button" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -196,6 +202,26 @@
     $('#printBtn').click(function () {
         window.open('/ClientInfo/Print?id= + @Model.Client.id');
     });
+
+    $('textarea, input, select').change(function () {
+        //$('form').submit();
+        $.post('/ClientInfo/Save', $('form textarea,form input,form select').toArray(), function (data, status, jqXHR) {
+            if ($("#Client_id").val() != parseInt(data)) {
+                $("#Client_id").val(parseInt(data));
+                id = parseInt(data);
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
+    });
+
+    setTimeout(function () {
+        $('#Client_Client_Name').focus();
+    }, 1000);
+
+    $('#Save').click(function () {
+        $('#ClientDlg').dialog('close');
+    })
 </script>
 
 <script>
