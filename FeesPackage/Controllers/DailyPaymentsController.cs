@@ -134,6 +134,27 @@ namespace FeesPackage.Controllers
             return model;
         }
 
+        // POST: Delete
+        [HttpPost]
+        public ActionResult Delete(int Id)
+        {
+            try
+            {
+                // get original record for unedited fields
+                tblPayment record = db.tblPayments.Where(x => x.id == Id).Single();
+
+                // Delete record
+                db.Entry(record).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+
+            return Json(new { isDeleted = true });
+        }
+
         // POST: PostPayments
         [HttpPost]
         public JsonResult PostPayments(DateTime fromDate, DateTime toDate)

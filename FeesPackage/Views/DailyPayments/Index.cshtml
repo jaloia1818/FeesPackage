@@ -354,25 +354,51 @@
                 },
                 { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center', columntype: 'checkbox', editable: false, hidden: true },
                 { text: 'Comment', datafield: 'Comment', filtertype: 'checkedlist', align: 'center' },
-/*                { text: 'Edit', datafield: 'Edit', columntype: 'button',
-			        cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
-				        return 'Delete';
-			        },
-			        buttonclick: function () {
-				        var rowIndex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                        var rowId = $("#jqxgrid").jqxGrid('getrowid', rowIndex);
-                        alert(rowIndex + " - " + rowId);
-				        //$("#jqxgrid").jqxGrid('deleterow', rowId);
+                { text: 'X', width: 24, align: 'center', filterable: false, sortable: false,
+                    cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                        return '<img src="/Content/images/delete.png" style="height:18px; padding:6px 4px;" />';
 			        }
-		        }*/
+		        }
             ]
             });
 
-        $("#jqxgrid").on('cellendedit', function (event)
-        {
+        $("#jqxgrid").on('cellendedit', function (event) {
             // column data field.
             if (event.args.datafield == 'Comment' && addRow)
                 setTimeout(function () { $("#addrowbutton").click(); }, 1);
+        });
+
+        $("#jqxgrid").on('cellclick', function (event) {
+            // event arguments.
+            var args = event.args;
+            // row's bound index.
+            var rowBoundIndex = args.rowindex;
+            // row's visible index.
+            var rowVisibleIndex = args.visibleindex;
+            // right click.
+            var rightclick = args.rightclick;
+            // original event.
+            var ev = args.originalEvent;
+            // column index.
+            var columnindex = args.columnindex;
+            // column data field.
+            var dataField = args.datafield;
+            // cell value
+            var value = args.value;
+
+            if (args.columnindex == 10) {
+                setTimeout(function () {
+                    var rowIndex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                    var rowId = $("#jqxgrid").jqxGrid('getrowid', rowIndex);
+                    var data = $('#jqxgrid').jqxGrid('getrowdata', rowIndex);
+
+                    $.post('/DailyPayments/Delete', { Id: data.id }, function (data, status, jqXHR) {
+                        $("#jqxgrid").jqxGrid('deleterow', rowId);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ': ' + errorThrown);
+                    });
+                }, 100);
+            }
         });
 
         var options = {

@@ -246,6 +246,7 @@
     <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\css\theme.css" />
     <Content Include="Content\images\bg.png" />
+    <Content Include="Content\images\delete.png" />
     <Content Include="Content\images\icons\css\font-awesome.css" />
     <Content Include="Content\images\img.jpg" />
     <Content Include="Content\images\jquery-ui\picker.png" />
