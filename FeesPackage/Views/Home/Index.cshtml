@@ -33,6 +33,12 @@
 </div>
 <!--/.span9-->
 
+<style>
+    .disabled {
+        background-color: #e0e9f5;
+    }
+</style>
+
 <script>
     var groups = [];
     var id;
@@ -97,7 +103,7 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'Case', datafield: 'case', filtertype: 'checkedlist', cellsalign: 'center', width: 60, align: 'center' },
+                { text: 'Case', datafield: 'case', filtertype: 'checkedlist', cellsalign: 'center', width: 60, align: 'center', cellclassname: "disabled" },
                 { text: 'Party Name', datafield: 'party_name', filtertype: 'checkedlist', width: 200, align: 'center' },
                 { text: 'Code', datafield: 'code', filtertype: 'checkedlist', width: 50, align: 'center' },
                 { text: 'Description', datafield: 'description', filtertype: 'checkedlist', align: 'center' },

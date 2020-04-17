@@ -35,6 +35,12 @@
 </div>
 <!--/.span9-->
 
+<style>
+    .disabled {
+        background-color: #e0e9f5;
+    }
+</style>
+
 <script>
     var groups = [];
 
@@ -120,7 +126,7 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', width: 75, align: 'center', editable: false },
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', width: 75, align: 'center', editable: false, cellclassname: "disabled" },
                 { text: 'Referral Name', datafield: 'Referral_Name', filtertype: 'checkedlist', align: 'center' },
                 { text: 'Referral Firm', datafield: 'Referral_Firm', filtertype: 'checkedlist', align: 'center' },
                 { text: 'Referral Tax ID', datafield: 'Referral_Tax_ID', filtertype: 'checkedlist', align: 'center' },

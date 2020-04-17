@@ -54,6 +54,9 @@
         text-align: center;
         vertical-align: middle;
     }
+    .disabled {
+        background-color: #e0e9f5;
+    }
 </style>
 
 <script>
@@ -290,7 +293,7 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', align: 'center', width: 57, editable: false },
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', align: 'center', width: 57, editable: false, cellclassname: "disabled" },
                 { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist', width: 180, align: 'center',
                     columntype: 'combobox',
                     createeditor: function (row, column, editor) {
@@ -356,7 +359,7 @@
                 { text: 'Comment', datafield: 'Comment', filtertype: 'checkedlist', align: 'center' },
                 { text: 'X', width: 24, align: 'center', filterable: false, sortable: false,
                     cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
-                        return '<img src="/Content/images/delete.png" style="height:18px; padding:6px 4px;" />';
+                        return '<img src="/Content/images/delete.png" style="height:18px; padding:6px 4px;background-color:yellow;" />';
 			        }
 		        }
             ]

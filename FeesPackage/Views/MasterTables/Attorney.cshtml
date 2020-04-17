@@ -35,6 +35,12 @@
 </div>
 <!--/.span9-->
 
+<style>
+    .disabled {
+        background-color: #e0e9f5;
+    }
+</style>
+
 <script>
     var groups = [];
 
@@ -105,7 +111,7 @@
             ready: function () { setup(); },
             columnsresize: true,
             columns: [
-                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', width: 75, align: 'center', editable: false },
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', width: 75, align: 'center', editable: false, cellclassname: "disabled" },
                 { text: 'Attorney Contact', datafield: 'Atty_Initials', filtertype: 'checkedlist', cellsalign: 'center', width: 130, align: 'center', align: 'center' },
                 { text: 'Attorney Name', datafield: 'Atty_Name', filtertype: 'checkedlist', align: 'center' }
             ]
