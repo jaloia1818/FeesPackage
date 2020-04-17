@@ -562,6 +562,9 @@
     <Content Include="Content\scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Content\scripts\jquery.dataTables.js" />
     <Content Include="Content\scripts\typewatch\jquery.typewatch.js" />
+    <Content Include="Content\webfonts\fa-brands-400.svg" />
+    <Content Include="Content\webfonts\fa-regular-400.svg" />
+    <Content Include="Content\webfonts\fa-solid-900.svg" />
     <Content Include="Data_Access\FeesPackage.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FeesPackage.edmx</DependentUpon>
@@ -590,6 +593,18 @@
     <Content Include="Content\images\icons\font\fontawesome-webfont3294.woff" />
     <Content Include="Content\images\icons\font\fontawesome-webfontd41d.eot" />
     <Content Include="Content\jqwidgets\css\images\Thumbs.db" />
+    <Content Include="Content\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\webfonts\fa-solid-900.woff2" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
