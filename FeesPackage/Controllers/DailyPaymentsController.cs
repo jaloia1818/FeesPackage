@@ -362,7 +362,7 @@ namespace FeesPackage.Controllers
                                 select new ListClass()
                                 {
                                     Id = cla.Claim_Number,
-                                    Name = clt.Client_Name
+                                    Name = clt.Client_Name + " - " + cla.Claim_Number
                                 }
                 ).ToList()
             };

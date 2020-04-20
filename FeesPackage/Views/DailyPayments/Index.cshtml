@@ -305,15 +305,11 @@
                                 autoOpen: true,
                                 dropDownHeight: 350,
                                 dropDownWidth: 350,
-                                searchMode: 'startswithignorecase',
+                                searchMode: 'containsignorecase',
                                 source: locallistbAdapter,
                                 displayMember: 'Name',
                                 valueMember: 'Id',
-                                placeHolder: 'Choose ...',
-                                renderer: function (index, label, value) {
-                                    //var item = editor.jqxComboBox('getSelectedItem');
-                                    return label + ' - ' + value;
-                                }
+                                placeHolder: 'Choose ...'
                             });
 
                             $("#jqxgrid").jqxGrid({ disabled: false });
