@@ -12,6 +12,7 @@ namespace FeesPackage.Models
         public List<ListClass> Attys { get; set; }
         public List<ListClass> Hand_Attys { get; set; }
         public List<ListClass> ReferralwithClients { get; set; }
+        public List<ListClass> Referrals { get; set; }
         public List<ListClass> AttyCombos { get; set; }
         public List<ListClass> Adjusters { get; set; }
         public List<ListClass> Frequencys { get; set; }

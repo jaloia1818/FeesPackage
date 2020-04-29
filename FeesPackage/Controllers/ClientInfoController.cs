@@ -291,6 +291,13 @@ namespace FeesPackage.Controllers
                 Claims = db.tblClaims.SqlQuery("select * from tblClaim where reference_number = " + id).ToList(),
                 
                 ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
+                Referrals = db.tblReferrals.ToList()
+                .Select(c => new ListClass
+                {
+                    Id = c.Referral_Name,
+                    Name = c.Referral_Name
+                })
+                .ToList(),
 
                 Payments = 
                     (from clt in db.tblClients
