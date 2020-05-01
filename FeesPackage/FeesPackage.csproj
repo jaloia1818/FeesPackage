@@ -219,6 +219,7 @@
     <Compile Include="Models\ClientInfoModel.cs" />
     <Compile Include="Models\DailyDeposits.cs" />
     <Compile Include="Models\ClaimsWithNoPayments.cs" />
+    <Compile Include="Models\Needles_Case.cs" />
     <Compile Include="Models\ReferralEscrowModel.cs" />
     <Compile Include="Models\MonthlyIncome.cs" />
     <Compile Include="Models\UnmatchedDeposits.cs" />

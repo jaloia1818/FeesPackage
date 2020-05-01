@@ -1,7 +1,10 @@
 using FeesPackage.Data_Access;
 
-public class ClaimsWithNoPayments
+namespace FeesPackage.Models
 {
-    public tblClient Client { get; set; }
-    public tblClaim Claim { get; set; }
+    public class ClaimsWithNoPayments
+    {
+        public tblClient Client { get; set; }
+        public tblClaim Claim { get; set; }
+    }
 }

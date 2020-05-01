@@ -1,8 +1,8 @@
+using System;
+
 namespace FeesPackage.Models
 {
-    using System;
-    
-    public partial class DailyDetail
+    public class DailyDetail
     {
         public string Claim_Number { get; set; }
         public string Client_Name { get; set; }

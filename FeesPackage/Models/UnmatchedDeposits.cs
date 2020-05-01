@@ -1,8 +1,8 @@
+using System;
+    
 namespace FeesPackage.Models
 {
-    using System;
-    
-    public partial class UnmatchedDeposits
+    public class UnmatchedDeposits
     {
         public DateTime? Input_Date { get; set; }
         public string Claim_Number { get; set; }

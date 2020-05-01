@@ -1,9 +1,8 @@
+using System;
+
 namespace FeesPackage.Models
 {
-    using System;
-    using System.Data.SqlTypes;
-
-    public partial class DailyDeposits
+    public class DailyDeposits
     {
         public string Deposit_Breakdown { get; set; }
         public Decimal Total { get; set; }

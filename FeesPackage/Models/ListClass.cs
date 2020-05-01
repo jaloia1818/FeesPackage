@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FeesPackage.Models
+﻿namespace FeesPackage.Models
 {
     public class ListClass
     {
