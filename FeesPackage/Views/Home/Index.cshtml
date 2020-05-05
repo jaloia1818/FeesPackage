@@ -61,7 +61,7 @@
                 { name: 'due_date', type: 'date' },
                 { name: 'status', type: 'string' },
                 { name: 'repeat_period', type: 'string' },
-                { name: 'lim', type: 'string' }
+                { name: 'lim_stat', type: 'string' }
             ],
             id: 'insurance',
             localdata: data
@@ -84,6 +84,9 @@
 
         $('#jqxgrid').on('bindingcomplete', function (event) {
         });
+
+        var cellsrenderer = function (row, column, value, defaultHtml, columnSettings, record) {
+        }
 
         $("#jqxgrid").jqxGrid(
         {
@@ -111,7 +114,7 @@
                 { text: 'Due Date', datafield: 'due_date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 95, align: 'center' },
                 { text: 'Status', datafield: 'status', filtertype: 'checkedlist', width: 60, align: 'center' },
                 { text: 'S/R', datafield: 'repeat_period', filtertype: 'checkedlist', width: 40, align: 'center', cellsalign: 'center' },
-                { text: 'Lim', datafield: 'date_limcreated', filtertype: 'checkedlist', width: 40, align: 'center' }
+                { text: 'Lim', datafield: 'lim_stat', filtertype: 'checkedlist', width: 40, align: 'center', cellsalign: 'center' }
             ]
         });
 

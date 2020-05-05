@@ -226,6 +226,7 @@
     <Compile Include="Models\DailyDetail.cs" />
     <Compile Include="Models\ListClass.cs" />
     <Compile Include="Models\ReferralModel.cs" />
+    <Compile Include="Models\User_Case_Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

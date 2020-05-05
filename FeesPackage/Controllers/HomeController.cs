@@ -33,14 +33,14 @@ namespace FeesPackage.Controllers
                         , cl.due_date
                         , cl.status
                         , cl_d.repeat_period
-                        , cl_d.lim
+                        , cases.lim_stat
                     from case_checklist cl
                     inner join checklist_dir cl_d on cl_d.matcode = cl.matcode and cl_d.code = cl.code
                     inner join cases on cases.casenum = cl.case_id
                     inner join party on party.case_id = cases.casenum
                     inner join names on names.names_id = party.party_id and names.name_location = party.party_id_location and party.our_client = 'Y'
-                    where cl.staff_assigned = 'KALAI' and cl.status = 'Open'
-                    order by cl.due_date desc";
+                    where cl.staff_assigned = 'KALAI' and cl.status = 'Open' and cl.code = 'FEE'
+                    order by cl.due_date asc";
             SADataReader myDataReader = myCommand.ExecuteReader();
 
             DataSet dsChecklist = new DataSet();
