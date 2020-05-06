@@ -291,7 +291,7 @@ namespace FeesPackage.Controllers
                 Claims = db.tblClaims.SqlQuery("select * from tblClaim where reference_number = " + id).ToList(),
                 
                 ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
-                Referrals = db.tblReferrals.ToList()
+                Referrals = db.tblReferrals.OrderBy(x => x.Referral_Name).ToList()
                 .Select(c => new ListClass
                 {
                     Id = c.Referral_Name,
