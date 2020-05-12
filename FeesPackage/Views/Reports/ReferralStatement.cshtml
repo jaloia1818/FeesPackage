@@ -62,7 +62,7 @@
         table.superscore {
             border-top: 1px solid #000;
         }
-        span.huge {
+        .huge {
             font-size: 50pt;
         }
         td:nth-child(1),
@@ -79,7 +79,7 @@
     <div style="max-width: 1200px;">
         @foreach (var grp in Model.ReferralEscrow.OrderBy(x => x.Key))
         {
-            <div class="title center"><span class="huge">Martin</span>LLC</div>
+            <div class="title center huge">Martin LLC</div>
             @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
             <div class="title">
                 Referral Statement[@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
@@ -98,10 +98,10 @@
             <div style="page-break-after:always"></div>
             foreach (var frm in grp.GroupBy(x => x.Referral_Firm).OrderBy(x => x.Key))
             {
-                <div class="title center"><span class="huge">Martin</span>LLC</div>
+                <div class="title center huge">Martin LLC</div>
                 @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
                 <div class="title">
-                    Referral Statement[@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
+                    Referral Statement [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
                 </div>
                 <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
                 <br />
@@ -130,10 +130,10 @@
                 }
             }
         }
-        <div class="title center"><span class="huge">Martin</span>LLC</div>
+        <div class="title center huge">Martin LLC</div>
         @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
         <div class="title">
-            Referral Statement[@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
+            Referral Statement [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]
         </div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         <br />

@@ -25,6 +25,7 @@ namespace FeesPackage.Controllers
                      join cla in db.tblClaims on clt.id equals cla.Reference_Number
                      join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
                      where clt.id == id
+                     orderby pay.Period_From
                      select pay
                     ).ToList(),
             };
@@ -50,7 +51,7 @@ namespace FeesPackage.Controllers
             var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
             {
                 PageFooterHtml = footerHtml,
-                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 1, Right = 1 },
+                Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
                 Size = NReco.PdfGenerator.PageSize.Letter
             };
 

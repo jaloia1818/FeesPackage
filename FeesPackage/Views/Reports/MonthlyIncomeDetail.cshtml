@@ -63,8 +63,8 @@
         td.underscore {
             text-decoration: underline;
         }
-        span.huge {
-            font-size: 25pt;
+        .huge {
+            font-size: 28pt;
         }
         td.indent {
             padding-left: 50px;
@@ -72,6 +72,7 @@
         td.indent2 {
             padding-left: 25px;
         }
+
         td:nth-child(1) {
             min-width: 460px;
         }
@@ -82,6 +83,13 @@
         td:nth-child(6) {
             min-width: 130px;
         }
+        .center {
+            text-align: center;
+        }
+
+        .large {
+            font-size: 24pt;
+        }
     </style>
 
     <div style="max-width: 1200px;">
@@ -90,8 +98,8 @@
             foreach (var atty in grp.GroupBy(x => x.Client.Credit_Atty + "/" + x.Client.Handling_Atty).OrderBy(x => x.Key))
             {
                 @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
-                <div class="title"><span class="huge">Martin</span>LLC</div>
-                <div class="title">Income Detail Report [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
+                <div class="title huge">Martin LLC</div>
+                <div class="title large">Income Detail Report [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
                 <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
                 @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
                 <br />
@@ -136,8 +144,9 @@
             }
         }
         @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
-        <div class="title"><span class="huge">Martin</span>LLC</div>
-        <div class="title">Income Detail Report [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
+        <div class="title huge">Martin LLC</div>
+        <br />
+        <div class="title large">Income Detail Report [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         @Html.Raw("══════════════════════════════════════════════════════════════════════════════════════════")
         <br />

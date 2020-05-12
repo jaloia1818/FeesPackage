@@ -63,18 +63,26 @@
         td.underscore {
             text-decoration: underline;
         }
-        span.huge {
-            font-size: 25pt;
+        .huge {
+            font-size: 28pt;
         }
         td.indent {
             padding-left: 50px;
+        }
+        .center {
+            text-align: center;
+        }
+
+        .large {
+            font-size: 24pt;
         }
     </style>
 
     <div style="max-width: 1200px;">
         ══════════════════════════════════════════════════════════════════════════════════════════
-        <div class="title"><span class="huge">Martin</span>LLC</div>
-        <div class="title">Income Summary [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
+        <div class="title huge">Martin LLC</div>
+        <br />
+        <div class="title large">Income Summary [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         ══════════════════════════════════════════════════════════════════════════════════════════
         <br />

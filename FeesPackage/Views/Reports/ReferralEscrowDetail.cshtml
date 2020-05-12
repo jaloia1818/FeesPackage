@@ -60,11 +60,15 @@
         td.superscore {
             border-top: 1px solid #000;
         }
+        .large {
+            font-size: 24pt;
+        }
     </style>
 
-    <div style="max-width: 1200px;">
+    <div style="        max-width: 1200px;
+">
         ══════════════════════════════════════════════════════════════════════════════════════════
-        <div class="title">Referral Escrow Detail [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
+        <div class="title large">Referral Escrow Detail [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         ══════════════════════════════════════════════════════════════════════════════════════════
         <br />

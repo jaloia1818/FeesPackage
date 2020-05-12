@@ -63,8 +63,8 @@
         td.underscore {
             border-bottom: 1px solid #000;
         }
-        span.huge {
-            font-size: 25pt;
+        .huge {
+            font-size: 28pt;
         }
         td.indent {
             padding-left: 50px;
@@ -73,12 +73,20 @@
             border: none;
             background-color: lightgray;
         }
+        .center {
+            text-align: center;
+        }
+        .large {
+            font-size: 24pt;
+        }
     </style>
 
-    <div style="max-width: 1200px;">
+    <div style="        max-width: 1200px;
+">
         ══════════════════════════════════════════════════════════════════════════════════════════
-        <div class="title"><span class="huge">Martin</span>LLC</div>
-        <div class="title">Posted Deposit Summary [@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
+        <div class="title huge">Martin LLC</div>
+        <div class="title center large">Posted Deposit Summary</div>
+        <div class="title center">[@string.Format("{0:MM/dd/yyyy}", ViewBag.fromDate) - @string.Format("{0:MM/dd/yyyy}", ViewBag.toDate)]</div>
         <div class="date">@DateTime.Today.ToString("dd-MMM-yy")</div>
         ══════════════════════════════════════════════════════════════════════════════════════════
         <br />
@@ -93,14 +101,14 @@
             </tr>
             @foreach (var grp in Model.MonthlyIncome.OrderBy(x => x.Key))
             {
-        <tr>
-            <td class="left overflow totals">@grp.Key</td>
-            <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount))</td>
-            <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-            <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-            <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-            <td class="right totals net">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
-        </tr>
+                <tr>
+                    <td class="left overflow totals">@grp.Key</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Sum(x => ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Phila").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                    <td class="right underscore totals">@string.Format("{0:C}", (double)grp.Where(x => x.Client.County == "Cty").Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                    <td class="right totals net">@string.Format("{0:C}", (double)grp.Sum(x => (double?)x.Payment.Amount - ((double?)x.Payment.Amount * x.Client.Escrow)))</td>
+                </tr>
             }
             <tr>
                 <td class="right totals">Grand Total:</td>
