@@ -376,7 +376,17 @@ namespace FeesPackage.Controllers
                     Id = c.Status_Code,
                     Name = c.Status_Code
                 })
-                .ToList()
+                .ToList(),
+
+                ClaimNumbers = (from cla in db.tblClaims
+                                join clt in db.tblClients on cla.Reference_Number equals clt.id
+                                orderby clt.Client_Name
+                                select new ListClass()
+                                {
+                                    Id = cla.Claim_Number,
+                                    Name = clt.Client_Name + " - " + cla.Claim_Number
+                                }
+                ).ToList()
             };
 
             return PartialView("~/Views/ClientInfo/_Edit.cshtml", model);
