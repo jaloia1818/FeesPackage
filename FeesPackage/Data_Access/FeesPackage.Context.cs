@@ -58,5 +58,18 @@ namespace FeesPackage.Data_Access
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PostPayments", fromDateParameter, toDateParameter, cnt, amt, rowCount);
         }
+    
+        public virtual int sp_PostedPaymentsRpt(Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, ObjectParameter cnt, ObjectParameter amt)
+        {
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PostedPaymentsRpt", fromDateParameter, toDateParameter, cnt, amt);
+        }
     }
 }

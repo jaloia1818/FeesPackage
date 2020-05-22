@@ -225,6 +225,12 @@ warning 6002: The table/view 'FeesPackage.dbo.qryClaimsDormant2' does not have a
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_tblReferral_tblAttorney" />-->
+        <Function Name="sp_PostedPaymentsRpt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fromDate" Type="datetime" Mode="In" />
+          <Parameter Name="toDate" Type="datetime" Mode="In" />
+          <Parameter Name="cnt" Type="int" Mode="InOut" />
+          <Parameter Name="amt" Type="money" Mode="InOut" />
+        </Function>
         <Function Name="sp_PostPayments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fromDate" Type="datetime" Mode="In" />
           <Parameter Name="toDate" Type="datetime" Mode="In" />
@@ -344,6 +350,12 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
             <Parameter Name="cnt" Mode="InOut" Type="Int32" />
             <Parameter Name="amt" Mode="InOut" Type="Decimal" />
             <Parameter Name="rowCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PostedPaymentsRpt">
+            <Parameter Name="fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="toDate" Mode="In" Type="DateTime" />
+            <Parameter Name="cnt" Mode="InOut" Type="Int32" />
+            <Parameter Name="amt" Mode="InOut" Type="Decimal" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="tblInsurance">
@@ -761,6 +773,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_PostPayments" FunctionName="FeesPackageModel.Store.sp_PostPayments" />
+          <FunctionImportMapping FunctionImportName="sp_PostedPaymentsRpt" FunctionName="FeesPackageModel.Store.sp_PostedPaymentsRpt" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

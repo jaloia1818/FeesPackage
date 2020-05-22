@@ -155,6 +155,24 @@ namespace FeesPackage.Controllers
             return Json(new { isDeleted = true });
         }
 
+        // POST: PostedPaymentsRpt
+        [HttpPost]
+        public JsonResult PostedPaymentsRpt(DateTime fromDate, DateTime toDate)
+        {
+            // output params
+            ObjectParameter cnt = new ObjectParameter("cnt", 0);            // int
+            ObjectParameter amt = new ObjectParameter("amt", 0.0);          // double
+
+            // call sproc with 2 input and 3 output params
+            db.sp_PostedPaymentsRpt(fromDate, toDate, cnt, amt);
+
+            // convert
+            int Cnt = int.Parse(cnt.Value.ToString());
+            double Amt = double.Parse(amt.Value.ToString());
+
+            return Json(new { count = Cnt, amount = Amt.ToString("C") });
+        }
+
         // POST: PostPayments
         [HttpPost]
         public JsonResult PostPayments(DateTime fromDate, DateTime toDate)
@@ -163,10 +181,10 @@ namespace FeesPackage.Controllers
             ObjectParameter cnt = new ObjectParameter("cnt", 0);            // int
             ObjectParameter amt = new ObjectParameter("amt", 0.0);          // double
             ObjectParameter rowCount = new ObjectParameter("rowCount", 0);  // int
-            
+
             // call sproc with 2 input and 3 output params
             db.sp_PostPayments(fromDate, toDate, cnt, amt, rowCount);
-            
+
             // convert
             int Cnt = int.Parse(cnt.Value.ToString());
             double Amt = double.Parse(amt.Value.ToString());
