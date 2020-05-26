@@ -330,61 +330,61 @@
     });
 
     // prepare the Attorney list dropdown data
-    var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.AttyCombos));
+    var AttyCombosList = @Html.Raw(JsonConvert.SerializeObject(Model.AttyCombos));
 
-    var locallistaSource = {
+    var AttyCombosSrc = {
         datatype: "array",
         datafields: [
                 { name: 'Name', type: 'string' },
                 { name: 'Id', type: 'string' }
         ],
-        localdata: locallista
+        localdata: AttyCombosList
     };
-    var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
+    var AttyCombosAdapter = new $.jqx.dataAdapter(AttyCombosSrc);
 
     // prepare the Adjusters list dropdown data
-    var locallistb = @Html.Raw(JsonConvert.SerializeObject(Model.Adjusters));
+    var AdjustersList = @Html.Raw(JsonConvert.SerializeObject(Model.Adjusters));
 
-    var locallistbSource = {
+    var AdjustersSrc = {
         datatype: "array",
         datafields: [
                 { name: 'Name', type: 'string' },
                 { name: 'Id', type: 'string' }
         ],
-        localdata: locallistb
+        localdata: AdjustersList
     };
-    var locallistbAdapter = new $.jqx.dataAdapter(locallistbSource);
+    var AdjustersAdapter = new $.jqx.dataAdapter(AdjustersSrc);
 
     // prepare the Frequencys list dropdown data
-    var locallistc = @Html.Raw(JsonConvert.SerializeObject(Model.Frequencys));
+    var FrequencysList = @Html.Raw(JsonConvert.SerializeObject(Model.Frequencys));
 
-    var locallistcSource = {
+    var FrequencysSrc = {
         datatype: "array",
         datafields: [
                 { name: 'Name', type: 'string' },
                 { name: 'Id', type: 'string' }
         ],
-        localdata: locallistc
+        localdata: FrequencysList
     };
-    var locallistcAdapter = new $.jqx.dataAdapter(locallistcSource);
+    var FrequencysAdapter = new $.jqx.dataAdapter(FrequencysSrc);
 
     // prepare the StatusCodes list dropdown data
-    var locallistd = @Html.Raw(JsonConvert.SerializeObject(Model.StatusCodes));
+    var StatusCodesList = @Html.Raw(JsonConvert.SerializeObject(Model.StatusCodes));
 
-    var locallistdSource = {
+    var StatusCodesSrc = {
         datatype: "array",
         datafields: [
                 { name: 'Name', type: 'string' },
                 { name: 'Id', type: 'string' }
         ],
-        localdata: locallistd
+        localdata: StatusCodesList
     };
-    var locallistdAdapter = new $.jqx.dataAdapter(locallistdSource);
+    var StatusCodesAdapter = new $.jqx.dataAdapter(StatusCodesSrc);
 
     // prepare the data
-    var data = @Html.Raw(JsonConvert.SerializeObject(Model.Claims));
+    var ClaimsList = @Html.Raw(JsonConvert.SerializeObject(Model.Claims));
 
-    var source =
+    var ClaimsSrc =
     {
         dataType: "json",
         updaterow: function (rowid, rowdata, commit) {
@@ -411,10 +411,10 @@
             { name: 'Status_Code', type: 'string' }
         ],
         id: 'claim',
-        localdata: data
+        localdata: ClaimsList
     };
 
-    var dataAdapter = new $.jqx.dataAdapter(source, {
+    var ClaimsAdapter = new $.jqx.dataAdapter(ClaimsSrc, {
         downloadComplete: function (data, status, xhr) { },
         loadComplete: function (data) { },
         beforeLoadComplete: function (records) { },
@@ -427,7 +427,7 @@
         width: '100%',
         height: '100px',
         autowidth: false,
-        source: dataAdapter,
+        source: ClaimsAdapter,
         showfilterrow: false,
         filterable: false,
         pageable: false,
@@ -450,7 +450,7 @@
                             dropDownWidth: 500,
                             incrementalSearch: true,
                             searchMode: 'containsignorecase',
-                            source: locallistbAdapter,
+                            source: AdjustersAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
                             filterable: false,
@@ -477,7 +477,7 @@
                             dropDownWidth: 150,
                             incrementalSearch: true,
                             searchMode: 'containsignorecase',
-                            source: locallistaAdapter,
+                            source: AttyCombosAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
                             filterable: false,
@@ -502,7 +502,7 @@
                     {
                         editor.jqxDropDownList({
                             dropDownHeight: 200,
-                            source: locallistcAdapter,
+                            source: FrequencysAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
                             filterable: false,
@@ -526,7 +526,7 @@
                     {
                         editor.jqxDropDownList({
                             dropDownHeight: 200,
-                            source: locallistdAdapter,
+                            source: StatusCodesAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
                             filterable: false,
@@ -550,10 +550,10 @@
 
 <script>
     // prepare the data
-    var data = @Html.Raw(JsonConvert.SerializeObject(Model.Payments));
-    var locallistb = @Html.Raw(JsonConvert.SerializeObject(Model.ClaimNumbers));
+    var PaymentsList = @Html.Raw(JsonConvert.SerializeObject(Model.Payments));
+    var ClaimNumbersList = @Html.Raw(JsonConvert.SerializeObject(Model.ClaimNumbers));
 
-    var source =
+    var PaymentsSrc =
     {
         dataType: "json",
         updaterow: function (rowid, rowdata, commit) {
@@ -575,24 +575,24 @@
             { name: 'Posted_Indicator', type: 'bool' }
         ],
         id: 'payment',
-        localdata: data
+        localdata: PaymentsList
     };
-    var locallistbSource = {
+    var ClaimNumbersSrc = {
         datatype: "array",
         datafields: [
             { name: 'Name', type: 'string' },
             { name: 'Id', type: 'string' }
         ],
-        localdata: locallistb
+        localdata: ClaimNumbersList
     };
 
-    var dataAdapter = new $.jqx.dataAdapter(source, {
+    var PaymentsAdapter = new $.jqx.dataAdapter(PaymentsSrc, {
         downloadComplete: function (data, status, xhr) { },
         loadComplete: function (data) { },
         beforeLoadComplete: function (records) { },
         loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
     });
-    var locallistbAdapter = new $.jqx.dataAdapter(locallistbSource);
+    var ClaimNumbersAdapter = new $.jqx.dataAdapter(ClaimNumbersSrc);
 
     const sleep = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -604,7 +604,7 @@
         width: '100%',
         height: '100px',
         autowidth: false,
-        source: dataAdapter,
+        source: PaymentsAdapter,
         showfilterrow: false,
         filterable: false,
         pageable: false,
@@ -629,7 +629,7 @@
                             dropDownHeight: 350,
                             dropDownWidth: 350,
                             searchMode: 'containsignorecase',
-                            source: locallistbAdapter,
+                            source: ClaimNumbersAdapter,
                             displayMember: 'Name',
                             valueMember: 'Id',
                             placeHolder: 'Choose ...'
@@ -677,22 +677,22 @@
     });
 
     // prepare the Attorney list dropdown data
-    var localliste = @Html.Raw(JsonConvert.SerializeObject(Model.Referrals));
+    var ReferralsList = @Html.Raw(JsonConvert.SerializeObject(Model.Referrals));
 
-    var locallisteSource = {
+    var ReferralsSrc = {
         datatype: "array",
         datafields: [
                 { name: 'Name', type: 'string' },
                 { name: 'Id', type: 'string' }
         ],
-        localdata: localliste
+        localdata: ReferralsList
     };
-    var locallisteAdapter = new $.jqx.dataAdapter(locallisteSource);
+    var ReferralsAdapter = new $.jqx.dataAdapter(ReferralsSrc);
 
     // prepare the data
-    var data = @Html.Raw(JsonConvert.SerializeObject(Model.ClientReferrals));
+    var ClientReferralsList = @Html.Raw(JsonConvert.SerializeObject(Model.ClientReferrals));
 
-    var source =
+    var ClientReferralsSrc =
     {
         dataType: "json",
         updaterow: function (rowid, rowdata, commit) {
@@ -716,10 +716,10 @@
             { name: 'Client_Referral', type: 'float' }
         ],
         id: 'client_referral',
-        localdata: data
+        localdata: ClientReferralsList
     };
 
-    var dataAdapter = new $.jqx.dataAdapter(source, {
+    var ClientReferralsAdapter = new $.jqx.dataAdapter(ClientReferralsSrc, {
         downloadComplete: function (data, status, xhr) { },
         loadComplete: function (data) { },
         beforeLoadComplete: function (records) { },
@@ -732,7 +732,7 @@
         width: '100%',
         height: '100px',
         autowidth: false,
-        source: dataAdapter,
+        source: ClientReferralsAdapter,
         showfilterrow: false,
         filterable: false,
         pageable: false,
@@ -755,7 +755,7 @@
                             dropDownWidth: 350,
                             incrementalSearch: true,
                             searchMode: 'containsignorecase',
-                            source: locallisteAdapter,
+                            source: ReferralsAdapter,
                             displayMember: 'Id',
                             valueMember: 'Name',
                             filterable: false,

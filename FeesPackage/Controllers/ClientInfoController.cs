@@ -342,8 +342,8 @@ namespace FeesPackage.Controllers
                 Adjusters = db.tblInsurances.ToArray()
                 .Select(c => new ListClass
                 {
-                    Id = c.Ins_Contact,
-                    Name = c.Ins_Co_Name
+                    Id = c.Ins_Co_Name,
+                    Name = c.Ins_Contact
                 })
                 .ToList(),
 
