@@ -25,7 +25,6 @@
                 <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" autofocus />
                 <button id="addrowbutton" style="float: right">+</button>
                 <button id="PostPayments" style="float: right">Post Payments</button>
-                <button id="PostedPaymentsRpt" style="float: right">Posted Payments Rpt</button>
                 <button id="UnmatchedDepositsPrint" style="float: right">Unmatched Deposits</button>
                 <button id="DailyDepositsPrint" style="float: right">Daily Deposits</button>
                 <button id="DailyDetailPrint" style="float: right">Daily Detail</button>
@@ -134,7 +133,7 @@
             });
         });
 
-        $('#PostedPaymentsRpt').click(function () {
+        $('#PostPayments').click(function () {
             $('#ToFromDlg').dialog({
                 buttons: [{
                     text: "Run",
@@ -142,24 +141,34 @@
                     click: function () {
                         $.post('/DailyPayments/PostedPaymentsRpt', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
                             $('#StatsDlg').dialog({
-                                buttons: [{
-                                    text: "Close",
-                                    "id": "close",
-                                    click: function () {
-                                        $('#StatsDlg').dialog('close')
+                                buttons: [
+                                    {
+                                        text: "Post",
+                                        "id": "post",
+                                        click: function () {
+                                            PostPayments();
+                                        }
+                                    },
+                                    {
+                                        text: "Close",
+                                        "id": "close",
+                                        click: function () {
+                                            $('#StatsDlg').dialog('close')
+                                        }
                                     }
-                                }],
+                                ],
                                 open: function () {
                                     $('#numPayments').text(data.count);
                                     $('#totalPayments').text(data.amount);
                                 },
                                 close: function() {
+                                    $('#ToFromDlg').dialog('close');
+                                    setTimeout(function () { location.reload(); }, 10);
                                 },
                             });
                         }).fail(function (jqXHR, textStatus, errorThrown) {
                             alert(textStatus + ': ' + errorThrown);
                         });
-                        $('#ToFromDlg').dialog('close')
                     }
                 }],
                 open: function() {
@@ -175,46 +184,14 @@
             });
         });
 
-        $('#PostPayments').click(function () {
-            $('#ToFromDlg').dialog({
-                buttons: [{
-                    text: "Run",
-                    "id": "run",
-                    click: function () {
-                        $.post('/DailyPayments/PostPayments', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
-                            $('#StatsDlg').dialog({
-                                buttons: [{
-                                    text: "Close",
-                                    "id": "close",
-                                    click: function () {
-                                        $('#StatsDlg').dialog('close')
-                                    }
-                                }],
-                                open: function () {
-                                    $('#numPayments').text(data.row_count);
-                                    $('#totalPayments').text(data.amount);
-                                },
-                                close: function() {
-                                },
-                            });
-                        }).fail(function (jqXHR, textStatus, errorThrown) {
-                            alert(textStatus + ': ' + errorThrown);
-                        });
-                        $('#ToFromDlg').dialog('close')
-                    }
-                }],
-                open: function() {
-                    $('#fromDate').datepicker({title:'From Date'}).blur();
-                    $('#toDate').datepicker({ title: 'To Date' }).blur();
-                    if ($('#toDate').val() == '')
-                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
-                },
-                close: function() {
-                    $('#fromDate').datepicker('destroy');
-                    $('#toDate').datepicker('destroy');
-                },
+        function PostPayments() {
+            $.post('/DailyPayments/PostPayments', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
+                alert('POSTED!');
+                $('#StatsDlg').dialog('close')
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
             });
-        });
+        }
 
         // prepare the Attorney list dropdown data
         var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.AttyCombos));
