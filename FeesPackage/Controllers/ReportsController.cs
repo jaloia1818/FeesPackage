@@ -124,7 +124,7 @@ namespace FeesPackage.Controllers
                  join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
                  join atty in db.tblAttyDescs on cla.Attorney_Breakdown equals (int)atty.Combo_Indicator
                  join cty in db.tblCounties on clt.County equals cty.County
-                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Posted_Indicator == true
+                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate //&& pay.Posted_Indicator == true
                  orderby atty.Combo_Description
                  select new MonthlyIncome()
                  {
@@ -149,7 +149,7 @@ namespace FeesPackage.Controllers
                  join atty in db.tblAttyDescs on cla.Attorney_Breakdown equals (int)atty.Combo_Indicator
                  join cltref in db.tblClientReferrals on clt.id equals cltref.Reference_Number
                  join refer in db.tblReferrals on cltref.Client_Referral_Atty equals refer.Referral_Name
-                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate && pay.Posted_Indicator == true
+                 where pay.Input_Date >= fromDate && pay.Input_Date <= toDate //&& pay.Posted_Indicator == true
                  orderby atty.Combo_Description
                  select new ReferralEscrowDetail()
                  {
