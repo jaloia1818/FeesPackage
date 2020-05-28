@@ -288,10 +288,63 @@ namespace FeesPackage.Controllers
             ViewBag.fromDate = fromDate;
             ViewBag.toDate = toDate;
 
+            var headerHtml = @"
+            <style>
+                .title {
+                    font-size: larger;
+                    font-weight: bold;
+                    float: left;
+                }
+                .date {
+                    float: right;
+                    font-style: italic;
+                }
+                .label {
+                    min-width: 246px;
+                    text-align: right;
+                    font-weight: bold
+                }
+                .value {
+                    min-width: 200px;
+                }
+                table.center {
+                    margin: auto;
+                    text-align: center;
+                }
+                td {
+                    min-width: 100px;
+                    line-height: 105%;
+                }
+                td.right,
+                th.right {
+                    text-align: right;
+                }
+                td.left,
+                th.left {
+                    text-align: left;
+                }
+                th {
+                    border-bottom: 1px solid #555;
+                }
+            </style>
+            <table class=""center"">
+                <tr>
+                    <th style=""width: 161px;"">Claim Number</th>
+                    <th style=""width: 402px;"">Client Name</th>
+                    <th style=""width: 102px;"">Payment Date</th>
+                    <th style=""width: 115px;"">Handling/Credit</th>
+                    <th style=""width: 102px;"">Amount</th>
+                    <th style=""width: 102px;"">Escrow</th>
+                    <th style=""width: 102px;"">Atty.Amount</th>
+                    <th style=""width: 102px;"">Status</th>
+                    <th style=""width: 102px;"">Input Date</th>
+                </tr>
+            </table>";
             var footerHtml = $@"<div style=""text-align:center"">page <span class=""page""></span> of <span class=""topage""></span></div>";
 
             var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
             {
+                PageHeaderHtml = headerHtml,
                 PageFooterHtml = footerHtml,
                 Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
                 Size = NReco.PdfGenerator.PageSize.Letter,
