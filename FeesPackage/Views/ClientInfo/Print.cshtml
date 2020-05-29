@@ -124,16 +124,38 @@
                 <th>Amount</th>
                 <th>Insurance Contact</th>
             </tr>
-            @foreach (var payment in Model.Payments)
-            {
-                <tr>
-                    <td>@payment.Claim_Number</td>
-                    <td>@string.Format("{0:MM/dd/yyyy}", payment.Input_Date)</td>
-                    <td class="right">@string.Format("{0:MM/dd/yyyy}", payment.Period_From) => </td>
-                    <td class="left">@string.Format("{0:MM/dd/yyyy}", payment.Period_To)</td>
-                    <td>@string.Format("{0:C}", payment.Amount)</td>
-                    <td class="left">@Model.Claim.Insurance_Contact</td>
-                </tr>
+            @{
+                decimal count = 0;
+                decimal rowCount = 30;
+
+                foreach (var payment in Model.Payments)
+                {
+                    if (count % rowCount == 0 && count != 0)
+                    {
+                        rowCount = 50;
+                        count = 0;
+                        @Html.Raw(@"</table>
+                                    <div style='page-break-after:always'></div>
+                                    <table class='center'>
+                                    <tr>
+                                        <th>Claim Number</th>
+                                        <th>Deposit Date</th>
+                                        <th class='right'>Payment</th>
+                                        <th class='left'>Period</th>
+                                        <th>Amount</th>
+                                        <th>Insurance Contact</th>
+                                    </tr>")
+                    }
+                    count++;
+                    <tr>
+                        <td>@payment.Claim_Number</td>
+                        <td>@string.Format("{0:MM/dd/yyyy}", payment.Input_Date)</td>
+                        <td class="right">@string.Format("{0:MM/dd/yyyy}", payment.Period_From) => </td>
+                        <td class="left">@string.Format("{0:MM/dd/yyyy}", payment.Period_To)</td>
+                        <td>@string.Format("{0:C}", payment.Amount)</td>
+                        <td class="left">@Model.Claim.Insurance_Contact</td>
+                    </tr>
+                }
             }
             <tr>
                 <td></td>
