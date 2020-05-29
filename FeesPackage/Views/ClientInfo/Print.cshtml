@@ -46,6 +46,9 @@
         th.left {
             text-align: left;
         }
+        td.wide {
+            max-width: 660px;
+        }
     </style>
 
     <div style="max-width: 1000px;">
@@ -94,7 +97,7 @@
         <table>
             <tr>
                 <td class="label">Accident Description or Comments:</td>
-                <td class="value">@Model.Client.Accident_Desc</td>
+                <td class="value wide">@Model.Client.Accident_Desc</td>
             </tr>
         </table>
         <br />
