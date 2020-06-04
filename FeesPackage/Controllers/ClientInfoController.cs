@@ -351,8 +351,8 @@ namespace FeesPackage.Controllers
                 Adjusters = db.tblInsurances.OrderBy(x => x.Ins_Co_Name).ToArray()
                 .Select(c => new ListClass
                 {
-                    Id = c.Ins_Co_Name,
-                    Name = c.Ins_Contact
+                    Id = c.Ins_Contact,
+                    Name = c.Ins_Co_Name
                 })
                 .ToList(),
 
