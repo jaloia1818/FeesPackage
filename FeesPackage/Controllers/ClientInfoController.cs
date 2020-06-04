@@ -106,6 +106,14 @@ namespace FeesPackage.Controllers
                 })
                 .ToList(),
 
+                Referrals = db.tblReferrals.OrderBy(x => x.Referral_Name).ToList()
+                .Select(c => new ListClass
+                {
+                    Id = c.Referral_Name,
+                    Name = c.Referral_Name
+                })
+                .ToList(),
+
                 AttyCombos = db.tblAttorneyCombos.ToArray()
                 .Select(c => new ListClass
                 {
