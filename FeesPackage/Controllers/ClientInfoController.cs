@@ -123,7 +123,7 @@ namespace FeesPackage.Controllers
                 .OrderBy(x => x.Id).ThenBy(x => x.Name)
                 .ToList(),
 
-                Adjusters = db.tblInsurances.ToArray()
+                Adjusters = db.tblInsurances.OrderBy(x => x.Ins_Co_Name).ToArray()
                 .Select(c => new ListClass
                 {
                     Id = c.Ins_Contact,
@@ -300,6 +300,7 @@ namespace FeesPackage.Controllers
                 Claims = db.tblClaims.SqlQuery("select * from tblClaim where reference_number = " + id).ToList(),
                 
                 ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
+
                 Referrals = db.tblReferrals.OrderBy(x => x.Referral_Name).ToList()
                 .Select(c => new ListClass
                 {

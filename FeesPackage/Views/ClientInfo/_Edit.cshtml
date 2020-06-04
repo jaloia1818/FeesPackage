@@ -458,7 +458,7 @@
                             renderer: function (index, label, value)
                             {
                                 var item = editor.jqxDropDownList('getSelectedItem');
-                                return label + ' - ' + value;
+                                return value + ' - ' + label;
                             }
                         });
                         editor.on('close', function (event) {
