@@ -70,8 +70,7 @@
         </EntityType>
         <EntityType Name="tblClientReferral">
           <Key>
-            <PropertyRef Name="Reference_Number" />
-            <PropertyRef Name="Client_Referral_Atty" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Reference_Number" Type="int" Nullable="false" />
@@ -338,7 +337,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="qryClaims" EntityType="FeesPackageModel.qryClaim" />
           <EntitySet Name="tblPaymentFrequencies" EntityType="FeesPackageModel.tblPaymentFrequency" />
           <EntitySet Name="tblStatusCodes" EntityType="FeesPackageModel.tblStatusCode" />
-          <EntitySet Name="tblClientReferrals" EntityType="FeesPackageModel.tblClientReferral" />
           <EntitySet Name="tblPayments" EntityType="FeesPackageModel.tblPayment" />
           <EntitySet Name="qryClaims_30Days" EntityType="FeesPackageModel.qryClaims_30Days" />
           <EntitySet Name="qryClaims_30Days2" EntityType="FeesPackageModel.qryClaims_30Days2" />
@@ -357,6 +355,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
             <Parameter Name="cnt" Mode="InOut" Type="Int32" />
             <Parameter Name="amt" Mode="InOut" Type="Decimal" />
           </FunctionImport>
+          <EntitySet Name="tblClientReferrals" EntityType="FeesPackageModel.tblClientReferral" />
           </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
@@ -465,16 +464,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status_Code" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityType Name="tblClientReferral">
-          <Key>
-            <PropertyRef Name="Reference_Number" />
-            <PropertyRef Name="Client_Referral_Atty" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
-          <Property Name="Client_Referral_Atty" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
-          <Property Name="Client_Referral" Type="Double" />
-        </EntityType>
         <EntityType Name="tblPayment">
           <Key>
             <PropertyRef Name="id" />
@@ -554,6 +543,15 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Period_To" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="LastDepositDate" Type="DateTime" Precision="0" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="tblClientReferral">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reference_Number" Type="Int32" Nullable="false" />
+          <Property Name="Client_Referral_Atty" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Client_Referral" Type="Double" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -689,16 +687,6 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblClientReferrals">
-            <EntityTypeMapping TypeName="FeesPackageModel.tblClientReferral">
-              <MappingFragment StoreEntitySet="tblClientReferral">
-                <ScalarProperty Name="Client_Referral" ColumnName="Client_Referral" />
-                <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
-                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblPayments">
             <EntityTypeMapping TypeName="FeesPackageModel.tblPayment">
               <MappingFragment StoreEntitySet="tblPayments">
@@ -774,6 +762,16 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_PostPayments" FunctionName="FeesPackageModel.Store.sp_PostPayments" />
           <FunctionImportMapping FunctionImportName="sp_PostedPaymentsRpt" FunctionName="FeesPackageModel.Store.sp_PostedPaymentsRpt" />
+          <EntitySetMapping Name="tblClientReferrals">
+            <EntityTypeMapping TypeName="FeesPackageModel.tblClientReferral">
+              <MappingFragment StoreEntitySet="tblClientReferral">
+                <ScalarProperty Name="Client_Referral" ColumnName="Client_Referral" />
+                <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
+                <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

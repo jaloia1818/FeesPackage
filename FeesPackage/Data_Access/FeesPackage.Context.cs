@@ -39,12 +39,12 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<qryClaim> qryClaims { get; set; }
         public virtual DbSet<tblPaymentFrequency> tblPaymentFrequencies { get; set; }
         public virtual DbSet<tblStatusCode> tblStatusCodes { get; set; }
-        public virtual DbSet<tblClientReferral> tblClientReferrals { get; set; }
         public virtual DbSet<tblPayment> tblPayments { get; set; }
         public virtual DbSet<qryClaims_30Days> qryClaims_30Days { get; set; }
         public virtual DbSet<qryClaims_30Days2> qryClaims_30Days2 { get; set; }
         public virtual DbSet<qryClaimsDormant> qryClaimsDormants { get; set; }
         public virtual DbSet<qryClaimsDormant2> qryClaimsDormant2 { get; set; }
+        public virtual DbSet<tblClientReferral> tblClientReferrals { get; set; }
     
         public virtual int sp_PostPayments(Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, ObjectParameter cnt, ObjectParameter amt, ObjectParameter rowCount)
         {
