@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
-<body>
+<body onload="ready()">
     <style>
         .title {
             font-size: larger;
@@ -63,19 +63,44 @@
                 <th>Status</th>
                 <th>Input Date</th>
             </tr>
-            @foreach (var row in Model.DailyDetails)
-            {
-                <tr>
-                    <td class="left">@row.Claim_Number</td>
-                    <td class="left" style="min-width:400px">@row.Client_Name</td>
-                    <td>@string.Format("{0:MM/dd/yyyy}", row.Payment_Date)</td>
-                    <td>@row.Handling_Atty / @row.Credit_Atty</td>
-                    <td>@string.Format("{0:C}", row.Amount)</td>
-                    <td>@string.Format("{0:C}", (Double?)row.Amount * row.Escrow)</td>
-                    <td>@string.Format("{0:C}", (Double?)row.Amount - ((Double?)row.Amount * row.Escrow))</td>
-                    <td>@row.Status_Code</td>
-                    <td>@string.Format("{0:MM/dd/yyyy}", row.Input_Date)</td>
-                </tr>
+           @{
+                decimal count = 0;
+                decimal rowCount = 41;
+
+                foreach (var row in Model.DailyDetails)
+                {
+                    if (count % rowCount == 0 && count != 0)
+                    {
+                        rowCount = 43;
+                        count = 0;
+                        @Html.Raw(@"</table>
+                                    <div style='page-break-after:always'></div>
+                                    <table class='center'>
+                                    <tr>
+                                        <th>Claim Number</th>
+                                        <th>Client Name</th>
+                                        <th>Payment Date</th>
+                                        <th>Handling/Credit</th>
+                                        <th>Amount</th>
+                                        <th>Escrow</th>
+                                        <th>Atty.Amount</th>
+                                        <th>Status</th>
+                                        <th>Input Date</th>
+                                    </tr>")
+                    }
+                    count++;
+                    <tr>
+                        <td class="left">@row.Claim_Number</td>
+                        <td class="left" style="min-width:400px">@row.Client_Name</td>
+                        <td>@string.Format("{0:MM/dd/yyyy}", row.Payment_Date)</td>
+                        <td>@row.Handling_Atty / @row.Credit_Atty</td>
+                        <td>@string.Format("{0:C}", row.Amount)</td>
+                        <td>@string.Format("{0:C}", (Double?)row.Amount * row.Escrow)</td>
+                        <td>@string.Format("{0:C}", (Double?)row.Amount - ((Double?)row.Amount * row.Escrow))</td>
+                        <td>@row.Status_Code</td>
+                        <td>@string.Format("{0:MM/dd/yyyy}", row.Input_Date)</td>
+                    </tr>
+                }
             }
             <tr>
                 <td></td>
@@ -101,5 +126,10 @@
             </tr>
         </table>
     </div>
+    <script>
+        function ready() {
+            document.getElementsByClassName('headerStyle')[0].style.cssText = 'display: none;';
+        }
+    </script>
 </body>
 </html>

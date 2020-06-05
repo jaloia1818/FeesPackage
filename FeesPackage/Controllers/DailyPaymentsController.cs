@@ -327,7 +327,7 @@ namespace FeesPackage.Controllers
                     border-bottom: 1px solid #555;
                 }
             </style>
-            <table class=""center"">
+            <table class=""center headerStyle"">
                 <tr>
                     <th style=""width: 161px;"">Claim Number</th>
                     <th style=""width: 402px;"">Client Name</th>
@@ -344,7 +344,7 @@ namespace FeesPackage.Controllers
 
             var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter
             {
-                PageHeaderHtml = headerHtml,
+                //PageHeaderHtml = headerHtml,
                 PageFooterHtml = footerHtml,
                 Margins = new NReco.PdfGenerator.PageMargins { Bottom = 15, Top = 15, Left = 10, Right = 10 },
                 Size = NReco.PdfGenerator.PageSize.Letter,
