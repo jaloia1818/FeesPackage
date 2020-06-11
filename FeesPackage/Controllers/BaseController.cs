@@ -1,6 +1,7 @@
 ﻿using FeesPackage.Data_Access;
 using Root.Reports;
 using System;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -8,9 +9,41 @@ using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
 {
+    [AuthorizeAppRole(roles = "CREM_USER_ADMIN, OPS_MGR, ADMIN, SA")]
     public class BaseController : Controller
     {
         protected readonly FeesPackageEntities db = new FeesPackageEntities();
+
+        public BaseController()
+        {
+            string dbconnect = null;
+            //UserInfo ui = null;
+            string assemblyVersion = typeof(BaseController).Assembly.GetName().Version.ToString();
+
+            System.Web.HttpContext currContext = System.Web.HttpContext.Current;
+
+            dbconnect = ConfigurationManager.ConnectionStrings["FeesPackageEntities"].ConnectionString;
+
+            // Get loggedin user information and footer links and layouturl
+            /*if (currContext.Session["LoggedInUser"] == null)
+            {
+                ui = null;
+            }
+            else
+            {
+                ui = (UserInfo)currContext.Session["LoggedInUser"];
+
+                if (ui.AppRoleId.Equals("ADMIN"))
+                {
+                    foolinks = new FooterLinks("~/Admin/AboutUs", "~/Admin/ContactUs", "~/Admin/OurServices", "~/Admin/BereavementResources", "~/Admin/Testimonials");
+                    layouturl = "~/Views/Layouts/_LayoutAdmin.cshtml";
+                }
+            }*/
+
+            System.Web.HttpContext.Current.Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate");  // HTTP 1.1
+            System.Web.HttpContext.Current.Response.AppendHeader("Pragma", "no-cache");                                    // HTTP 1.0
+            System.Web.HttpContext.Current.Response.AppendHeader("Expires", "0");                                          // Proxies
+        }
 
         protected DateTime? ToDate(string str)
         {
