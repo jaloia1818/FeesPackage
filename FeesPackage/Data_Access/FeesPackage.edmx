@@ -14,6 +14,15 @@
           <Property Name="Referral_Tax_ID" Type="nvarchar" MaxLength="15" />
           <Property Name="Referral_Credit_Atty" Type="nvarchar" MaxLength="4" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descn" Type="varchar" MaxLength="200" />
+          <Property Name="IsSystemRole" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblAttorney">
           <Key>
             <PropertyRef Name="id" />
@@ -134,6 +143,18 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status_Code" Type="nchar" MaxLength="1" Nullable="false" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'FeesPackage.dbo.qryClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="qryClaims">
@@ -224,6 +245,18 @@ warning 6002: The table/view 'FeesPackage.dbo.qryClaimsDormant2' does not have a
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_tblReferral_tblAttorney" />-->
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sp_PostedPaymentsRpt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fromDate" Type="datetime" Mode="In" />
           <Parameter Name="toDate" Type="datetime" Mode="In" />
@@ -239,6 +272,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
         </Function>
         <EntityContainer Name="FeesPackageModelStoreContainer">
           <EntitySet Name="ReferralwithClient" EntityType="Self.ReferralwithClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorney" EntityType="Self.tblAttorney" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttorneyCombos" EntityType="Self.tblAttorneyCombos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAttyDesc" EntityType="Self.tblAttyDesc" Schema="dbo" store:Type="Tables" />
@@ -251,6 +285,7 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <EntitySet Name="tblPayments" EntityType="Self.tblPayments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferral" EntityType="Self.tblReferral" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStatusCode" EntityType="Self.tblStatusCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="qryClaims" EntityType="Self.qryClaims" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [qryClaims].[Claim_Number] AS [Claim_Number], 
@@ -310,6 +345,10 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
     [qryClaimsDormant2].[Amount] AS [Amount]
     FROM [dbo].[qryClaimsDormant2] AS [qryClaimsDormant2]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -356,6 +395,12 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
             <Parameter Name="amt" Mode="InOut" Type="Decimal" />
           </FunctionImport>
           <EntitySet Name="tblClientReferrals" EntityType="FeesPackageModel.tblClientReferral" />
+          <EntitySet Name="Roles" EntityType="FeesPackageModel.Role" />
+          <EntitySet Name="Users" EntityType="FeesPackageModel.User" />
+          <AssociationSet Name="FK_User_Role" Association="FeesPackageModel.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tblInsurance">
           <Key>
@@ -553,6 +598,41 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
           <Property Name="Client_Referral_Atty" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
           <Property Name="Client_Referral" Type="Double" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descn" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsSystemRole" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="FeesPackageModel.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="FeesPackageModel.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Type="FeesPackageModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="FeesPackageModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -769,6 +849,29 @@ warning 6035: The relationship 'FK_tblReferral_tblAttorney' has columns that are
                 <ScalarProperty Name="Client_Referral_Atty" ColumnName="Client_Referral_Atty" />
                 <ScalarProperty Name="Reference_Number" ColumnName="Reference_Number" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="FeesPackageModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="IsSystemRole" ColumnName="IsSystemRole" />
+                <ScalarProperty Name="Descn" ColumnName="Descn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FeesPackageModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

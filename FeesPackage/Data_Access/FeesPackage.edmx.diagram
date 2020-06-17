@@ -23,6 +23,9 @@
         <EntityTypeShape EntityType="FeesPackageModel.qryClaimsDormant" Width="1.5" PointX="15" PointY="0.5" />
         <EntityTypeShape EntityType="FeesPackageModel.qryClaimsDormant2" Width="1.5" PointX="15" PointY="4.125" />
         <EntityTypeShape EntityType="FeesPackageModel.tblClientReferral" Width="1.5" PointX="9.75" PointY="0.5" />
+        <EntityTypeShape EntityType="FeesPackageModel.Role" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="FeesPackageModel.User" Width="1.5" PointX="3" PointY="8.375" />
+        <AssociationConnector Association="FeesPackageModel.FK_User_Role" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

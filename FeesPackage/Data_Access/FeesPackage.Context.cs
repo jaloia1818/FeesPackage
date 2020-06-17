@@ -45,6 +45,8 @@ namespace FeesPackage.Data_Access
         public virtual DbSet<qryClaimsDormant> qryClaimsDormants { get; set; }
         public virtual DbSet<qryClaimsDormant2> qryClaimsDormant2 { get; set; }
         public virtual DbSet<tblClientReferral> tblClientReferrals { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual int sp_PostPayments(Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, ObjectParameter cnt, ObjectParameter amt, ObjectParameter rowCount)
         {

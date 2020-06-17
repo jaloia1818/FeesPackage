@@ -138,7 +138,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="AuthorizeAppRole.cs" />
+    <Compile Include="AuthorizeRole.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClientInfoController.cs" />
     <Compile Include="Controllers\DailyPaymentsController.cs" />
@@ -178,6 +179,9 @@
     <Compile Include="Data_Access\ReferralwithClient.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data_Access\Role.cs">
+      <DependentUpon>FeesPackage.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data_Access\tblAttorney.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
@@ -212,6 +216,9 @@
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
     <Compile Include="Data_Access\tblStatusCode.cs">
+      <DependentUpon>FeesPackage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data_Access\User.cs">
       <DependentUpon>FeesPackage.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -249,6 +256,7 @@
     <Content Include="Content\css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\css\theme.css" />
+    <Content Include="Content\images\401-Unauthorized-t.jpg" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\delete.png" />
     <Content Include="Content\images\icons\css\font-awesome.css" />
@@ -663,6 +671,8 @@
     <Content Include="Views\Reports\ClaimsDormant.cshtml" />
     <Content Include="Views\Reports\PostedDeposits.cshtml" />
     <Content Include="Views\Reports\RefAttyFeesByFP.cshtml" />
+    <Content Include="Views\Auth\NotFound.cshtml" />
+    <Content Include="Views\Shared\_LayoutMin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
