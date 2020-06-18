@@ -1,4 +1,10 @@
-﻿<style>
+﻿@using FeesPackage.Data_Access;
+
+@{
+    User usr = (User)Session["LoggedInUser"];
+}
+
+<style>
     li.active a,
     li.active a i::before {
         color: red;
@@ -15,11 +21,14 @@
 <div class="span3">
     <div class="sidebar">
         <ul class="widget widget-menu unstyled">
-            <li>
-                <a href="/">
-                    <i class="menu-icon icon-dashboard active"></i>Dashboard
-                </a>
-            </li>
+            @if ("ADMIN, OPS".Contains(usr.RoleId))
+            {
+                <li>
+                    <a href="/checklist">
+                        <i class="menu-icon icon-dashboard active"></i>Checklist
+                    </a>
+                </li>
+            }
             <li>
                 <a href="/clientinfo">
                     <i class="menu-icon far fa-address-card" style="width: 20px; text-align: center;"></i>Client Information
@@ -30,11 +39,14 @@
                     <i class="menu-icon far fa-money-bill-alt" style="width: 20px; text-align: center;"></i>Daily Payments
                 </a>
             </li>
-            <li>
-                <a href="/mastertables">
-                    <i class="menu-icon fa fa-columns" style="width: 20px; text-align: center;"></i>Master Tables <b class="label green pull-right">6</b>
-                </a>
-            </li>
+            @if ("ADMIN, OPS".Contains(usr.RoleId))
+            {
+                <li>
+                    <a href="/mastertables">
+                        <i class="menu-icon fa fa-columns" style="width: 20px; text-align: center;"></i>Master Tables <b class="label green pull-right">6</b>
+                    </a>
+                </li>
+            }
             <li>
                 <a href="/reports">
                     <i class="menu-icon far fa-file-alt" style="width: 20px; text-align: center;"></i>Reports <b class="label green pull-right">10</b>

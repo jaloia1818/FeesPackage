@@ -141,6 +141,7 @@
     <Compile Include="AuthorizeRole.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CheckListController.cs" />
     <Compile Include="Controllers\ClientInfoController.cs" />
     <Compile Include="Controllers\DailyPaymentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -676,6 +677,7 @@
     <Content Include="Views\ClientInfo\IndexRO.cshtml" />
     <Content Include="Views\ClientInfo\_EditRO.cshtml" />
     <Content Include="Views\DailyPayments\IndexRO.cshtml" />
+    <Content Include="Views\CheckList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
