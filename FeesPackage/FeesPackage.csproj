@@ -673,6 +673,9 @@
     <Content Include="Views\Reports\RefAttyFeesByFP.cshtml" />
     <Content Include="Views\Auth\NotFound.cshtml" />
     <Content Include="Views\Shared\_LayoutMin.cshtml" />
+    <Content Include="Views\ClientInfo\IndexRO.cshtml" />
+    <Content Include="Views\ClientInfo\_EditRO.cshtml" />
+    <Content Include="Views\DailyPayments\IndexRO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

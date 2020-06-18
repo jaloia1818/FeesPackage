@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
 {
-    [AuthorizeRole(roles = "R/O, OPS, ADMIN")]
     public class BaseController : Controller
     {
         protected readonly FeesPackageEntities db = new FeesPackageEntities();

@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
 
 namespace FeesPackage.Controllers
 {
+    [AuthorizeRole(roles = "R/O, OPS, ADMIN")]
     public class DailyPaymentsController : BaseController
     {
         [HttpPost]
@@ -438,7 +438,11 @@ namespace FeesPackage.Controllers
                 ).ToList()
             };
 
-            return View(model);
+            User usr = (User)Session["LoggedInUser"];
+            if (usr.RoleId == "R/O")
+                return View("IndexRO", model);
+            else
+                return View(model);
         }
     }
 }

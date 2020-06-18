@@ -1,0 +1,249 @@
+﻿@using FeesPackage.Models;
+@using Newtonsoft.Json;
+@model ClientInfoModel
+
+@{
+    ViewBag.Title = "tblClient [R/O]";
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        ready();
+    });
+</script>
+
+<div class="span9">
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h3>
+                    <i>@ViewBag.Title</i> Table
+                </h3>
+            </div>
+            <div class="module-body table">
+                <span>Search: </span>
+                <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" />
+                <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
+                    <div id="jqxgrid"></div>
+                </div>
+            </div>
+        </div>
+        <!--/.module-->
+    </div>
+    <!--/.content-->
+</div>
+<!--/.span9-->
+
+<div id="ClientDlg" style="display:none">
+</div>
+
+<style>
+    .disabled {
+        background-color: #e0e9f5;
+    }
+</style>
+
+<script>
+    var groups = [];
+    var id;
+
+    function ready() {
+        // setup edit dialog
+        $("#ClientDlg").dialog({
+            autoOpen: false,
+            width: 700,
+            resizable: false,
+            modal: true,
+            title: '@ViewBag.Title',
+            show: {
+                effect: "blind",
+                duration: 500
+            },
+            hide: {
+                effect: "explode",
+                duration: 500
+            }
+        });
+
+        // on close, reload page to refresh
+        $("#ClientDlg").on( "dialogclose", function(event, ui) {
+            location.reload();
+        });
+
+        // prepare the Attorney list dropdown data
+        var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.Attys));
+
+        var locallistaSource = {
+            datatype: "array",
+            datafields: [
+                    { name: 'Name', type: 'string' },
+                    { name: 'Id', type: 'string' }
+            ],
+            localdata: locallista
+        };
+        var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
+
+        // prepare the data
+        var data = @Html.Raw(JsonConvert.SerializeObject(Model.Clients));
+        var inUpdate = false;
+
+        var source =
+        {
+            dataType: "json",
+            // NO UPDATEROW, posted from form
+            dataFields: [
+                { name: 'id', type: 'int' },
+                { name: 'Client_Name', type: 'string' },
+                { name: 'Employer_Name', type: 'string' },
+                { name: 'Escrow', type: 'string' },
+                { name: 'Handling_Atty', type: 'string' },
+                { name: 'Handling', type: 'string' },
+                { name: 'Credit_Atty', type: 'string' },
+                { name: 'Credit', type: 'string' },
+                { name: 'County', type: 'string' },
+                { name: 'Accident_Desc', type: 'string' }
+            ],
+            id: 'insurance',
+            localdata: data
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) { },
+            loadComplete: function (data) { },
+            beforeLoadComplete: function (records) { },
+            loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
+        });
+
+        var cellsrenderer_center = function (row, column, value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        var columnrenderer_center = function (value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        // create new row.
+        $("#addrowbutton").on('click', function () {
+            $.get('/ClientInfo/Create', function (data, status, jqXHR) {
+                $('#ClientDlg').html(data);
+                $('.ui-dialog-title').html('@ViewBag.Title [0]');
+                $("#ClientDlg").dialog("open");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+        });
+
+        $("#jqxgrid").jqxGrid(
+        {
+            theme: 'energyblue',
+            width: '100%',
+            height: '50%',
+            autowidth: false,
+            source: dataAdapter,
+            showfilterrow: true,
+            filterable: true,
+            pageable: true,
+            pagesize: 100,
+            pagesizeoptions: ['5', '10', '20', '50', '100'],
+            groupable: false,
+            editable: false,
+            sortable: true,
+            ready: function () { setup(); },
+            columnsresize: true,
+            columns: [
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', width: 75, align: 'center', editable: false, cellclassname: "disabled" },
+                { text: 'Client Name', datafield: 'Client_Name', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Employer Name', datafield: 'Employer_Name', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Escrow %', datafield: 'Escrow', filtertype: 'checkedlist', width: 80, cellsalign: 'center', align: 'center' },
+                { text: 'Handling Atty', datafield: 'Handling_Atty', filtertype: 'checkedlist', width: 105, cellsalign: 'center', align: 'center' },
+                { text: 'Handling %', datafield: 'Handling', filtertype: 'checkedlist', width: 95, cellsalign: 'center', align: 'center' },
+                { text: 'Credit Atty', datafield: 'Credit_Atty', filtertype: 'checkedlist', width: 105, cellsalign: 'center', align: 'center' },
+                { text: 'Credit %', datafield: 'Credit', filtertype: 'checkedlist', width: 95, cellsalign: 'center', align: 'center' },
+                { text: 'County', datafield: 'County', filtertype: 'checkedlist', width: 65, cellsalign: 'center', align: 'center' },
+                { text: 'Accident Desc', datafield: 'Accident_Desc', filtertype: 'checkedlist', align: 'center' }
+            ]
+        });
+
+        $("#jqxgrid").on("celldoubleclick", function (event) {
+            var args = event.args;
+            var rowBoundIndex = args.rowindex;
+            //var rowVisibleIndex = args.visibleindex;
+            //var rightClick = args.rightclick;
+            //var ev = args.originalEvent;
+            //var columnIndex = args.columnindex;
+            //var dataField = args.datafield;
+            //var value = args.value;
+
+            // get 'id' value of row dblclk'd on
+            id = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value;
+
+            // render view/show dialog
+            $.post('/ClientInfo/EditRO', { id: id }, function (data, status, jqXHR) {
+                $('#ClientDlg').html(data);
+                $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
+                $("#ClientDlg").dialog("open");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+        });
+
+        var options = {
+            callback: function (value) {
+                var searchText = value;
+                var filter_or_operator = 1;
+                var filtervalue = searchText;
+                var filtercondition = 'CONTAINS';
+
+                var filtergroup = new $.jqx.filter();
+                filtergroup.operator = 'or';
+                var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+                filtergroup.addfilter(filter_or_operator, filter);
+
+                $("#jqxgrid").jqxGrid('clearfilters');
+                $("#jqxgrid").jqxGrid('addfilter', "id", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Client_Name", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Employer_Name", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Handling_Atty", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Credit_Atty", filtergroup);
+                $("#jqxgrid").jqxGrid('applyfilters');
+            },
+            wait: 0,
+            highlight: true,
+            allowSubmit: false,
+            captureLength: 1
+        }
+
+        $("#search").typeWatch(options);
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setup() {
+        $("#jqxgrid").jqxGrid('autoresizecolumns');
+
+        $(window).bind('resize', function () {
+            $("#jqxgrid").jqxGrid(
+            {
+                // set height of grid to available space
+                height: $(window).height() - ($('.navbar').height()
+                                            + $('.module').height()
+                                            + $('.footer').height()
+                                            + 100 // fudge factor for padding/margins
+                                             )
+            });
+        }).trigger('resize');
+    }
+</script>

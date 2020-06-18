@@ -3,11 +3,11 @@ using FeesPackage.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
 {
+    [AuthorizeRole(roles = "R/O, OPS, ADMIN")]
     public class ClientInfoController : BaseController
     {
         private ClientInfoModel GetModel(int id)
@@ -298,7 +298,7 @@ namespace FeesPackage.Controllers
                 Client = db.tblClients.SingleOrDefault(x => x.id == id),
 
                 Claims = db.tblClaims.SqlQuery("select * from tblClaim where reference_number = " + id).ToList(),
-                
+
                 ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
 
                 Referrals = db.tblReferrals.OrderBy(x => x.Referral_Name).ToList()
@@ -309,7 +309,7 @@ namespace FeesPackage.Controllers
                 })
                 .ToList(),
 
-                Payments = 
+                Payments =
                     (from clt in db.tblClients
                      join cla in db.tblClaims on clt.id equals cla.Reference_Number
                      join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
@@ -401,6 +401,117 @@ namespace FeesPackage.Controllers
             return PartialView("~/Views/ClientInfo/_Edit.cshtml", model);
         }
 
+        [HttpPost]
+        public ActionResult EditRO(int id)
+        {
+            ClientInfoModel model = new ClientInfoModel
+            {
+                Client = db.tblClients.SingleOrDefault(x => x.id == id),
+
+                Claims = db.tblClaims.SqlQuery("select * from tblClaim where reference_number = " + id).ToList(),
+
+                ClientReferrals = db.tblClientReferrals.Where(x => x.Reference_Number == id).ToList(),
+
+                Referrals = db.tblReferrals.OrderBy(x => x.Referral_Name).ToList()
+                .Select(c => new ListClass
+                {
+                    Id = c.Referral_Name,
+                    Name = c.Referral_Name
+                })
+                .ToList(),
+
+                Payments =
+                    (from clt in db.tblClients
+                     join cla in db.tblClaims on clt.id equals cla.Reference_Number
+                     join pay in db.tblPayments on cla.Claim_Number equals pay.Claim_Number
+                     where clt.id == id
+                     select pay
+                    ).ToList(),
+
+                Attys = new List<ListClass>
+                {
+                    new ListClass() {
+                        Id = null,
+                        Name = "Select ..."
+                    }
+                }
+                .Concat(db.tblAttorneys.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Atty_Initials,
+                    Name = c.Atty_Initials + " - " + c.Atty_Name
+                }))
+                .ToList(),
+
+                ReferralwithClients = db.ReferralwithClients.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Referral_Name,
+                    Name = c.Referral_Name
+                })
+                .ToList(),
+
+                AttyCombos = db.tblAttorneyCombos.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Deposit_Options.ToString(),
+                    Name = c.Attorney_Combinations
+                })
+                .ToList(),
+
+                Adjusters = db.tblInsurances.OrderBy(x => x.Ins_Co_Name).ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Ins_Contact,
+                    Name = c.Ins_Co_Name
+                })
+                .ToList(),
+
+                Counties = new List<ListClass>
+                {
+                    new ListClass() {
+                        Id = null,
+                        Name = "Select ..."
+                    }
+                }
+                .Concat(db.tblCounties.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.County,
+                    Name = c.County + " - " + c.County_Desc
+                }))
+                .ToList(),
+
+                Frequencys = db.tblPaymentFrequencies.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Payment_Frequency,
+                    Name = c.Payment_Frequency
+                })
+                .ToList(),
+
+                StatusCodes = db.tblStatusCodes.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Status_Code,
+                    Name = c.Status_Code
+                })
+                .ToList(),
+
+                ClaimNumbers = (from cla in db.tblClaims
+                                join clt in db.tblClients on cla.Reference_Number equals clt.id
+                                orderby clt.Client_Name
+                                select new ListClass()
+                                {
+                                    Id = cla.Claim_Number,
+                                    Name = clt.Client_Name + " - " + cla.Claim_Number
+                                }
+                ).ToList()
+            };
+
+            return PartialView("~/Views/ClientInfo/_EditRO.cshtml", model);
+        }
+
         // GET: ClientInfo
         public ActionResult Index()
         {
@@ -418,7 +529,11 @@ namespace FeesPackage.Controllers
                 .ToList()
             };
 
-            return View(model);
+            User usr = (User)Session["LoggedInUser"];
+            if (usr.RoleId == "R/O")
+                return View("IndexRO", model);
+            else
+                return View(model);
         }
     }
 }

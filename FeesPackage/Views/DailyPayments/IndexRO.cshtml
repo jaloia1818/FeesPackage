@@ -1,0 +1,473 @@
+﻿@using FeesPackage.Models;
+@using Newtonsoft.Json;
+@model ClientInfoModel
+
+@{
+    ViewBag.Title = "tblPayments [R/O]";
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        ready();
+    });
+</script>
+
+<div class="span9">
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h3>
+                    <i>@ViewBag.Title</i> Table
+                </h3>
+            </div>
+            <div class="module-body table">
+                <span style="margin-left: 10px; font-weight: bold; color: black">Search: </span>
+                <input type="text" id="search" placeholder="Type here ..." style="height: 21px; width: 200px;" autofocus />
+                <button id="UnmatchedDepositsPrint" style="float: right">Unmatched Deposits</button>
+                <button id="DailyDepositsPrint" style="float: right">Daily Deposits</button>
+                <button id="DailyDetailPrint" style="float: right">Daily Detail</button>
+                <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
+                    <div id="jqxgrid"></div>
+                </div>
+            </div>
+        </div>
+        <!--/.module-->
+    </div>
+    <!--/.content-->
+</div>
+<!--/.span9-->
+
+<div id="ToFromDlg" style="display:none">
+    <p>Begin date: <input type="text" id="fromDate" /></p>
+    <p>End date: <input type="text" id="toDate" /></p>
+</div>
+
+<div id="StatsDlg" style="display:none">
+    <p style="padding-left:20px;font-weight:bold"># of Payments: <span id="numPayments"></span></p>
+    <p style="font-weight:bold">Total of Payments: <span id="totalPayments"></span></p>
+</div>
+
+<style>
+    .jqx-grid-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+    .disabled {
+        background-color: #e0e9f5;
+    }
+</style>
+
+<script>
+    var groups = [];
+    var id;
+
+    function ready() {
+        $('#UnmatchedDepositsPrint').click(function () {
+            $('#ToFromDlg').dialog({
+                buttons: [{
+                    text: "Run",
+                    "id": "run",
+                    click: function () {
+                        window.open('/DailyPayments/UnmatchedDepositsPrint?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                        $('#ToFromDlg').dialog('close')
+                    }
+                }],
+                open: function() {
+                    $('#fromDate').datepicker({title:'From Date'}).blur();
+                    $('#toDate').datepicker({title:'To Date'}).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
+                },
+                close: function() {
+                    $('#fromDate').datepicker('destroy');
+                    $('#toDate').datepicker('destroy');
+                },
+            });
+        });
+
+        $('#DailyDepositsPrint').click(function () {
+            $('#ToFromDlg').dialog({
+                buttons: [{
+                    text: "Run",
+                    "id": "run",
+                    click: function () {
+                        window.open('/DailyPayments/DailyDepositsPrint?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                        $('#ToFromDlg').dialog('close')
+                    }
+                }],
+                open: function() {
+                    $('#fromDate').datepicker({title:'From Date'}).blur();
+                    $('#toDate').datepicker({title:'To Date'}).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
+                },
+                close: function() {
+                    $('#fromDate').datepicker('destroy');
+                    $('#toDate').datepicker('destroy');
+                },
+            });
+        });
+
+        $('#DailyDetailPrint').click(function () {
+            $('#ToFromDlg').dialog({
+                buttons: [{
+                    text: "Run",
+                    "id": "run",
+                    click: function () {
+                        window.open('/DailyPayments/DailyDetailPrint?fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val());
+                        $('#ToFromDlg').dialog('close')
+                    }
+                }],
+                open: function() {
+                    $('#fromDate').datepicker({title:'From Date'}).blur();
+                    $('#toDate').datepicker({title:'To Date'}).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
+                },
+                close: function() {
+                    $('#fromDate').datepicker('destroy');
+                    $('#toDate').datepicker('destroy');
+                },
+            });
+        });
+
+        $('#PostPayments').click(function () {
+            $('#ToFromDlg').dialog({
+                buttons: [{
+                    text: "Run",
+                    "id": "run",
+                    click: function () {
+                        $.post('/DailyPayments/PostedPaymentsRpt', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
+                            $('#StatsDlg').dialog({
+                                buttons: [
+                                    {
+                                        text: "Post",
+                                        "id": "post",
+                                        click: function () {
+                                            PostPayments();
+                                        }
+                                    },
+                                    {
+                                        text: "Close",
+                                        "id": "close",
+                                        click: function () {
+                                            $('#StatsDlg').dialog('close')
+                                        }
+                                    }
+                                ],
+                                open: function () {
+                                    $('#numPayments').text(data.count);
+                                    $('#totalPayments').text(data.amount);
+                                },
+                                close: function() {
+                                    $('#ToFromDlg').dialog('close');
+                                    setTimeout(function () { location.reload(); }, 10);
+                                },
+                            });
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus + ': ' + errorThrown);
+                        });
+                    }
+                }],
+                open: function() {
+                    $('#fromDate').datepicker({title:'From Date'}).blur();
+                    $('#toDate').datepicker({ title: 'To Date' }).blur();
+                    if ($('#toDate').val() == '')
+                        $('#toDate').val('@DateTime.Today.ToString("MM/dd/yyyy")');
+                },
+                close: function() {
+                    $('#fromDate').datepicker('destroy');
+                    $('#toDate').datepicker('destroy');
+                },
+            });
+        });
+
+        function PostPayments() {
+            $.post('/DailyPayments/PostPayments', { fromDate: $('#fromDate').val(), toDate: $('#toDate').val() }, function (data, status, jqXHR) {
+                alert('POSTED!');
+                $('#StatsDlg').dialog('close')
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+        }
+
+        // prepare the Attorney list dropdown data
+        var locallista = @Html.Raw(JsonConvert.SerializeObject(Model.AttyCombos));
+        var locallistb = @Html.Raw(JsonConvert.SerializeObject(Model.ClaimNumbers));
+
+        var locallistaSource = {
+            datatype: "array",
+            datafields: [
+                    { name: 'Name', type: 'string' },
+                    { name: 'Id', type: 'string' }
+            ],
+            localdata: locallista
+        };
+       var locallistbSource = {
+            datatype: "array",
+            datafields: [
+                    { name: 'Name', type: 'string' },
+                    { name: 'Id', type: 'string' }
+            ],
+            localdata: locallistb
+        };
+
+        var locallistaAdapter = new $.jqx.dataAdapter(locallistaSource);
+        var locallistbAdapter = new $.jqx.dataAdapter(locallistbSource);
+
+        // prepare the data
+        var data = @Html.Raw(JsonConvert.SerializeObject(Model.Payments));
+        var inUpdate = false;
+
+        var source =
+        {
+            dataType: "json",
+            updaterow: function (rowid, rowdata, commit) {
+                if (!inUpdate) {
+                    $.post('/DailyPayments', rowdata, function (data, status, jqXHR) {
+                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(data)) {
+                            inUpdate = true;
+                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(data));
+                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Input_Date', Date.now);
+                            inUpdate = false;
+
+                            if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Deposit_Indicator') == '') {
+                                var clmNum = $("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Claim_Number');
+
+                                $.post('/DailyPayments/GetAttyBreakdown', { ClaimNumber: clmNum }, function (data, status, jqXHR) {
+                                    $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Deposit_Indicator', parseInt(data.attyBreakdown));
+                                }).fail(function (jqXHR, textStatus, errorThrown) {
+                                    alert(textStatus + ': ' + errorThrown);
+                                });
+                            }
+                        }
+                        commit(true);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ': ' + errorThrown);
+                    });
+                }
+            },
+            dataFields: [
+                { name: 'id', type: 'int' },
+                { name: 'Claim_Number', type: 'string', align: 'center' },
+                { name: 'Payment_Date', type: 'date' },
+                { name: 'Period_From', type: 'date' },
+                { name: 'Period_To', type: 'date' },
+                { name: 'Amount', type: 'float' },
+                { name: 'Input_Date', type: 'date' },
+                { name: 'Deposit_Indicator', type: 'int' },
+                { name: 'Posted_Indicator', type: 'bool' },
+                { name: 'Comment', type: 'string' }
+            ],
+            id: 'payments',
+            localdata: data
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) { },
+            loadComplete: function (data) { },
+            beforeLoadComplete: function (records) { },
+            loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
+        });
+
+        var cellsrenderer_center = function (row, column, value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        var columnrenderer_center = function (value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        var addRow = false;
+        // create new row.
+        $("#addrowbutton").on('click', function () {
+            addRow = true;
+            // add empty row in first position
+            $("#jqxgrid").jqxGrid('addrow', null, {}, 'first');
+            // begin editting newly added row, first column
+            $("#jqxgrid").jqxGrid('begincelledit', 0, 'Claim_Number');
+        });
+
+        const sleep = (milliseconds) => {
+            return new Promise(resolve => setTimeout(resolve, milliseconds))
+        }
+
+        $("#jqxgrid").jqxGrid(
+        {
+            theme: 'energyblue',
+            width: '100%',
+            height: '50%',
+            autowidth: false,
+            source: dataAdapter,
+            showfilterrow: true,
+            filterable: true,
+            pageable: true,
+            pagesize: 100,
+            pagesizeoptions: ['5', '10', '20', '50', '100'],
+            groupable: false,
+            editable: false,
+            sortable: true,
+            ready: function () { setup(); },
+            columnsresize: true,
+            columns: [
+                { text: 'id', datafield: 'id', filtertype: 'checkedlist', cellsalign: 'center', align: 'center', width: 57, editable: false, cellclassname: "disabled" },
+                { text: 'Claim Number', datafield: 'Claim_Number', filtertype: 'checkedlist', width: 180, align: 'center',
+                    columntype: 'combobox',
+                    createeditor: function (row, column, editor) {
+                        $('html').css('cursor', 'wait');
+                        $("#jqxgrid").jqxGrid({ disabled: true});
+
+                        sleep(500).then(() => {
+                            editor.jqxComboBox({
+                                autoOpen: true,
+                                dropDownHeight: 350,
+                                dropDownWidth: 350,
+                                searchMode: 'containsignorecase',
+                                source: locallistbAdapter,
+                                displayMember: 'Name',
+                                valueMember: 'Id',
+                                placeHolder: 'Choose ...'
+                            });
+
+                            $("#jqxgrid").jqxGrid({ disabled: false });
+                            $('html').css('cursor', 'default');
+                        }, 1000);
+                        editor.on('close', function (event) {
+                            //var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            //setTimeout(function () { $("#jqxgrid").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                        });
+                    }
+                },
+                { text: 'Payment Date', datafield: 'Payment_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Period From', datafield: 'Period_From', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c2', width: 83, align: 'center' },
+                { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
+                { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', width: 65, align: 'center',
+                    columntype: 'combobox',
+                    createeditor: function (row, column, editor) {
+                        editor.jqxComboBox({
+                            autoOpen: true,
+                            dropDownHeight: 350,
+                            dropDownWidth: 150,
+                            searchMode: 'startswithignorecase',
+                            source: locallistaAdapter,
+                            displayMember: 'Name',
+                            valueMember: 'Id',
+                            placeHolder: 'Choose ...',
+                            renderer: function (index, label, value) {
+                                //var item = editor.jqxComboBox('getSelectedItem');
+                                return label + ' - ' + value;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            //var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            //setTimeout(function () { $("#jqxgrid").jqxGrid('begincelledit', sel, 'id'); }, 10);
+                        });
+                    }
+                },
+                { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center', columntype: 'checkbox', editable: false, hidden: true },
+                { text: 'Comment', datafield: 'Comment', filtertype: 'checkedlist', align: 'center' }
+            ]
+            });
+
+        $("#jqxgrid").on('cellendedit', function (event) {
+            // column data field.
+            if (event.args.datafield == 'Comment' && addRow)
+                setTimeout(function () { $("#addrowbutton").click(); }, 1);
+        });
+
+        $("#jqxgrid").on('cellclick', function (event) {
+            // event arguments.
+            var args = event.args;
+            // row's bound index.
+            var rowBoundIndex = args.rowindex;
+            // row's visible index.
+            var rowVisibleIndex = args.visibleindex;
+            // right click.
+            var rightclick = args.rightclick;
+            // original event.
+            var ev = args.originalEvent;
+            // column index.
+            var columnindex = args.columnindex;
+            // column data field.
+            var dataField = args.datafield;
+            // cell value
+            var value = args.value;
+
+            if (args.columnindex == 10) {
+                setTimeout(function () {
+                    var rowIndex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                    var rowId = $("#jqxgrid").jqxGrid('getrowid', rowIndex);
+                    var data = $('#jqxgrid').jqxGrid('getrowdata', rowIndex);
+
+                    $.post('/DailyPayments/Delete', { Id: data.id }, function (data, status, jqXHR) {
+                        $("#jqxgrid").jqxGrid('deleterow', rowId);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ': ' + errorThrown);
+                    });
+                }, 100);
+            }
+        });
+
+        var options = {
+            callback: function (value) {
+                var searchText = value;
+                var filter_or_operator = 1;
+                var filtervalue = searchText;
+                var filtercondition = 'CONTAINS';
+
+                var filtergroup = new $.jqx.filter();
+                filtergroup.operator = 'or';
+                var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+                filtergroup.addfilter(filter_or_operator, filter);
+
+                $("#jqxgrid").jqxGrid('clearfilters');
+                $("#jqxgrid").jqxGrid('addfilter', "id", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Claim_Number", filtergroup);
+                $("#jqxgrid").jqxGrid('addfilter', "Deposit_Indicator", filtergroup);
+                $("#jqxgrid").jqxGrid('applyfilters');
+            },
+            wait: 0,
+            highlight: true,
+            allowSubmit: false,
+            captureLength: 1
+        }
+
+        $("#search").typeWatch(options);
+        $("#search").focus();
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setup() {
+        $("#jqxgrid").jqxGrid('autoresizecolumns');
+
+        $(window).bind('resize', function () {
+            $("#jqxgrid").jqxGrid(
+            {
+                // set height of grid to available space
+                height: $(window).height() - ($('.navbar').height()
+                                            + $('.module').height()
+                                            + $('.footer').height()
+                                            + 100 // fudge factor for padding/margins
+                                             )
+            });
+        }).trigger('resize');
+    }
+</script>

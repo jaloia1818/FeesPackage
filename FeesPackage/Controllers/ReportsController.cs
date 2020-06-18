@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace FeesPackage.Controllers
 {
+    [AuthorizeRole(roles = "R/O, OPS, ADMIN")]
     public class ReportsController : BaseController
     {
         private ClientInfoModel GetModel()

@@ -7,6 +7,7 @@ using Sap.Data.SQLAnywhere;
 
 namespace FeesPackage.Controllers
 {
+    [AuthorizeRole(roles = "OPS, ADMIN")]
     public class HomeController : BaseController
     {
         public ActionResult Index()
