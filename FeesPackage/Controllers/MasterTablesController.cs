@@ -322,5 +322,72 @@ namespace FeesPackage.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Users(User model)
+        {
+            try
+            {
+                if (model.Id == new Guid("00000000-0000-0000-0000-000000000000"))
+                {   // insert
+                    // set new Guid for primary key
+                    model.Id = Guid.NewGuid();
+
+                    // Insert into table
+                    db.Users.Add(model);
+                    db.SaveChanges();
+                }
+                else
+                {   // update
+                    // get original record for unedited fields
+                    User record = db.Users.Where(x => x.Id == model.Id).Single();
+
+                    // transfer form fields
+                    record.FirstName = model.FirstName;
+                    record.LastName = model.LastName;
+                    record.Email = model.Email;
+                    record.Username = model.Username;
+                    record.RoleId = model.RoleId;
+                    record.IsActive = model.IsActive;
+
+                    // Update record
+                    db.Entry(record).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+
+            // return Status OK
+            return Content(model.Id.ToString());
+        }
+
+        [HttpGet]
+        public ActionResult Users()
+        {
+            User_Roles model = new User_Roles
+            {
+                Users = db.Users.OrderBy(x => x.LastName).ToList(),
+
+                Roles = new List<ListClass>
+                {
+                    new ListClass() {
+                        Id = null,
+                        Name = "Select ..."
+                    }
+                }
+                .Concat(db.Roles.ToArray()
+                .Select(c => new ListClass
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                }).OrderBy(x => x.Name))
+                .ToList(),
+            };
+
+            return View(model);
+        }
     }
 }

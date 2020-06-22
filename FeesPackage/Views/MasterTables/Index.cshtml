@@ -1,4 +1,10 @@
-﻿<style>
+﻿@using FeesPackage.Data_Access;
+
+@{
+    User usr = (User)Session["LoggedInUser"];
+}
+
+<style>
     .span12 .svg-inline--fa.fa-w-12,
     .span12 .svg-inline--fa {
         height: 30px;
@@ -48,6 +54,17 @@
                             </a>
                         </div>
                     </div>
+                    @if ("ADMIN".Contains(usr.RoleId))
+                    {
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <a href="/masterTables/users" class="btn-box small span4">
+                                    <i class="fa fa-users"></i>
+                                    <div class="report_label">Users</div>
+                                </a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

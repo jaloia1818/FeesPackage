@@ -1,0 +1,243 @@
+﻿@using FeesPackage.Data_Access;
+@using FeesPackage.Models
+@using Newtonsoft.Json;
+@model User_Roles
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        ready();
+    });
+</script>
+
+<div class="span9">
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h3>
+                    <i>@ViewBag.Title</i> Table
+                </h3>
+            </div>
+            <div class="module-body table">
+                <span>Search: </span>
+                <input type="text" id="searchUser" placeholder="Type here ..." style="height: 21px; width: 200px;" />
+                <button id="adduserbutton" style="float: right">+</button>
+                <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
+                    <div id="user"></div>
+                </div>
+            </div>
+        </div>
+        <!--/.module-->
+    </div>
+    <!--/.content-->
+</div>
+<!--/.span9-->
+
+<style>
+    .disabled {
+        background-color: #e0e9f5;
+    }
+
+    .jqx-grid-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
+
+<script>
+    var groups = [];
+
+    function ready() {
+        // prepare the data
+        var data = @Html.Raw(JsonConvert.SerializeObject(Model.Users));
+        var inUpdate = false;
+
+        var source =
+        {
+            dataType: "json",
+            updaterow: function (rowid, rowdata, commit) {
+                if (!inUpdate) {
+                    $.post('/masterTables/users', rowdata, function (data, status, jqXHR) {
+                        if ($("#user").jqxGrid('getcellvaluebyid', rowid, 'Id') != data) {
+                            inUpdate = true;
+                            $("#user").jqxGrid('setcellvaluebyid', rowid, 'Id', data);
+                            inUpdate = false;
+                        }
+                        commit(true);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ': ' + errorThrown);
+                    });
+                }
+            },
+            dataFields: [
+                { name: 'Id', type: 'string' },
+                { name: 'FirstName', type: 'string' },
+                { name: 'LastName', type: 'string' },
+                { name: 'Email', type: 'string' },
+                { name: 'Username', type: 'string' },
+                { name: 'RoleId', type: 'string' },
+                { name: 'IsActive', type: 'bool' }
+            ],
+            id: 'user',
+            localdata: data
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) { },
+            loadComplete: function (data) { },
+            beforeLoadComplete: function (records) { },
+            loadError: function (xhr, status, error) { alert('loadError: status=' + status + ' error=' + error); },
+        });
+        var cellsrenderer_center = function (row, column, value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+        var columnrenderer_center = function (value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        // prepare the Attorney list dropdown data
+        var RolesList = @Html.Raw(JsonConvert.SerializeObject(Model.Roles));
+
+        var RolesSrc = {
+            datatype: "array",
+            datafields: [
+                    { name: 'Name', type: 'string' },
+                    { name: 'Id', type: 'string' }
+            ],
+            localdata: RolesList
+        };
+        var RolesAdapter = new $.jqx.dataAdapter(RolesSrc);
+
+         // create new row.
+        $("#adduserbutton").on('click', function () {
+            // add empty row in first position
+            $("#user").jqxGrid('addrow', null, {}, 'first');
+            // begin editting newly added row, first column
+            $("#user").jqxGrid('begincelledit', 0, 'FirstName');
+        });
+        $("#user").jqxGrid(
+        {
+            theme: 'energyblue',
+            width: '100%',
+            height: '50%',
+            autowidth: false,
+            source: dataAdapter,
+            showfilterrow: true,
+            filterable: true,
+            pageable: true,
+            pagesize: 100,
+            pagesizeoptions: ['5', '10', '20', '50', '100'],
+            groupable: false,
+            editable: true,
+            sortable: true,
+            ready: function () { setup(); },
+            columnsresize: true,
+            columns: [
+                { text: 'Id', datafield: 'Id', filtertype: 'checkedlist', width: 75, align: 'center', editable: false, cellclassname: "disabled", hidden: true },
+                { text: 'FirstName', datafield: 'FirstName', filtertype: 'checkedlist', align: 'center' },
+                { text: 'LastName', datafield: 'LastName', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Email', datafield: 'Email', filtertype: 'checkedlist', align: 'center' },
+                { text: 'Username', datafield: 'Username', filtertype: 'checkedlist', align: 'center' },
+                {
+                    text: 'RoleId', datafield: 'RoleId', filtertype: 'checkedlist', width: '89px', align: 'center',
+                    columntype: 'dropdownlist',
+                    createeditor: function (row, column, editor) {
+                        editor.jqxDropDownList({
+                            dropDownHeight: 350,
+                            dropDownWidth: 150,
+                            incrementalSearch: true,
+                            searchMode: 'containsignorecase',
+                            source: RolesAdapter,
+                            displayMember: 'Id',
+                            valueMember: 'Name',
+                            filterable: false,
+                            placeHolder: 'Choose ...',
+                            renderer: function (index, label, value) {
+                                var item = editor.jqxDropDownList('getSelectedItem');
+                                return label;
+                            }
+                        });
+                        editor.on('close', function (event) {
+                            //var sel = $('#claims').jqxGrid('getselectedrowindex');
+                            // this will lose focus on current dropdownlist, firing onChange event on this row
+                            //setTimeout(function () { $("#claims").jqxGrid('begincelledit', sel, 'Reference_Number'); }, 10);
+                        });
+                    }
+                },
+                {
+                    text: 'IsActive', datafield: 'IsActive', filtertype: 'checkedlist', align: 'center', columntype: 'checkbox',
+                    /*cellsRenderer: function (row, column, value, rowData) {
+                        var checkbox;
+                        if (value === true)
+                            checkbox = '<input type="checkbox" checked onclick="return false;">'
+                        else
+                            checkbox = '<input type="checkbox" onclick="return false;">'
+                        return checkbox;
+                    }*/
+                }
+            ]
+        });
+
+        var options = {
+            callback: function (value) {
+                var searchText = value;
+                var filter_or_operator = 1;
+                var filtervalue = searchText;
+                var filtercondition = 'CONTAINS';
+
+                var filtergroup = new $.jqx.filter();
+                filtergroup.operator = 'or';
+                var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+                filtergroup.addfilter(filter_or_operator, filter);
+
+                $("#insuranceContact").jqxGrid('clearfilters');
+                $("#insuranceContact").jqxGrid('addfilter', "Id", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "FirstName", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "LastName", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "Email", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "Username", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "RoleId", filtergroup);
+                $("#insuranceContact").jqxGrid('addfilter', "IsActive", filtergroup);
+                $("#insuranceContact").jqxGrid('applyfilters');
+            },
+            wait: 0,
+            highlight: true,
+            allowSubmit: false,
+            captureLength: 1
+        }
+        $("#searchIns").typeWatch(options);
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setup() {
+        $("#user").jqxGrid('autoresizecolumns');
+
+        $(window).bind('resize', function () {
+            $("#insuranceContact").jqxGrid(
+            {
+                // set height of grid to available space
+                height: $(window).height() - ($('.navbar').height()
+                                            + $('.module').height()
+                                            + $('.footer').height()
+                                            + 100 // fudge factor for padding/margins
+                                             )
+            });
+        }).trigger('resize');
+    }
+</script>

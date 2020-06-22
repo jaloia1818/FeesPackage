@@ -9,9 +9,11 @@
 
 namespace FeesPackage.Data_Access
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
     public partial class User
     {
         public System.Guid Id { get; set; }
@@ -20,8 +22,10 @@ namespace FeesPackage.Data_Access
         public string Email { get; set; }
         public string Username { get; set; }
         public string RoleId { get; set; }
-        public bool IsActive { get; set; }
-    
+        public Nullable<bool> IsActive { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual Role Role { get; set; }
     }
 }
