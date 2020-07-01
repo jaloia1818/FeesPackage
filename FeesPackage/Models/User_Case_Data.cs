@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace FeesPackage.Models
 {
@@ -127,5 +128,17 @@ namespace FeesPackage.Models
         public string ReplyRef { get; set; }
         public string Tax_ID { get; set; }
         public string Fee_Amount { get; set; }
+
+        public User_Case_Data() { }
+
+        public User_Case_Data(DataRow row)
+        {
+            this.casenum = (int)row["casenum"];
+            /*this.Name = (string)row["name"];
+			if (!(row["modified"] is DBNull))
+			{
+				this.Modified = (DateTime)row["modified"];
+			}*/
+        }
     }
 }

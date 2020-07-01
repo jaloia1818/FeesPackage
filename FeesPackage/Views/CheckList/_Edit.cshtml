@@ -1,0 +1,19 @@
+﻿@using FeesPackage.Models;
+@using Newtonsoft.Json;
+@model ClientInfoModel
+
+@using (Html.BeginForm("Save", "CheckList", FormMethod.Post, Model.Case))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => Model.Case.casenum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Case.casenum, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+    </div>
+}

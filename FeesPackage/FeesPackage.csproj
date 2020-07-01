@@ -680,6 +680,7 @@
     <Content Include="Views\DailyPayments\IndexRO.cshtml" />
     <Content Include="Views\CheckList\Index.cshtml" />
     <Content Include="Views\MasterTables\Users.cshtml" />
+    <Content Include="Views\CheckList\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

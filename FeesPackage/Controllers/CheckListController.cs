@@ -10,9 +10,10 @@ namespace FeesPackage.Controllers
     [AuthorizeRole(roles = "OPS, ADMIN")]
     public class CheckListController : BaseController
     {
+        readonly SAConnection myConnection = new SAConnection(ConfigurationManager.ConnectionStrings["Needles"].ConnectionString);
+        
         public ActionResult Index()
         {
-            SAConnection myConnection = new SAConnection(ConfigurationManager.ConnectionStrings["Needles"].ConnectionString);
             myConnection.Open();
 
             ClientInfoModel model = GetOpenCheckList(myConnection);
@@ -20,6 +21,33 @@ namespace FeesPackage.Controllers
             myConnection.Close();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(string case_no)
+        {
+            myConnection.Open();
+            SACommand myCommand = myConnection.CreateCommand();
+            myCommand.CommandText =
+                @"SELECT * FROM cases c
+                    inner join user_case_data ucd on c.casenum = ucd.casenum
+                    where c.casenum = " + case_no;
+            SADataReader myDataReader = myCommand.ExecuteReader();
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add("Case");
+            ds.Tables[0].Load(myDataReader);
+
+            ClientInfoModel model = new ClientInfoModel
+            {
+                Case = new Needles_Case(ds.Tables[0].Rows[0]),
+                Case_Data = new User_Case_Data(ds.Tables[0].Rows[0])
+            };
+
+            myDataReader.Close();
+            myConnection.Close();
+
+            return PartialView("~/Views/CheckList/_Edit.cshtml", model);
         }
 
         private ClientInfoModel GetOpenCheckList(SAConnection myConnection)

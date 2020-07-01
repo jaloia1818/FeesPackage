@@ -33,6 +33,9 @@
 </div>
 <!--/.span9-->
 
+<div id="CaseDlg" style="display:none">
+</div>
+
 <style>
     .disabled {
         background-color: #e0e9f5;
@@ -44,6 +47,28 @@
     var id;
 
     function ready() {
+        // setup edit dialog
+        $("#CaseDlg").dialog({
+            autoOpen: false,
+            width: 700,
+            resizable: false,
+            modal: true,
+            title: '@ViewBag.Title',
+            show: {
+                effect: "blind",
+                duration: 500
+            },
+            hide: {
+                effect: "explode",
+                duration: 500
+            }
+        });
+
+        // on close, reload page to refresh
+        $("#ClientDlg").on( "dialogclose", function(event, ui) {
+            location.reload();
+        });
+
         // prepare the data
         var data = @Html.Raw(JsonConvert.SerializeObject(Model.CheckList));
         var inUpdate = false;
@@ -129,13 +154,13 @@
             //var value = args.value;
 
             // get 'id' value of row dblclk'd on
-            id = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'id').value;
+            var case_no = $("#jqxgrid").jqxGrid('getcell', rowBoundIndex, 'case').value;
 
             // render view/show dialog
-            $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
-                $('#ClientDlg').html(data);
-                $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
-                $("#ClientDlg").dialog("open");
+            $.post('/CheckList/Edit', { case_no: case_no }, function (data, status, jqXHR) {
+                $('#CaseDlg').html(data);
+                $('.ui-dialog-title').html('@ViewBag.Title [' + case_no + ']');
+                $("#CaseDlg").dialog("open");
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 alert(textStatus + ': ' + errorThrown);
             });

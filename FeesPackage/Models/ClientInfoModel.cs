@@ -32,5 +32,7 @@ namespace FeesPackage.Models
         public List<qryClaimsDormant2> ClaimsDormant { get; set; }
         public string CheckList { get; set; }
         public int CheckListCount { get; set; }
+        public Needles_Case Case { get; set; }
+        public User_Case_Data Case_Data { get; set; }
     }
 }
