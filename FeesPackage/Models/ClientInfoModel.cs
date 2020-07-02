@@ -30,9 +30,5 @@ namespace FeesPackage.Models
         public List<ClaimsWithNoPayments> ClaimsWithNoPayments { get; set; }
         public List<qryClaims_30Days2> ClaimsWithNoPaymentsOver30Days { get; set; }
         public List<qryClaimsDormant2> ClaimsDormant { get; set; }
-        public string CheckList { get; set; }
-        public int CheckListCount { get; set; }
-        public Needles_Case Case { get; set; }
-        public User_Case_Data Case_Data { get; set; }
     }
 }

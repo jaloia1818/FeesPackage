@@ -16,7 +16,7 @@ namespace FeesPackage.Controllers
         {
             myConnection.Open();
 
-            ClientInfoModel model = GetOpenCheckList(myConnection);
+            NeedlesModel model = GetOpenCheckList(myConnection);
 
             myConnection.Close();
 
@@ -28,6 +28,7 @@ namespace FeesPackage.Controllers
         {
             myConnection.Open();
             SACommand myCommand = myConnection.CreateCommand();
+
             myCommand.CommandText =
                 @"SELECT * FROM cases c
                     inner join user_case_data ucd on c.casenum = ucd.casenum
@@ -38,19 +39,34 @@ namespace FeesPackage.Controllers
             ds.Tables.Add("Case");
             ds.Tables[0].Load(myDataReader);
 
-            ClientInfoModel model = new ClientInfoModel
+            NeedlesModel model = new NeedlesModel
             {
                 Case = new Needles_Case(ds.Tables[0].Rows[0]),
                 Case_Data = new User_Case_Data(ds.Tables[0].Rows[0])
             };
 
             myDataReader.Close();
+
+            myCommand.CommandText =
+                @"select n.last_long_name + ', ' + prefix + ' ' + first_name as name from party p
+                    inner join names n on p.party_id = n.names_id
+                    where p.case_id = " + case_no + " and p.role = 'Claimant'";
+            myDataReader = myCommand.ExecuteReader();
+
+            ds = new DataSet();
+            ds.Tables.Add("Party");
+            ds.Tables[0].Load(myDataReader);
+
+            model.Name = ds.Tables[0].Rows[0]["name"].ToString();
+
+            myDataReader.Close();
+
             myConnection.Close();
 
             return PartialView("~/Views/CheckList/_Edit.cshtml", model);
         }
 
-        private ClientInfoModel GetOpenCheckList(SAConnection myConnection)
+        private NeedlesModel GetOpenCheckList(SAConnection myConnection)
         {
             SACommand myCommand = myConnection.CreateCommand();
             myCommand.CommandText =
@@ -76,7 +92,7 @@ namespace FeesPackage.Controllers
             dsChecklist.Tables.Add("Checklist");
             dsChecklist.Tables[0].Load(myDataReader);
 
-            ClientInfoModel model = new ClientInfoModel
+            NeedlesModel model = new NeedlesModel
             {
                 CheckListCount = dsChecklist.Tables[0].Rows.Count,
                 CheckList = JsonConvert.SerializeObject(dsChecklist)

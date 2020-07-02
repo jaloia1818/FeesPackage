@@ -7,19 +7,19 @@ namespace FeesPackage.Models
 	{
 		public int casenum { get; set; }
 		public string alt_case_num { get; set; }
-		public Nullable<DateTime> date_of_incident { get; set; }
-		public Nullable<DateTime> date_opened { get; set; }
-		public Nullable<DateTime> lim_date { get; set; }
+		public string date_of_incident { get; set; }
+		public string date_opened { get; set; }
+		public string lim_date { get; set; }
 		public char lim_stat { get; set; }
 		public string matcode { get; set; }
 		public string staff_1 { get; set; }
 		public string staff_2 { get; set; }
 		public string staff_3 { get; set; }
 		public string staff_4 { get; set; }
-		public Nullable<DateTime> close_date { get; set; }
-		public Nullable<DateTime> case_date_1 { get; set; }
-		public Nullable<DateTime> case_date_2 { get; set; }
-		public Nullable<DateTime> case_date_3 { get; set; }
+		public string close_date { get; set; }
+		public string case_date_1 { get; set; }
+		public string case_date_2 { get; set; }
+		public string case_date_3 { get; set; }
 		public Nullable<DateTime> case_date_5 { get; set; }
 		public Nullable<DateTime> case_date_4 { get; set; }
 		public int referred_link { get; set; }
@@ -28,7 +28,7 @@ namespace FeesPackage.Models
 		public int group_id { get; set; }
 		public int group_id_location { get; set; }
 		public string synopsis { get; set; }
-		public Nullable<DateTime> ressign_date { get; set; }
+		public string ressign_date { get; set; }
 		public Nullable<DateTime> case_date_6 { get; set; }
 		public string litigation_title { get; set; }
 		public int court_link { get; set; }
@@ -52,7 +52,7 @@ namespace FeesPackage.Models
 		public string alt_case_num_2 { get; set; }
 		public int referred_to_id { get; set; }
 		public int referred_to_loc { get; set; }
-		public Nullable<DateTime> intake_date { get; set; }
+		public string intake_date { get; set; }
 		public TimeSpan intake_time { get; set; }
 		public string intake_staff { get; set; }
 		public Nullable<DateTime> import_date { get; set; }
@@ -71,18 +71,22 @@ namespace FeesPackage.Models
 		{
 			this.casenum = (int)row["casenum"];
 			this.alt_case_num = (string)row["alt_case_num"];
-			if (!(row["case_date_3"] is DBNull))
+			if (!(row["date_of_incident"] is DBNull))
 			{
-				this.date_of_incident = (DateTime)row["date_of_incident"];
+				this.date_of_incident = ((DateTime)row["date_of_incident"]).ToString("MM/dd/yyyy");
 			}
-			if (!(row["case_date_3"] is DBNull))
+			if (!(row["date_opened"] is DBNull))
 			{
-				this.date_opened = (DateTime)row["date_opened"];
+				this.date_opened = ((DateTime)row["date_opened"]).ToString("MM/dd/yyyy");
 			}
-			if (!(row["case_date_3"] is DBNull))
+			if (!(row["lim_date"] is DBNull))
 			{
-				this.lim_date = (DateTime)row["lim_date"];
+				this.lim_date = ((DateTime)row["lim_date"]).ToString("MM/dd/yyyy");
 			}
+			else
+            {
+				this.lim_date = "Not Set";
+            }
 			this.lim_stat = ((string)row["lim_stat"])[0];
 			this.matcode = (string)row["matcode"];
 			this.staff_1 = (string)row["staff_1"];
@@ -92,19 +96,19 @@ namespace FeesPackage.Models
 			this.staff_4 = (string)row["staff_4"];
 			if (!(row["close_date"] is DBNull))
 			{
-				this.close_date = (DateTime)row["close_date"];
+				this.close_date = ((DateTime)row["close_date"]).ToString("MM/dd/yyyy");
 			}
 			if (!(row["case_date_1"] is DBNull))
 			{
-				this.case_date_1 = (DateTime)row["case_date_1"];
+				this.case_date_1 = ((DateTime)row["case_date_1"]).ToString("MM/dd/yyyy");
 			}
 			if (!(row["case_date_2"] is DBNull))
 			{
-				this.case_date_2 = (DateTime)row["case_date_2"];
+				this.case_date_2 = ((DateTime)row["case_date_2"]).ToString("MM/dd/yyyy");
 			}
 			if (!(row["case_date_3"] is DBNull))
 			{
-				this.case_date_3 = (DateTime)row["case_date_3"];
+				this.case_date_3 = ((DateTime)row["case_date_3"]).ToString("MM/dd/yyyy");
 			}
 			if (!(row["case_date_5"] is DBNull))
 			{
@@ -122,7 +126,7 @@ namespace FeesPackage.Models
 			this.synopsis = (string)row["synopsis"];
 			if (!(row["ressign_date"] is DBNull))
 			{
-				this.ressign_date = (DateTime)row["ressign_date"];
+				this.ressign_date = ((DateTime)row["ressign_date"]).ToString("MM/dd/yyyy");
 			}
 			if (!(row["case_date_6"] is DBNull))
 			{
@@ -161,7 +165,7 @@ namespace FeesPackage.Models
 			this.referred_to_loc = (int)row["referred_to_loc"];
 			if (!(row["intake_date"] is DBNull))
 			{
-				this.intake_date = (DateTime)row["intake_date"];
+				this.intake_date = ((DateTime)row["intake_date"]).ToString("MM/dd/yyyy");
 			}
 			this.intake_time = (TimeSpan)row["intake_time"];
 			this.intake_staff = (string)row["intake_staff"];
