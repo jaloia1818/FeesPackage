@@ -74,39 +74,39 @@
                         <td>@Html.EditorFor(model => Model.Case.intake_staff, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
                     </tr>
                 </table>
-                <table id="assigned">
+                <table id="ten_col">
                     <tr>
                         <td colspan="10">Assigned To:</td>
                     </tr>
                     <tr>
                         <td style="text-align: right">1:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">2:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">3:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_3, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_3, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">4:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_4, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_4, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">5:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_5, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_5, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                     </tr>
                     <tr>
                         <td style="text-align: right">6:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_6, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_6, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">7:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_7, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_7, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">8:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_8, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_8, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">9:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_9, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_9, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                         <td style="text-align: right">10:</td>
-                        <td>@Html.EditorFor(model => Model.Case.staff_10, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td>@Html.EditorFor(model => Model.Case.staff_10, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 132px" } })</td>
                     </tr>
                 </table>
                 <table>
                     <tr>
                         <td>Synopsis:</td>
-                        <td colspan="9">@Html.TextAreaFor(model => Model.Case.synopsis, htmlAttributes: new { @class = "form-control", @readonly = "readonly", style = "width: 732px", rows = "2" })</td>
+                        <td>@Html.TextAreaFor(model => Model.Case.synopsis, htmlAttributes: new { @class = "form-control", @readonly = "readonly", style = "width: 732px", rows = "2" })</td>
                     </tr>
                 </table>
                 <table id="case_dates">
@@ -114,28 +114,112 @@
                         <td colspan="10">Case Dates:</td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">Petition Filed:</td>
-                        <td>@Html.EditorFor(model => Model.Case.case_date_1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
-                        <td style="text-align: right">Hearing:</td>
-                        <td>@Html.EditorFor(model => Model.Case.case_date_2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
-                        <td style="text-align: right">No Meds After:</td>
-                        <td>@Html.EditorFor(model => Model.Case.case_date_3, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td style="text-align: right; min-width: 140px;">Petition Filed:</td>
+                        <td style="min-width: 140px;">@Html.EditorFor(model => Model.Case.case_date_1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td style="text-align: right; min-width: 140px;">Hearing:</td>
+                        <td style="min-width: 140px;">@Html.EditorFor(model => Model.Case.case_date_2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td style="text-align: right; min-width: 140px;">No Meds After:</td>
+                        <td style="min-width: 140px;">@Html.EditorFor(model => Model.Case.case_date_3, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">No Comp After:</td>
-                        <td>@Html.EditorFor(model => Model.Case.case_date_4, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td style="text-align: right; min-width: 140px;">No Comp After:</td>
+                        <td style="min-width: 140px;">@Html.EditorFor(model => Model.Case.case_date_4, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">Mediation Date:</td>
-                        <td>@Html.EditorFor(model => Model.Case.case_date_7, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                        <td style="text-align: right; min-width: 140px;">Mediation Date:</td>
+                        <td style="min-width: 140px;">@Html.EditorFor(model => Model.Case.case_date_7, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="text-align: right">Case Title:</td>
+                        <td>@Html.EditorFor(model => Model.Case.case_title, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 732px" } })</td>
+                    </tr>
+                </table>
+                <table id="six_col">
+                    <tr>
+                        <td style="text-align: right">Docket:</td>
+                        <td>@Html.EditorFor(model => Model.Case.docket, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 215px" } })</td>
+                        <td style="text-align: right">Court:</td>
+                        <td>@Html.EditorFor(model => Model.Case.court_link, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 215px" } })</td>
+                        <td style="text-align: right">Judge:</td>
+                        <td>@Html.EditorFor(model => Model.Case.judge_link, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 215px" } })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="text-align: right">Location:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Location, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 215px" } })</td>
+                        <td style="text-align: right">State:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.State, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 100px" } })</td>
+                        <td style="text-align: right">Credit Atty:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.CREDIT_ATTY, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 180px" } })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="text-align: right">Senate #</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Senate_Num, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 150px" } })</td>
+                        <td style="text-align: right">House #</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.House_Num, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 150px" } })</td>
+                        <td style="text-align: right">Referring Attorney:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Referring_Attorney, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 190px" } })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="text-align: right">Appeal #</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Appeal_Num, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 407px" } })</td>
+                        <td style="text-align: right">Referring - No Fee:</td>
+                        <td style="border: 1px solid #cccccc; border-radius: 3px; background-color: #eeeeee; min-width: 206px;">@Html.DisplayFor(model => Model.Case_Data.Referring__No_Fee, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Tax ID#</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Tax_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 407px" } })</td>
+                        <td style="text-align: right">Third Party:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Third_Party, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 206px" } })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="text-align: right">Doctor/Pt Referred To:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.DOCTORPT_REFERRED_TO, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 700px" } })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>Injuries Alleged:</td>
+                        <td>@Html.TextAreaFor(model => Model.Case_Data.Injuries_Alleged, htmlAttributes: new { @class = "form-control", @readonly = "readonly", style = "width: 732px", rows = "2" })</td>
+                    </tr>
+                    <tr>
+                        <td>Injuries per NCP/Decision:</td>
+                        <td>@Html.TextAreaFor(model => Model.Case_Data.Injuries_per_NCPDecision, htmlAttributes: new { @class = "form-control", @readonly = "readonly", style = "width: 732px", rows = "2" })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="text-align: right">Prior Status:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.PRIOR_STATUS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">Judge:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.JUDGE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="text-align: right">Petitions Pendings:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Petitions_Pendings, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 732px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Petitions Resolved:</td>
+                        <td>@Html.EditorFor(model => Model.Case_Data.Petitions_Resolved, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 732px" } })</td>
                     </tr>
                 </table>
             </div>
@@ -154,16 +238,16 @@
     td {
         min-width: 100px;
     }
-    input, textarea {
+    input {
         width: 95px;
     }
-    table#assigned td:nth-child(odd) {
+    table#ten_col td:nth-child(odd) {
         min-width: 20px;
     }
-    table#case_dates td {
-        min-width: 140px;
+    table#six_col td:nth-child(odd) {
+        min-width: 50px;
     }
- </style>
+</style>
 
 <script>
     $(function () {

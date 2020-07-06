@@ -67,8 +67,8 @@ namespace FeesPackage.Models
         public string TREATING_DOC { get; set; }
         public string DECISION_winlossdraw { get; set; }
         public DateTime modified_timestamp { get; set; }
-        public Decimal Senate_Num { get; set; }
-        public Decimal House_Num { get; set; }
+        public string Senate_Num { get; set; }
+        public string House_Num { get; set; }
         public string Impairment { get; set; }
         public DateTime Last_day_worked { get; set; }
         public string Highest_level_education { get; set; }
@@ -134,11 +134,198 @@ namespace FeesPackage.Models
         public User_Case_Data(DataRow row)
         {
             this.casenum = (int)row["casenum"];
-            /*this.Name = (string)row["name"];
-			if (!(row["modified"] is DBNull))
-			{
-				this.Modified = (DateTime)row["modified"];
-			}*/
+            if (!(row["Location"] is DBNull))
+            {
+                this.Location = (string)row["Location"];
+            }
+            if (!(row["City"] is DBNull))
+            {
+                this.City = (string)row["City"];
+            }
+            if (!(row["County"] is DBNull))
+            {
+                this.County = (string)row["County"];
+            }
+            if (!(row["State"] is DBNull))
+            {
+                this.State = (string)row["State"];
+            }
+            this.PRIOR_STATUS = (string)row["PRIOR_STATUS"];
+            if (!(row["DATE_DIS"] is DBNull))
+            {
+                this.DATE_DIS = (string)row["DATE_DIS"];
+            }
+            this.ATTY_FEE = (string)row["ATTY_FEE"];
+            this.AWW = (string)row["AWW"];
+            if (!(row["PETITION_TYP"] is DBNull))
+            {
+                this.PETITION_TYP = (string)row["PETITION_TYP"];
+            }
+            this.START_DATE = (string)row["START_DATE"];
+            this.TTD_RATE = (string)row["TTD_RATE"];
+            if (!(row["CR_ATTORNEY"] is DBNull))
+            {
+                this.CR_ATTORNEY = (string)row["CR_ATTORNEY"];
+            }
+            this.JUDGE = (string)row["JUDGE"];
+            if (!(row["IME_DOCTOR"] is DBNull))
+            {
+                this.IME_DOCTOR = (string)row["IME_DOCTOR"];
+            }
+            if (!(row["DATE_INJ"] is DBNull))
+            {
+                this.DATE_INJ = (string)row["DATE_INJ"];
+            }
+            if (!(row["AWWCOMP"] is DBNull))
+            {
+                this.AWWCOMP = (string)row["AWWCOMP"];
+            }
+            if (!(row["CLMT_DOCTOR"] is DBNull))
+            {
+                this.CLMT_DOCTOR = (string)row["CLMT_DOCTOR"];
+            }
+            if (!(row["DATE_OF_IME"] is DBNull))
+            {
+                this.DATE_OF_IME = (string)row["DATE_OF_IME"];
+            }
+            if (!(row["RECCOMP$"] is DBNull))
+            {
+                this.RECCOMP_Dollars = (string)row["RECCOMP$"];
+            }
+            this.CREDIT_ATTY = (string)row["CREDIT_ATTY"];
+            /*public string LIT_COSTS { get; set; }
+            public string ONSET_DATE { get; set; }
+            public string DT_DISABLED { get; set; }
+            public string WC { get; set; }
+            public string DPA { get; set; }
+            public string LTD { get; set; }
+            public string PIA { get; set; }
+            public string DEPENDENTS { get; set; }
+            public string TTD_OR_TPD { get; set; }
+            public string CURRENT_RATE { get; set; }
+            public string CR_DollarsS { get; set; }
+            public string DATE_DENIED { get; set; }
+            public string MED_CR_Dollars { get; set; }
+            public string SSD { get; set; }
+            public string TREATING_DR { get; set; }
+            public string SETTLEMENT_Dollars { get; set; }
+            public string Injuries { get; set; }*/
+            if (!(row["Petitions_Resolved"] is DBNull))
+            {
+                this.Petitions_Resolved = (string)row["Petitions_Resolved"];
+            }
+            if (!(row["Petitions_Pendings"] is DBNull))
+            {
+                this.Petitions_Pendings = (string)row["Petitions_Pendings"];
+            }
+            /*public string Client_Dollars_Owed_to_us { get; set; }
+            public string Fee_Pkg_No { get; set; }
+            public string TPD_Rate { get; set; }
+            public string WC_Rate_at_Settlement { get; set; }
+            public string Unemp_Comp_Dollars { get; set; }
+            public string Supt_Order { get; set; }
+            public char XXX_OLD_PINS_FIELDS_XXX { get; set; }
+            public string STDLTD { get; set; }
+            public DateTime Return_to_Work_date { get; set; }
+            public char VOC { get; set; }
+            public string Voc_Counselor { get; set; }
+            public char IRE { get; set; }
+            public DateTime IRE_Date { get; set; }
+            public string How_Long_Emp { get; set; }
+            public DateTime Client_Dollars_Start_Date { get; set; }
+            public DateTime SupersedEffectiveDate { get; set; }
+            public DateTime Carrier_Dollars_Start_Date { get; set; }
+            public char CFA_Signed { get; set; }*/
+            if (!(row["Appeal_#"] is DBNull))
+            {
+                this.Appeal_Num = (string)row["Appeal_#"];
+            }
+            /*public string TREATING_DOC { get; set; }
+            public string DECISION_winlossdraw { get; set; }
+            public DateTime modified_timestamp { get; set; }*/
+            this.Senate_Num = row["Senate_#"].ToString();
+	        this.House_Num = row["House_#"].ToString();
+            /*public string Impairment { get; set; }
+            public DateTime Last_day_worked { get; set; }
+            public string Highest_level_education { get; set; }
+            public string TYPE_AGR { get; set; }
+            public string Claims_Representative { get; set; }
+            public string testing { get; set; }*/
+            if (!(row["DOCTORPT_REFERRED_TO"] is DBNull))
+            {
+                this.DOCTORPT_REFERRED_TO = (string)row["DOCTORPT_REFERRED_TO"];
+            }
+            /*public string Percentage_Impaired { get; set; }
+            public DateTime TTD_Start_Date_for_IRE { get; set; }
+            public DateTime Start_date500_weeks_TPD { get; set; }
+            public string IA_Level { get; set; }
+            public string Hearing_Level { get; set; }
+            public DateTime Date_of_IA_Decision { get; set; }
+            public DateTime Date_of_Hearing_Decision { get; set; }
+            public string Ivins { get; set; }
+            public string WC_Transfer { get; set; }*/
+            if (!(row["Injuries_Alleged"] is DBNull))
+            {
+                this.Injuries_Alleged = (string)row["Injuries_Alleged"];
+            }
+            if (!(row["Injuries_per_NCPDecision"] is DBNull))
+            {
+                this.Injuries_per_NCPDecision = (string)row["Injuries_per_NCPDecision"];
+            }
+            /*public string Injuries_per_Doctor { get; set; }*/
+            if (!(row["Third_Party"] is DBNull))
+            {
+                this.Third_Party = (string)row["Third_Party"];
+            }
+            /*public string Old_Fields__Dont_Use { get; set; }
+            public Decimal Attorney_Fee_ { get; set; }
+            public char Uninsured { get; set; }
+            public string Suppt_Order { get; set; }*/
+            if (!(row["Referring_Attorney"] is DBNull))
+            {
+                this.Referring_Attorney = (string)row["Referring_Attorney"];
+            }
+            /*public string Dispute_No { get; set; }*/
+            if (!(row["Referring__No_Fee"] is DBNull))
+            {
+                this.Referring__No_Fee = (string)row["Referring__No_Fee"];
+            }
+            else
+            {
+                this.Referring__No_Fee = " ";
+            }
+            /*public string Place_of_Accident { get; set; }
+            public DateTime Time { get; set; }
+            public char Police { get; set; }
+            public char ReptInsurance_Co { get; set; }
+            public string Witnesses { get; set; }
+            public string Weather_Conditions { get; set; }
+            public string Type_of_Collision { get; set; }
+            public string LimitedFull_Tort { get; set; }
+            public string Property_Damage { get; set; }
+            public char Declaration_Page { get; set; }
+            public DateTime Date_of_Call { get; set; }
+            public string Call_Taken_By { get; set; }
+            public string Statement_Made { get; set; }
+            public char Reported_to_DefIns_Co { get; set; }
+            public string Deformity_of_Premises { get; set; }
+            public string Deformity_of_Product { get; set; }
+            public char Reported_Deformity { get; set; }
+            public string Reported_to_Whom { get; set; }
+            public string Type_of_Hazard { get; set; }
+            public string SlipTrip { get; set; }
+            public string Injuries_NCP { get; set; }
+            public string Injuries_Decision { get; set; }
+            public char Third_Party_Case { get; set; }
+            public string Third_Party_Atty { get; set; }
+            public string Concurrent_Employment { get; set; }
+            public string Gross_Weekly_Pay_OT { get; set; }
+            public Decimal AWW_on_NCP { get; set; }
+            public string State_injury_occurred { get; set; }
+            public string VA_File_Number { get; set; }
+            public string ReplyRef { get; set; }*/
+            this.Tax_ID = (string)row["Tax_ID"];
+            /*public string Fee_Amount { get; set; }*/
         }
-    }
+}
 }
