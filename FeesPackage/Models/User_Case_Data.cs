@@ -51,18 +51,18 @@ namespace FeesPackage.Models
         public string WC_Rate_at_Settlement { get; set; }
         public string Unemp_Comp_Dollars { get; set; }
         public string Supt_Order { get; set; }
-        public char XXX_OLD_PINS_FIELDS_XXX { get; set; }
+        public char? XXX_OLD_PINS_FIELDS_XXX { get; set; }
         public string STDLTD { get; set; }
         public string Return_to_Work_date { get; set; }
-        public char VOC { get; set; }
+        public char? VOC { get; set; }
         public string Voc_Counselor { get; set; }
-        public char IRE { get; set; }
+        public char? IRE { get; set; }
         public string IRE_Date { get; set; }
         public string How_Long_Emp { get; set; }
         public string Client_Dollars_Start_Date { get; set; }
         public string SupersedEffectiveDate { get; set; }
         public string Carrier_Dollars_Start_Date { get; set; }
-        public char CFA_Signed { get; set; }
+        public char? CFA_Signed { get; set; }
         public string Appeal_Num { get; set; }
         public string TREATING_DOC { get; set; }
         public string DECISION_winlossdraw { get; set; }
@@ -91,34 +91,34 @@ namespace FeesPackage.Models
         public string Third_Party { get; set; }
         public string Old_Fields__Dont_Use { get; set; }
         public string Attorney_Fee_ { get; set; }
-        public char Uninsured { get; set; }
+        public char? Uninsured { get; set; }
         public string Suppt_Order { get; set; }
         public string Referring_Attorney { get; set; }
         public string Dispute_No { get; set; }
         public string Referring__No_Fee { get; set; }
         public string Place_of_Accident { get; set; }
         public string Time { get; set; }
-        public char Police { get; set; }
-        public char ReptInsurance_Co { get; set; }
+        public char? Police { get; set; }
+        public char? ReptInsurance_Co { get; set; }
         public string Witnesses { get; set; }
         public string Weather_Conditions { get; set; }
         public string Type_of_Collision { get; set; }
         public string LimitedFull_Tort { get; set; }
         public string Property_Damage { get; set; }
-        public char Declaration_Page { get; set; }
+        public char? Declaration_Page { get; set; }
         public string Date_of_Call { get; set; }
         public string Call_Taken_By { get; set; }
         public string Statement_Made { get; set; }
-        public char Reported_to_DefIns_Co { get; set; }
+        public char? Reported_to_DefIns_Co { get; set; }
         public string Deformity_of_Premises { get; set; }
         public string Deformity_of_Product { get; set; }
-        public char Reported_Deformity { get; set; }
+        public char? Reported_Deformity { get; set; }
         public string Reported_to_Whom { get; set; }
         public string Type_of_Hazard { get; set; }
         public string SlipTrip { get; set; }
         public string Injuries_NCP { get; set; }
         public string Injuries_Decision { get; set; }
-        public char Third_Party_Case { get; set; }
+        public char? Third_Party_Case { get; set; }
         public string Third_Party_Atty { get; set; }
         public string Concurrent_Employment { get; set; }
         public string Gross_Weekly_Pay_OT { get; set; }
@@ -133,498 +133,134 @@ namespace FeesPackage.Models
 
         public User_Case_Data(DataRow row)
         {
-            if (!(row["casenum"] is DBNull))
-            {
-                this.casenum = (int)row["casenum"];
-            }
-            if (!(row["Location"] is DBNull))
-            {
-                this.Location = (string)row["Location"];
-            }
-            if (!(row["City"] is DBNull))
-            {
-                this.City = (string)row["City"];
-            }
-            if (!(row["County"] is DBNull))
-            {
-                this.County = (string)row["County"];
-            }
-            if (!(row["State"] is DBNull))
-            {
-                this.State = (string)row["State"];
-            }
-            if (!(row["PRIOR_STATUS"] is DBNull))
-            {
-                this.PRIOR_STATUS = (string)row["PRIOR_STATUS"];
-            }
-            if (!(row["DATE_DIS"] is DBNull))
-            {
-                this.DATE_DIS = (string)row["DATE_DIS"];
-            }
-            if (!(row["ATTY_FEE"] is DBNull))
-            {
-                this.ATTY_FEE = (string)row["ATTY_FEE"];
-            }
-            if (!(row["AWW"] is DBNull))
-            {
-                this.AWW = (string)row["AWW"];
-            }
-            if (!(row["PETITION_TYP"] is DBNull))
-            {
-                this.PETITION_TYP = (string)row["PETITION_TYP"];
-            }
-            if (!(row["START_DATE"] is DBNull))
-            {
-                this.START_DATE = (string)row["START_DATE"];
-            }
-            if (!(row["TTD_RATE"] is DBNull))
-            {
-                this.TTD_RATE = (string)row["TTD_RATE"];
-            }
-            if (!(row["CR_ATTORNEY"] is DBNull))
-            {
-                this.CR_ATTORNEY = (string)row["CR_ATTORNEY"];
-            }
-            if (!(row["JUDGE"] is DBNull))
-            {
-                this.JUDGE = (string)row["JUDGE"];
-            }
-            if (!(row["IME_DOCTOR"] is DBNull))
-            {
-                this.IME_DOCTOR = (string)row["IME_DOCTOR"];
-            }
-            if (!(row["DATE_INJ"] is DBNull))
-            {
-                this.DATE_INJ = (string)row["DATE_INJ"];
-            }
-            if (!(row["AWWCOMP"] is DBNull))
-            {
-                this.AWWCOMP = (string)row["AWWCOMP"];
-            }
-            if (!(row["CLMT_DOCTOR"] is DBNull))
-            {
-                this.CLMT_DOCTOR = (string)row["CLMT_DOCTOR"];
-            }
-            if (!(row["DATE_OF_IME"] is DBNull))
-            {
-                this.DATE_OF_IME = (string)row["DATE_OF_IME"];
-            }
-            if (!(row["RECCOMP$"] is DBNull))
-            {
-                this.RECCOMP_Dollars = (string)row["RECCOMP$"];
-            }
-            if (!(row["CREDIT_ATTY"] is DBNull))
-            {
-                this.CREDIT_ATTY = (string)row["CREDIT_ATTY"];
-            }
-            if (!(row["LIT_COSTS"] is DBNull))
-            {
-                this.LIT_COSTS = (string)row["LIT_COSTS"];
-            }
-            if (!(row["ONSET_DATE"] is DBNull))
-            {
-                this.ONSET_DATE = (string)row["ONSET_DATE"];
-            }
-            if (!(row["DT_DISABLED"] is DBNull))
-            {
-                this.DT_DISABLED = (string)row["DT_DISABLED"];
-            }
-            if (!(row["WC"] is DBNull))
-            {
-                this.WC = (string)row["WC"];
-            }
-            if (!(row["DPA"] is DBNull))
-            {
-                this.DPA = (string)row["DPA"];
-            }
-            if (!(row["LTD"] is DBNull))
-            {
-                this.LTD = (string)row["LTD"];
-            }
-            if (!(row["PIA"] is DBNull))
-            {
-                this.PIA = (string)row["PIA"];
-            }
-            if (!(row["DEPENDENTS"] is DBNull))
-            {
-                this.DEPENDENTS = (string)row["DEPENDENTS"];
-            }
-            if (!(row["TTD_OR_TPD"] is DBNull))
-            {
-                this.TTD_OR_TPD = (string)row["TTD_OR_TPD"];
-            }
-            if (!(row["CURRENT_RATE"] is DBNull))
-            {
-                this.CURRENT_RATE = (string)row["CURRENT_RATE"];
-            }
-            if (!(row["CR_$$S"] is DBNull))
-            {
-                this.CR_DollarsS = (string)row["CR_$$S"];
-            }
-            if (!(row["DATE_DENIED"] is DBNull))
-            {
-                this.DATE_DENIED = (string)row["DATE_DENIED"];
-            }
-            if (!(row["MED_CR_$$"] is DBNull))
-            {
-                this.MED_CR_Dollars = (string)row["MED_CR_$$"];
-            }
-            if (!(row["SSD"] is DBNull))
-            {
-                this.SSD = (string)row["SSD"];
-            }
-            if (!(row["TREATING_DR"] is DBNull))
-            {
-                this.TREATING_DR = (string)row["TREATING_DR"];
-            }
-            if (!(row["SETTLEMENT_$"] is DBNull))
-            {
-                this.SETTLEMENT_Dollars = (string)row["SETTLEMENT_$"];
-            }
-            if (!(row["Injuries"] is DBNull))
-            {
-                this.Injuries = (string)row["Injuries"];
-            }
-            if (!(row["Petitions_Resolved"] is DBNull))
-            {
-                this.Petitions_Resolved = (string)row["Petitions_Resolved"];
-            }
-            if (!(row["Petitions_Pendings"] is DBNull))
-            {
-                this.Petitions_Pendings = (string)row["Petitions_Pendings"];
-            }
-            if (!(row["Client_$$$_Owed_to_us"] is DBNull))
-            {
-                this.Client_Dollars_Owed_to_us = (string)row["Client_$$$_Owed_to_us"];
-            }
-            if (!(row["Fee_Pkg_No"] is DBNull))
-            {
-                this.Fee_Pkg_No = (string)row["Fee_Pkg_No"];
-            }
-            if (!(row["TPD_Rate"] is DBNull))
-            {
-                this.TPD_Rate = (string)row["TPD_Rate"];
-            }
-            if (!(row["WC_Rate_at_Settlement"] is DBNull))
-            {
-                this.WC_Rate_at_Settlement = (string)row["WC_Rate_at_Settlement"];
-            }
-            if (!(row["Unemp_Comp_$"] is DBNull))
-            {
-                this.Unemp_Comp_Dollars = (string)row["Unemp_Comp_$"];
-            }
-            if (!(row["Supt_Order"] is DBNull))
-            {
-                this.Supt_Order = (string)row["Supt_Order"];
-            }
-            if (!(row["XXX_OLD_PINS_FIELDS_XXX"] is DBNull))
-            {
-			    this.XXX_OLD_PINS_FIELDS_XXX = ((string)row["XXX_OLD_PINS_FIELDS_XXX"])[0];
-            }
-            if (!(row["STDLTD"] is DBNull))
-            {
-                this.STDLTD = (string)row["STDLTD"];
-            }
-            if (!(row["Return_to_Work_date"] is DBNull))
-            {
-                this.Return_to_Work_date = ((DateTime)row["Return_to_Work_date"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["VOC"] is DBNull))
-            {
-                this.VOC = ((string)row["VOC"])[0];
-            }
-            if (!(row["Voc_Counselor"] is DBNull))
-            {
-                this.Voc_Counselor = (string)row["Voc_Counselor"];
-            }
-            if (!(row["IRE"] is DBNull))
-            {
-                this.IRE = ((string)row["IRE"])[0];
-            }
-            if (!(row["IRE_Date"] is DBNull))
-            {
-                this.IRE_Date = ((DateTime)row["IRE_Date"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["How_Long_Emp"] is DBNull))
-            {
-                this.How_Long_Emp = (string)row["How_Long_Emp"];
-            }
-            if (!(row["Client_$$_Start_Date"] is DBNull))
-            {
-                this.Client_Dollars_Start_Date = ((DateTime)row["Client_$$_Start_Date"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["SupersedEffectiveDate"] is DBNull))
-            {
-                this.SupersedEffectiveDate = ((DateTime)row["SupersedEffectiveDate"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Carrier_$$_Start_Date"] is DBNull))
-            {
-                this.Carrier_Dollars_Start_Date = ((DateTime)row["Carrier_$$_Start_Date"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["CFA_Signed"] is DBNull))
-            {
-                this.CFA_Signed = ((string)row["CFA_Signed"])[0];
-            }
-            if (!(row["Appeal_#"] is DBNull))
-            {
-                this.Appeal_Num = (string)row["Appeal_#"];
-            }
-            if (!(row["TREATING_DOC"] is DBNull))
-            {
-                this.TREATING_DOC = (string)row["TREATING_DOC"];
-            }
-            if (!(row["DECISION_winlossdraw"] is DBNull))
-            {
-                this.DECISION_winlossdraw = (string)row["DECISION_winlossdraw"];
-            }
-            if (!(row["modified_timestamp"] is DBNull))
-            {
-                this.modified_timestamp = ((DateTime)row["modified_timestamp"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Senate_#"] is DBNull))
-            {
-                this.Senate_Num = row["Senate_#"].ToString();
-            }
-            if (!(row["House_#"] is DBNull))
-            {
-                this.House_Num = row["House_#"].ToString();
-            }
-            if (!(row["Impairment"] is DBNull))
-            {
-                this.Impairment = (string)row["Impairment"];
-            }
-            if (!(row["Last_day_worked"] is DBNull))
-            {
-                this.Last_day_worked = ((DateTime)row["Last_day_worked"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Highest_level_education"] is DBNull))
-            {
-                this.Highest_level_education = (string)row["Highest_level_education"];
-            }
-            if (!(row["TYPE_AGR"] is DBNull))
-            {
-                this.TYPE_AGR = (string)row["TYPE_AGR"];
-            }
-            if (!(row["Claims_Representative"] is DBNull))
-            {
-                this.Claims_Representative = (string)row["Claims_Representative"];
-            }
-            if (!(row["testing"] is DBNull))
-            {
-                this.testing = (string)row["testing"];
-            }
-            if (!(row["DOCTORPT_REFERRED_TO"] is DBNull))
-            {
-                this.DOCTORPT_REFERRED_TO = (string)row["DOCTORPT_REFERRED_TO"];
-            }
-            if (!(row["Percentage_Impaired"] is DBNull))
-            {
-                this.Percentage_Impaired = (string)row["Percentage_Impaired"];
-            }
-            if (!(row["TTD_Start_Date_for_IRE"] is DBNull))
-            {
-                this.TTD_Start_Date_for_IRE = ((DateTime)row["TTD_Start_Date_for_IRE"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Start_date500_weeks_TPD"] is DBNull))
-            {
-                this.Start_date500_weeks_TPD = ((DateTime)row["Start_date500_weeks_TPD"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["IA_Level"] is DBNull))
-            {
-                this.IA_Level = (string)row["IA_Level"];
-            }
-            if (!(row["Hearing_Level"] is DBNull))
-            {
-                this.Hearing_Level = (string)row["Hearing_Level"];
-            }
-            if (!(row["Date_of_IA_Decision"] is DBNull))
-            {
-                this.Date_of_IA_Decision = ((DateTime)row["Date_of_IA_Decision"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Date_of_Hearing_Decision"] is DBNull))
-            {
-                this.Date_of_Hearing_Decision = ((DateTime)row["Date_of_Hearing_Decision"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Ivins"] is DBNull))
-            {
-                this.Ivins = (string)row["Ivins"];
-            }
-            if (!(row["WC_Transfer"] is DBNull))
-            {
-                this.WC_Transfer = (string)row["WC_Transfer"];
-            }
-            if (!(row["Injuries_Alleged"] is DBNull))
-            {
-                this.Injuries_Alleged = (string)row["Injuries_Alleged"];
-            }
-            if (!(row["Injuries_per_NCPDecision"] is DBNull))
-            {
-                this.Injuries_per_NCPDecision = (string)row["Injuries_per_NCPDecision"];
-            }
-            if (!(row["Injuries_per_Doctor"] is DBNull))
-            {
-                this.Injuries_per_Doctor = (string)row["Injuries_per_Doctor"];
-            }
-            if (!(row["Third_Party"] is DBNull))
-            {
-                this.Third_Party = (string)row["Third_Party"];
-            }
-            if (!(row["Old_Fields__Dont_Use"] is DBNull))
-            {
-                this.Old_Fields__Dont_Use = (string)row["Old_Fields__Dont_Use"];
-            }
-            if (!(row["Attorney_Fee_"] is DBNull))
-            {
-                this.Attorney_Fee_ = row["Attorney_Fee_"].ToString();
-            }
-            if (!(row["Uninsured"] is DBNull))
-            {
-                this.Uninsured = ((string)row["Uninsured"])[0];
-            }
-            if (!(row["Suppt_Order"] is DBNull))
-            {
-                this.Suppt_Order = (string)row["Suppt_Order"];
-            }
-            if (!(row["Referring_Attorney"] is DBNull))
-            {
-                this.Referring_Attorney = (string)row["Referring_Attorney"];
-            }
-            if (!(row["Dispute_No"] is DBNull))
-            {
-                this.Dispute_No = (string)row["Dispute_No"];
-            }
-            if (!(row["Referring__No_Fee"] is DBNull))
-            {
-                this.Referring__No_Fee = (string)row["Referring__No_Fee"];
-            }
-            if (!(row["Place_of_Accident"] is DBNull))
-            {
-                this.Place_of_Accident = (string)row["Place_of_Accident"];
-            }
-            if (!(row["Time"] is DBNull))
-            {
-                this.Time = ((DateTime)row["Time"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Police"] is DBNull))
-            {
-                this.Police = ((string)row["Police"])[0];
-            }
-            if (!(row["ReptInsurance_Co"] is DBNull))
-            {
-                this.ReptInsurance_Co = ((string)row["ReptInsurance_Co"])[0];
-            }
-            if (!(row["Witnesses"] is DBNull))
-            {
-                this.Witnesses = (string)row["Witnesses"];
-            }
-            if (!(row["Weather_Conditions"] is DBNull))
-            {
-                this.Weather_Conditions = (string)row["Weather_Conditions"];
-            }
-            if (!(row["Type_of_Collision"] is DBNull))
-            {
-                this.Type_of_Collision = (string)row["Type_of_Collision"];
-            }
-            if (!(row["LimitedFull_Tort"] is DBNull))
-            {
-                this.LimitedFull_Tort = (string)row["LimitedFull_Tort"];
-            }
-            if (!(row["Property_Damage"] is DBNull))
-            {
-                this.Property_Damage = (string)row["Property_Damage"];
-            }
-            if (!(row["Declaration_Page"] is DBNull))
-            {
-                this.Declaration_Page = ((string)row["Declaration_Page"])[0];
-            }
-            if (!(row["Date_of_Call"] is DBNull))
-            {
-                this.Date_of_Call = ((DateTime)row["Date_of_Call"]).ToString("MM/dd/yyyy");
-            }
-            if (!(row["Call_Taken_By"] is DBNull))
-            {
-                this.Call_Taken_By = (string)row["Call_Taken_By"];
-            }
-            if (!(row["Statement_Made"] is DBNull))
-            {
-                this.Statement_Made = (string)row["Statement_Made"];
-            }
-            if (!(row["Reported_to_DefIns_Co"] is DBNull))
-            {
-                this.Reported_to_DefIns_Co = ((string)row["Reported_to_DefIns_Co"])[0];
-            }
-            if (!(row["Deformity_of_Premises"] is DBNull))
-            {
-                this.Deformity_of_Premises = (string)row["Deformity_of_Premises"];
-            }
-            if (!(row["Deformity_of_Product"] is DBNull))
-            {
-                this.Deformity_of_Product = (string)row["Deformity_of_Product"];
-            }
-            if (!(row["Reported_Deformity"] is DBNull))
-            {
-                this.Reported_Deformity = ((string)row["Reported_Deformity"])[0];
-            }
-            if (!(row["Reported_to_Whom"] is DBNull))
-            {
-                this.Reported_to_Whom = (string)row["Reported_to_Whom"];
-            }
-            if (!(row["Type_of_Hazard"] is DBNull))
-            {
-                this.Type_of_Hazard = (string)row["Type_of_Hazard"];
-            }
-            if (!(row["SlipTrip"] is DBNull))
-            {
-                this.SlipTrip = (string)row["SlipTrip"];
-            }
-            if (!(row["Injuries_NCP"] is DBNull))
-            {
-                this.Injuries_NCP = (string)row["Injuries_NCP"];
-            }
-            if (!(row["Injuries_Decision"] is DBNull))
-            {
-                this.Injuries_Decision = (string)row["Injuries_Decision"];
-            }
-            if (!(row["Third_Party_Case"] is DBNull))
-            {
-                this.Third_Party_Case = ((string)row["Third_Party_Case"])[0];
-            }
-            if (!(row["Third_Party_Atty"] is DBNull))
-            {
-                this.Third_Party_Atty = (string)row["Third_Party_Atty"];
-            }
-            if (!(row["Concurrent_Employment"] is DBNull))
-            {
-                this.Concurrent_Employment = (string)row["Concurrent_Employment"];
-            }
-            if (!(row["Gross_Weekly_Pay_OT"] is DBNull))
-            {
-                this.Gross_Weekly_Pay_OT = (string)row["Gross_Weekly_Pay_OT"];
-            }
-            if (!(row["AWW_on_NCP"] is DBNull))
-            {
-                this.AWW_on_NCP = row["AWW_on_NCP"].ToString();
-            }
-            if (!(row["State_injury_occurred"] is DBNull))
-            {
-                this.State_injury_occurred = (string)row["State_injury_occurred"];
-            }
-            if (!(row["VA_File_Number"] is DBNull))
-            {
-                this.VA_File_Number = (string)row["VA_File_Number"];
-            }
-            if (!(row["ReplyRef"] is DBNull))
-            {
-                this.ReplyRef = (string)row["ReplyRef"];
-            }
-            if (!(row["Tax_ID"] is DBNull))
-            {
-                this.Tax_ID = (string)row["Tax_ID"];
-            }
-            if (!(row["Fee_Amount"] is DBNull))
-            {
-                this.Fee_Amount = (string)row["Fee_Amount"];
-            }
+            this.casenum = (int)GetValue(row, "casenum");
+            this.Location = GetValue(row, "Location")?.ToString();
+            this.City = GetValue(row, "City")?.ToString();
+            this.County = GetValue(row, "County")?.ToString();
+            this.State = GetValue(row, "State")?.ToString();
+            this.PRIOR_STATUS = GetValue(row, "PRIOR_STATUS")?.ToString();
+            this.DATE_DIS = GetValue(row, "DATE_DIS")?.ToString();
+            this.ATTY_FEE = GetValue(row, "ATTY_FEE")?.ToString();
+            this.AWW = GetValue(row, "AWW")?.ToString();
+            this.PETITION_TYP = GetValue(row, "PETITION_TYP")?.ToString();
+            this.START_DATE = GetValue(row, "START_DATE")?.ToString();
+            this.TTD_RATE = GetValue(row, "TTD_RATE")?.ToString();
+            this.CR_ATTORNEY = GetValue(row, "CR_ATTORNEY")?.ToString();
+            this.JUDGE = GetValue(row, "JUDGE")?.ToString();
+            this.IME_DOCTOR = GetValue(row, "IME_DOCTOR")?.ToString();
+            this.DATE_INJ = GetValue(row, "DATE_INJ")?.ToString();
+            this.AWWCOMP = GetValue(row, "AWWCOMP")?.ToString();
+            this.CLMT_DOCTOR = GetValue(row, "CLMT_DOCTOR")?.ToString();
+            this.DATE_OF_IME = GetValue(row, "DATE_OF_IME")?.ToString();
+            this.RECCOMP_Dollars = GetValue(row, "RECCOMP$")?.ToString();
+            this.CREDIT_ATTY = GetValue(row, "CREDIT_ATTY")?.ToString();
+            this.LIT_COSTS = GetValue(row, "LIT_COSTS")?.ToString();
+            this.ONSET_DATE = GetValue(row, "ONSET_DATE")?.ToString();
+            this.DT_DISABLED = GetValue(row, "DT_DISABLED")?.ToString();
+            this.WC = GetValue(row, "WC")?.ToString();
+            this.DPA = GetValue(row, "DPA")?.ToString();
+            this.LTD = GetValue(row, "LTD")?.ToString();
+            this.PIA = GetValue(row, "PIA")?.ToString();
+            this.DEPENDENTS = GetValue(row, "DEPENDENTS")?.ToString();
+            this.TTD_OR_TPD = GetValue(row, "TTD_OR_TPD")?.ToString();
+            this.CURRENT_RATE = GetValue(row, "CURRENT_RATE")?.ToString();
+            this.CR_DollarsS = GetValue(row, "CR_$$S")?.ToString();
+            this.DATE_DENIED = GetValue(row, "DATE_DENIED")?.ToString();
+            this.MED_CR_Dollars = GetValue(row, "MED_CR_$$")?.ToString();
+            this.SSD = GetValue(row, "SSD")?.ToString();
+            this.TREATING_DR = GetValue(row, "TREATING_DR")?.ToString();
+            this.SETTLEMENT_Dollars = GetValue(row, "SETTLEMENT_$")?.ToString();
+            this.Injuries = GetValue(row, "Injuries")?.ToString();
+            this.Petitions_Resolved = GetValue(row, "Petitions_Resolved")?.ToString();
+            this.Petitions_Pendings = GetValue(row, "Petitions_Pendings")?.ToString();
+            this.Client_Dollars_Owed_to_us = GetValue(row, "Client_$$$_Owed_to_us")?.ToString();
+            this.Fee_Pkg_No = GetValue(row, "Fee_Pkg_No")?.ToString();
+            this.TPD_Rate = GetValue(row, "TPD_Rate")?.ToString();
+            this.WC_Rate_at_Settlement = GetValue(row, "WC_Rate_at_Settlement")?.ToString();
+            this.Unemp_Comp_Dollars = GetValue(row, "Unemp_Comp_$")?.ToString();
+            this.Supt_Order = GetValue(row, "Supt_Order")?.ToString();
+			this.XXX_OLD_PINS_FIELDS_XXX = GetValue(row, "XXX_OLD_PINS_FIELDS_XXX")?.ToString()?.ToString()[0];
+            this.STDLTD = GetValue(row, "STDLTD")?.ToString();
+            this.Return_to_Work_date = ((DateTime?)GetValue(row, "Return_to_Work_date"))?.ToString("MM/dd/yyyy");
+            this.VOC = GetValue(row, "VOC")?.ToString()[0];
+            this.Voc_Counselor = GetValue(row, "Voc_Counselor")?.ToString();
+            this.IRE = GetValue(row, "IRE")?.ToString()[0];
+            this.IRE_Date = ((DateTime?)GetValue(row, "IRE_Date"))?.ToString("MM/dd/yyyy");
+            this.How_Long_Emp = GetValue(row, "How_Long_Emp")?.ToString();
+            this.Client_Dollars_Start_Date = ((DateTime?)GetValue(row, "Client_$$_Start_Date"))?.ToString("MM/dd/yyyy");
+            this.SupersedEffectiveDate = ((DateTime?)GetValue(row, "SupersedEffectiveDate"))?.ToString("MM/dd/yyyy");
+            this.Carrier_Dollars_Start_Date = ((DateTime?)GetValue(row, "Carrier_$$_Start_Date"))?.ToString("MM/dd/yyyy");
+            this.CFA_Signed = GetValue(row, "CFA_Signed")?.ToString()[0];
+            this.Appeal_Num = GetValue(row, "Appeal_#")?.ToString();
+            this.TREATING_DOC = GetValue(row, "TREATING_DOC")?.ToString();
+            this.DECISION_winlossdraw = GetValue(row, "DECISION_winlossdraw")?.ToString();
+            this.modified_timestamp = ((DateTime?)GetValue(row, "modified_timestamp"))?.ToString("MM/dd/yyyy");
+            this.Senate_Num = GetValue(row, "Senate_#")?.ToString();
+            this.House_Num = GetValue(row, "House_#")?.ToString();
+            this.Impairment = GetValue(row, "Impairment")?.ToString();
+            this.Last_day_worked = ((DateTime?)GetValue(row, "Last_day_worked"))?.ToString("MM/dd/yyyy");
+            this.Highest_level_education = GetValue(row, "Highest_level_education")?.ToString();
+            this.TYPE_AGR = GetValue(row, "TYPE_AGR")?.ToString();
+            this.Claims_Representative = GetValue(row, "Claims_Representative")?.ToString();
+            this.testing = GetValue(row, "testing")?.ToString();
+            this.DOCTORPT_REFERRED_TO = GetValue(row, "DOCTORPT_REFERRED_TO")?.ToString();
+            this.Percentage_Impaired = GetValue(row, "Percentage_Impaired")?.ToString();
+            this.TTD_Start_Date_for_IRE = ((DateTime?)GetValue(row, "TTD_Start_Date_for_IRE"))?.ToString("MM/dd/yyyy");
+            this.Start_date500_weeks_TPD = ((DateTime?)GetValue(row, "Start_date500_weeks_TPD"))?.ToString("MM/dd/yyyy");
+            this.IA_Level = GetValue(row, "IA_Level")?.ToString();
+            this.Hearing_Level = GetValue(row, "Hearing_Level")?.ToString();
+            this.Date_of_IA_Decision = ((DateTime?)GetValue(row, "Date_of_IA_Decision"))?.ToString("MM/dd/yyyy");
+            this.Date_of_Hearing_Decision = ((DateTime?)GetValue(row, "Date_of_Hearing_Decision"))?.ToString("MM/dd/yyyy");
+            this.Ivins = GetValue(row, "Ivins")?.ToString();
+            this.WC_Transfer = GetValue(row, "WC_Transfer")?.ToString();
+            this.Injuries_Alleged = GetValue(row, "Injuries_Alleged")?.ToString();
+            this.Injuries_per_NCPDecision = GetValue(row, "Injuries_per_NCPDecision")?.ToString();
+            this.Injuries_per_Doctor = GetValue(row, "Injuries_per_Doctor")?.ToString();
+            this.Third_Party = GetValue(row, "Third_Party")?.ToString();
+            this.Old_Fields__Dont_Use = GetValue(row, "Old_Fields__Dont_Use")?.ToString();
+            this.Attorney_Fee_ = GetValue(row, "Attorney_Fee_")?.ToString();
+            this.Uninsured = GetValue(row, "Uninsured")?.ToString()[0];
+            this.Suppt_Order = GetValue(row, "Suppt_Order")?.ToString();
+            this.Referring_Attorney = GetValue(row, "Referring_Attorney")?.ToString();
+            this.Dispute_No = GetValue(row, "Dispute_No")?.ToString();
+            this.Referring__No_Fee = GetValue(row, "Referring__No_Fee")?.ToString();
+            this.Place_of_Accident = GetValue(row, "Place_of_Accident")?.ToString();
+            this.Time = ((DateTime?)GetValue(row, "Time"))?.ToString("MM/dd/yyyy");
+            this.Police = GetValue(row, "Police")?.ToString()[0];
+            this.ReptInsurance_Co = GetValue(row, "ReptInsurance_Co")?.ToString()[0];
+            this.Witnesses = GetValue(row, "Witnesses")?.ToString();
+            this.Weather_Conditions = GetValue(row, "Weather_Conditions")?.ToString();
+            this.Type_of_Collision = GetValue(row, "Type_of_Collision")?.ToString();
+            this.LimitedFull_Tort = GetValue(row, "LimitedFull_Tort")?.ToString();
+            this.Property_Damage = GetValue(row, "Property_Damage")?.ToString();
+            this.Declaration_Page = GetValue(row, "Declaration_Page")?.ToString()[0];
+            this.Date_of_Call = ((DateTime?)GetValue(row, "Date_of_Call"))?.ToString("MM/dd/yyyy");
+            this.Call_Taken_By = GetValue(row, "Call_Taken_By")?.ToString();
+            this.Statement_Made = GetValue(row, "Statement_Made")?.ToString();
+            this.Reported_to_DefIns_Co = GetValue(row, "Reported_to_DefIns_Co")?.ToString()[0];
+            this.Deformity_of_Premises = GetValue(row, "Deformity_of_Premises")?.ToString();
+            this.Deformity_of_Product = GetValue(row, "Deformity_of_Product")?.ToString();
+            this.Reported_Deformity = GetValue(row, "Reported_Deformity")?.ToString()[0];
+            this.Reported_to_Whom = GetValue(row, "Reported_to_Whom")?.ToString();
+            this.Type_of_Hazard = GetValue(row, "Type_of_Hazard")?.ToString();
+            this.SlipTrip = GetValue(row, "SlipTrip")?.ToString();
+            this.Injuries_NCP = GetValue(row, "Injuries_NCP")?.ToString();
+            this.Injuries_Decision = GetValue(row, "Injuries_Decision")?.ToString();
+            this.Third_Party_Case = GetValue(row, "Third_Party_Case")?.ToString()[0];
+            this.Third_Party_Atty = GetValue(row, "Third_Party_Atty")?.ToString();
+            this.Concurrent_Employment = GetValue(row, "Concurrent_Employment")?.ToString();
+            this.Gross_Weekly_Pay_OT = GetValue(row, "Gross_Weekly_Pay_OT")?.ToString();
+            this.AWW_on_NCP = GetValue(row, "AWW_on_NCP")?.ToString()?.ToString();
+            this.State_injury_occurred = GetValue(row, "State_injury_occurred")?.ToString();
+            this.VA_File_Number = GetValue(row, "VA_File_Number")?.ToString();
+            this.ReplyRef = GetValue(row, "ReplyRef")?.ToString();
+            this.Tax_ID = GetValue(row, "Tax_ID")?.ToString();
+            this.Fee_Amount = GetValue(row, "Fee_Amount")?.ToString();
+        }
+
+        protected object GetValue(DataRow row, string column)
+        {
+            return row.Table.Columns.Contains(column) && !(row[column] is DBNull) ? row[column] : null;
         }
     }
 }

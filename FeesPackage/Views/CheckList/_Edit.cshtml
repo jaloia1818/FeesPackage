@@ -266,9 +266,116 @@
                         <td>@Html.EditorFor(model => Model.Case_Data.START_DATE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
                     </tr>
                 </table>
+                <table>
+                    <tr>
+                        <td>Decisions (win,loss,draw):</td>
+                        <td>@Html.TextAreaFor(model => Model.Case_Data.DECISION_winlossdraw, htmlAttributes: new { @class = "form-control", @readonly = "readonly", style = "width: 732px", rows = "2" })</td>
+                    </tr>
+                </table>
             </div>
             <div id="insurance">
-                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <table>
+                    <tr style="background-color: black; color: yellow;">
+                        <td colspan="2">@Html.DisplayFor(model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">Case Type:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.matcode, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">DOI:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.date_of_incident, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">LIM Date:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.lim_date, new { htmlAttributes = new { @class = "form-control" } })</td>
+                    </tr>
+                    <tr style="background-color: black; color: yellow;">
+                        <td colspan="2">Case #@Html.DisplayFor(model => Model.Case.casenum, new { htmlAttributes = new { @class = "form-control" } }) ( @Html.DisplayFor(model => Model.Case.alt_case_num, new { htmlAttributes = new { @class = "form-control" } }) )</td>
+                        <td style="text-align: right">Class:</td>
+                        <td>@Html.DisplayFor(model => Model.Case._class, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">Assigned:</td>
+                        <td>XXXXXXXXXX</td>
+                        <td style="text-align: right">Opened:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.date_opened, new { htmlAttributes = new { @class = "form-control" } })</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right">Party:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.party_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Insurer:</td>
+                        <td>@Html.EditorFor(model => Model.Insurer.last_long_name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">Insurance Type:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.policy_type, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>@Html.Raw(Model.Insurer.address)</td>
+                        <td style="text-align: right">Agent:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.agent, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>@Html.Raw(Model.Insurer.address_2)</td>
+                        <td style="text-align: right">Policy #</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.policy, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>@Html.Raw(Model.Insurer.city + ", " + Model.Insurer.state + "  " + Model.Insurer.zipcode)</td>
+                        <td style="text-align: right">Claim #</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.claim, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Phone:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.party_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">Insured:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.insured, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Fax:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.party_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">Limits:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.limits, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Note:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.comments, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">Accept Liability?</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.accept, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Adjuster:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.adjuster_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">Work:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.adjuster_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right">Fax:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.adjuster_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Minimum:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.minimum_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">Maximum:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.maximum_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right">Actual:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.actual, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Date Resolved:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.date_settled, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                        <td style="text-align: right">How Resolved:</td>
+                        <td>@Html.EditorFor(model => Model.Insurance.how_settled, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                    </tr>
+                </table>
             </div>
             <div id="notes">
                 <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
