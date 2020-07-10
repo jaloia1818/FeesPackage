@@ -33,8 +33,9 @@ namespace FeesPackage.Controllers
                 @"SELECT * FROM cases c
                     inner join user_case_data ucd on c.casenum = ucd.casenum
                     inner join insurance ins on c.casenum = ins.case_num
-                    inner join names n on ins.insurer_id = n.names_id
-                    inner join names nn on ins.party_id = nn.names_id
+                    inner join names party on ins.party_id = party.names_id
+                    inner join names insurer on ins.insurer_id = insurer.names_id
+                    inner join names adjuster on ins.adjuster_id = adjuster.names_id
                     inner join multi_addresses a on ins.insurer_id = a.names_id and default_addr = 'Y'
                     where c.casenum = " + case_no;
             SADataReader myDataReader = myCommand.ExecuteReader();
@@ -48,8 +49,9 @@ namespace FeesPackage.Controllers
                 Case = new Needles_Case(ds.Tables[0].Rows[0]),
                 Case_Data = new User_Case_Data(ds.Tables[0].Rows[0]),
                 Insurance = new Insurance(ds.Tables[0].Rows[0]),
+                Party = new Party(ds.Tables[0].Rows[0]),
                 Insurer = new Insurer(ds.Tables[0].Rows[0]),
-                Name = ds.Tables[0].Rows[0]["last_long_name1"].ToString() + ", " + ds.Tables[0].Rows[0]["prefix1"].ToString() + " " + ds.Tables[0].Rows[0]["first_name1"].ToString()
+                Adjuster = new Adjuster(ds.Tables[0].Rows[0])
             };
 
             myDataReader.Close();

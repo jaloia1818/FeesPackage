@@ -11,7 +11,8 @@ namespace FeesPackage.Models
         public Needles_Case Case { get; set; }
         public User_Case_Data Case_Data { get; set; }
         public Insurance Insurance { get; set; }
+        public Party Party { get; set; }
         public Insurer Insurer { get; set; }
-        public string Name { get; set; }
+        public Adjuster Adjuster { get; set; }
     }
 }
