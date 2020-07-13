@@ -30,14 +30,15 @@ namespace FeesPackage.Controllers
             SACommand myCommand = myConnection.CreateCommand();
 
             myCommand.CommandText =
-                @"SELECT * FROM cases c
+                $@"SELECT * 
+                    FROM cases c
                     inner join user_case_data ucd on c.casenum = ucd.casenum
                     inner join insurance ins on c.casenum = ins.case_num
                     inner join names party on ins.party_id = party.names_id
                     inner join names insurer on ins.insurer_id = insurer.names_id
                     inner join names adjuster on ins.adjuster_id = adjuster.names_id
                     inner join multi_addresses a on ins.insurer_id = a.names_id and default_addr = 'Y'
-                    where c.casenum = " + case_no;
+                    where c.casenum = {case_no}";
             SADataReader myDataReader = myCommand.ExecuteReader();
 
             DataSet ds = new DataSet();
@@ -56,6 +57,26 @@ namespace FeesPackage.Controllers
 
             myDataReader.Close();
 
+            myCommand.CommandText =
+                $@"SELECT cn.note_key
+                        , cn.note_date
+                        , cn.note_time
+                        , cn.staff_id
+                        , cn.topic
+                        , cn.note 
+                    FROM case_notes cn
+                    where cn.case_num = {case_no}
+                    order by cn.note_date desc";
+            myDataReader = myCommand.ExecuteReader();
+
+            ds = new DataSet();
+            ds.Tables.Add("CaseNotes");
+            ds.Tables[0].Load(myDataReader);
+
+            model.CaseNotes = JsonConvert.SerializeObject(ds);
+
+            myDataReader.Close();
+
             myConnection.Close();
 
             return PartialView("~/Views/CheckList/_Edit.cshtml", model);
@@ -65,7 +86,7 @@ namespace FeesPackage.Controllers
         {
             SACommand myCommand = myConnection.CreateCommand();
             myCommand.CommandText =
-                @"select cl.case_id as 'case'
+                @"select  cl.case_id as 'case'
                         , names.last_long_name + ', ' + names.prefix + ' ' + names.first_name as 'party_name'
                         , cl.code
                         , cl.description

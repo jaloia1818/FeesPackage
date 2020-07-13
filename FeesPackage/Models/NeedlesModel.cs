@@ -14,5 +14,6 @@ namespace FeesPackage.Models
         public Party Party { get; set; }
         public Insurer Insurer { get; set; }
         public Adjuster Adjuster { get; set; }
+        public string CaseNotes { get; set; }
     }
 }
