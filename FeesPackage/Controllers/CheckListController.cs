@@ -35,25 +35,42 @@ namespace FeesPackage.Controllers
                     inner join user_case_data ucd on c.casenum = ucd.casenum
                     inner join insurance ins on c.casenum = ins.case_num
                     inner join names party on ins.party_id = party.names_id
-                    inner join names insurer on ins.insurer_id = insurer.names_id
-                    inner join names adjuster on ins.adjuster_id = adjuster.names_id
-                    inner join multi_addresses a on ins.insurer_id = a.names_id and default_addr = 'Y'
                     where c.casenum = {case_no}";
             SADataReader myDataReader = myCommand.ExecuteReader();
 
             DataSet ds = new DataSet();
+            ds.EnforceConstraints = false;
             ds.Tables.Add("Case");
+
             ds.Tables[0].Load(myDataReader);
 
             NeedlesModel model = new NeedlesModel
             {
                 Case = new Needles_Case(ds.Tables[0].Rows[0]),
                 Case_Data = new User_Case_Data(ds.Tables[0].Rows[0]),
-                Insurance = new Insurance(ds.Tables[0].Rows[0]),
-                Party = new Party(ds.Tables[0].Rows[0]),
-                Insurer = new Insurer(ds.Tables[0].Rows[0]),
-                Adjuster = new Adjuster(ds.Tables[0].Rows[0])
+                Party = new Party(ds.Tables[0].Rows[0])
             };
+
+            myDataReader.Close();
+
+            myCommand.CommandText =
+                $@"SELECT * 
+                    FROM insurance ins
+                    inner join names party on ins.party_id = party.names_id
+                    inner join names insurer on ins.insurer_id = insurer.names_id
+                    inner join names adjuster on ins.adjuster_id = adjuster.names_id
+                    inner join multi_addresses a on ins.insurer_id = a.names_id and default_addr = 'Y'
+                    where ins.case_num = {case_no}";
+            myDataReader = myCommand.ExecuteReader();
+
+            ds = new DataSet();
+            ds.Tables.Add("Insurance");
+            ds.Tables[0].Load(myDataReader);
+
+            model.Insurances = new Insurances(ds.Tables[0].Rows);
+            model.Partys = new Partys(ds.Tables[0].Rows);
+            model.Insurers = new Insurers(ds.Tables[0].Rows);
+            model.Adjusters = new Adjusters(ds.Tables[0].Rows);
 
             myDataReader.Close();
 

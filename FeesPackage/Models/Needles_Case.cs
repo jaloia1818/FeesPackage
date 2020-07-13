@@ -74,7 +74,7 @@ namespace FeesPackage.Models
 			this.date_of_incident = ((DateTime?)GetValue(row, "date_of_incident"))?.ToString("MM/dd/yyyy");
 			this.date_opened = ((DateTime?)GetValue(row, "date_opened"))?.ToString("MM/dd/yyyy");
 			this.lim_date = ((DateTime?)GetValue(row, "lim_date"))?.ToString("MM/dd/yyyy");
-			this.lim_stat = GetValue(row, "lim_stat")?.ToString()[0];
+			this.lim_stat = GetFirstChar(GetValue(row, "lim_stat")?.ToString());
 			this.matcode = GetValue(row, "matcode")?.ToString();
 			this.staff_1 = GetValue(row, "staff_1")?.ToString();
 			this.staff_2 = GetValue(row, "staff_2")?.ToString();
@@ -100,7 +100,7 @@ namespace FeesPackage.Models
 			this.judge_link = (int)GetValue(row, "judge_link");
 			this.judge_link_location = (int)GetValue(row, "judge_link_location");
 			this.docket = GetValue(row, "docket")?.ToString();
-			this.dormant = GetValue(row, "dormant")?.ToString()[0];
+			this.dormant = GetFirstChar(GetValue(row, "dormant")?.ToString());
 			this.special_note = GetValue(row, "special_note")?.ToString();
 			this.staff_5 = GetValue(row, "staff_5")?.ToString();
 			this.staff_6 = GetValue(row, "staff_6")?.ToString();
@@ -111,7 +111,7 @@ namespace FeesPackage.Models
 			this.case_date_7 = ((DateTime?)GetValue(row, "case_date_7"))?.ToString("MM/dd/yyyy");
 			this.case_date_8 = ((DateTime?)GetValue(row, "case_date_8"))?.ToString("MM/dd/yyyy");
 			this.case_date_9 = ((DateTime?)GetValue(row, "case_date_9"))?.ToString("MM/dd/yyyy");
-			this.open_status = GetValue(row, "open_status")?.ToString()[0];
+			this.open_status = GetFirstChar(GetValue(row, "open_status")?.ToString());
 			this.case_title = GetValue(row, "case_title")?.ToString();
 			this.alt_case_num_2 = GetValue(row, "alt_case_num_2")?.ToString();
 			this.referred_to_id = (int)GetValue(row, "referred_to_id");
@@ -133,6 +133,14 @@ namespace FeesPackage.Models
 		protected object GetValue(DataRow row, string column)
 		{
 			return row.Table.Columns.Contains(column) && !(row[column] is DBNull) ? row[column] : null;
+		}
+
+		protected char GetFirstChar(string str)
+		{
+			if (str == null || str.Length == 0)
+				return ' ';
+			else
+				return str[0];
 		}
 	}
 }

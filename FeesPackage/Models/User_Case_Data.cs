@@ -179,18 +179,18 @@ namespace FeesPackage.Models
             this.WC_Rate_at_Settlement = GetValue(row, "WC_Rate_at_Settlement")?.ToString();
             this.Unemp_Comp_Dollars = GetValue(row, "Unemp_Comp_$")?.ToString();
             this.Supt_Order = GetValue(row, "Supt_Order")?.ToString();
-			this.XXX_OLD_PINS_FIELDS_XXX = GetValue(row, "XXX_OLD_PINS_FIELDS_XXX")?.ToString()?.ToString()[0];
+			this.XXX_OLD_PINS_FIELDS_XXX = GetFirstChar(GetValue(row, "XXX_OLD_PINS_FIELDS_XXX")?.ToString());
             this.STDLTD = GetValue(row, "STDLTD")?.ToString();
             this.Return_to_Work_date = ((DateTime?)GetValue(row, "Return_to_Work_date"))?.ToString("MM/dd/yyyy");
-            this.VOC = GetValue(row, "VOC")?.ToString()[0];
+            this.VOC = GetFirstChar(GetValue(row, "VOC")?.ToString());
             this.Voc_Counselor = GetValue(row, "Voc_Counselor")?.ToString();
-            this.IRE = GetValue(row, "IRE")?.ToString()[0];
+            this.IRE = GetFirstChar(GetValue(row, "IRE")?.ToString());
             this.IRE_Date = ((DateTime?)GetValue(row, "IRE_Date"))?.ToString("MM/dd/yyyy");
             this.How_Long_Emp = GetValue(row, "How_Long_Emp")?.ToString();
             this.Client_Dollars_Start_Date = ((DateTime?)GetValue(row, "Client_$$_Start_Date"))?.ToString("MM/dd/yyyy");
             this.SupersedEffectiveDate = ((DateTime?)GetValue(row, "SupersedEffectiveDate"))?.ToString("MM/dd/yyyy");
             this.Carrier_Dollars_Start_Date = ((DateTime?)GetValue(row, "Carrier_$$_Start_Date"))?.ToString("MM/dd/yyyy");
-            this.CFA_Signed = GetValue(row, "CFA_Signed")?.ToString()[0];
+            this.CFA_Signed = GetFirstChar(GetValue(row, "CFA_Signed")?.ToString());
             this.Appeal_Num = GetValue(row, "Appeal_#")?.ToString();
             this.TREATING_DOC = GetValue(row, "TREATING_DOC")?.ToString();
             this.DECISION_winlossdraw = GetValue(row, "DECISION_winlossdraw")?.ToString();
@@ -219,34 +219,34 @@ namespace FeesPackage.Models
             this.Third_Party = GetValue(row, "Third_Party")?.ToString();
             this.Old_Fields__Dont_Use = GetValue(row, "Old_Fields__Dont_Use")?.ToString();
             this.Attorney_Fee_ = GetValue(row, "Attorney_Fee_")?.ToString();
-            this.Uninsured = GetValue(row, "Uninsured")?.ToString()[0];
+            this.Uninsured = GetFirstChar(GetValue(row, "Uninsured")?.ToString());
             this.Suppt_Order = GetValue(row, "Suppt_Order")?.ToString();
             this.Referring_Attorney = GetValue(row, "Referring_Attorney")?.ToString();
             this.Dispute_No = GetValue(row, "Dispute_No")?.ToString();
             this.Referring__No_Fee = GetValue(row, "Referring__No_Fee")?.ToString();
             this.Place_of_Accident = GetValue(row, "Place_of_Accident")?.ToString();
             this.Time = ((DateTime?)GetValue(row, "Time"))?.ToString("MM/dd/yyyy");
-            this.Police = GetValue(row, "Police")?.ToString()[0];
-            this.ReptInsurance_Co = GetValue(row, "ReptInsurance_Co")?.ToString()[0];
+            this.Police = GetFirstChar(GetValue(row, "Police")?.ToString());
+            this.ReptInsurance_Co = GetFirstChar(GetValue(row, "ReptInsurance_Co")?.ToString());
             this.Witnesses = GetValue(row, "Witnesses")?.ToString();
             this.Weather_Conditions = GetValue(row, "Weather_Conditions")?.ToString();
             this.Type_of_Collision = GetValue(row, "Type_of_Collision")?.ToString();
             this.LimitedFull_Tort = GetValue(row, "LimitedFull_Tort")?.ToString();
             this.Property_Damage = GetValue(row, "Property_Damage")?.ToString();
-            this.Declaration_Page = GetValue(row, "Declaration_Page")?.ToString()[0];
+            this.Declaration_Page = GetFirstChar(GetValue(row, "Declaration_Page")?.ToString());
             this.Date_of_Call = ((DateTime?)GetValue(row, "Date_of_Call"))?.ToString("MM/dd/yyyy");
             this.Call_Taken_By = GetValue(row, "Call_Taken_By")?.ToString();
             this.Statement_Made = GetValue(row, "Statement_Made")?.ToString();
-            this.Reported_to_DefIns_Co = GetValue(row, "Reported_to_DefIns_Co")?.ToString()[0];
+            this.Reported_to_DefIns_Co = GetFirstChar(GetValue(row, "Reported_to_DefIns_Co")?.ToString());
             this.Deformity_of_Premises = GetValue(row, "Deformity_of_Premises")?.ToString();
             this.Deformity_of_Product = GetValue(row, "Deformity_of_Product")?.ToString();
-            this.Reported_Deformity = GetValue(row, "Reported_Deformity")?.ToString()[0];
+            this.Reported_Deformity = GetFirstChar(GetValue(row, "Reported_Deformity")?.ToString());
             this.Reported_to_Whom = GetValue(row, "Reported_to_Whom")?.ToString();
             this.Type_of_Hazard = GetValue(row, "Type_of_Hazard")?.ToString();
             this.SlipTrip = GetValue(row, "SlipTrip")?.ToString();
             this.Injuries_NCP = GetValue(row, "Injuries_NCP")?.ToString();
             this.Injuries_Decision = GetValue(row, "Injuries_Decision")?.ToString();
-            this.Third_Party_Case = GetValue(row, "Third_Party_Case")?.ToString()[0];
+            this.Third_Party_Case = GetFirstChar(GetValue(row, "Third_Party_Case")?.ToString());
             this.Third_Party_Atty = GetValue(row, "Third_Party_Atty")?.ToString();
             this.Concurrent_Employment = GetValue(row, "Concurrent_Employment")?.ToString();
             this.Gross_Weekly_Pay_OT = GetValue(row, "Gross_Weekly_Pay_OT")?.ToString();
@@ -261,6 +261,14 @@ namespace FeesPackage.Models
         protected object GetValue(DataRow row, string column)
         {
             return row.Table.Columns.Contains(column) && !(row[column] is DBNull) ? row[column] : null;
+        }
+
+        protected char GetFirstChar(string str)
+        {
+            if (str == null || str.Length == 0)
+                return ' ';
+            else
+                return str[0];
         }
     }
 }

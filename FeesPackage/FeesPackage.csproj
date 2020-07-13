@@ -225,7 +225,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Adjusters.cs" />
     <Compile Include="Models\Adjuster.cs" />
+    <Compile Include="Models\Insurances.cs" />
+    <Compile Include="Models\Insurers.cs" />
+    <Compile Include="Models\Partys.cs" />
     <Compile Include="Models\Party.cs" />
     <Compile Include="Models\Insurer.cs" />
     <Compile Include="Models\Insurance.cs" />

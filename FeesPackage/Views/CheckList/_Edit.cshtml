@@ -297,111 +297,115 @@
                         <td>@Html.DisplayFor(model => Model.Case.date_opened, new { htmlAttributes = new { @class = "form-control" } })</td>
                     </tr>
                 </table>
-                <table>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td style="text-align: right">Party:</td>
-                        <td>@Html.Raw(Model.Party.last_long_name + ", " + Model.Party.prefix + " " + Model.Party.first_name)</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right; color: red;">Insurer:</td>
-                        <td>@Html.EditorFor(model => Model.Insurer.last_long_name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
-                        <td style="text-align: right">Insurance Type:</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.policy_type, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>@Html.Raw(Model.Insurer.address)</td>
-                        <td style="text-align: right">Agent:</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.agent, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>@Html.Raw(Model.Insurer.address_2)</td>
-                        <td style="text-align: right">Policy #</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.policy, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>@Html.Raw(Model.Insurer.city + ", " + Model.Insurer.state + "  " + Model.Insurer.zipcode)</td>
-                        <td style="text-align: right">Claim #</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.claim, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Phone:</td>
-                        <td>@Html.Raw(Model.Insurer.work_phone + "    Ext: " + Model.Insurer.work_extension)</td>
-                        <td style="text-align: right">Insured:</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.insured, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Fax:</td>
-                        <td>@Html.Raw(Model.Insurer.fax_number)</td>
-                        <td style="text-align: right">Limits:</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.limits, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Note:</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.comments, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
-                        <td style="text-align: right">Accept Liability?</td>
-                        <td>@Html.EditorFor(model => Model.Insurance.accept, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right; color: red;">Adjuster:</td>
-                        <td>@Html.Raw(Model.Adjuster.last_long_name + ", " + Model.Adjuster.prefix + " " + Model.Adjuster.first_name)</td>
-                        <td style="text-align: right">Work:</td>
-                        <td>
-                            @Html.EditorFor(model => Model.Adjuster.work_phone, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 90px" } }) Ext:
-                        @Html.EditorFor(model => Model.Adjuster.work_extension, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 34px" } }) Fax:
-                        @Html.EditorFor(model => Model.Adjuster.fax_number, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 90px" } })
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Minimum:</td>
-                    <td>
-                        @Html.EditorFor(model => Model.Insurance.minimum_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 113px" } }) Maximum:
-                    @Html.EditorFor(model => Model.Insurance.maximum_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 112px" } })
-                </td>
-                <td style="text-align: right">Actual:</td>
-                <td>@Html.EditorFor(model => Model.Insurance.actual, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Date Resolved:</td>
-                <td>@Html.EditorFor(model => Model.Insurance.date_settled, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
-                <td style="text-align: right">How Resolved:</td>
-                <td>@Html.EditorFor(model => Model.Insurance.how_settled, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
-            </tr>
-        </table>
-    </div>
-    <div id="notes" style="min-height: 1250px">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @for (int index = 0; index < Model.Insurances.InsuranceList.Count; index++)
+                {
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: right">Party:</td>
+                            <td>@Html.Raw(Model.Partys.PartyList[index].last_long_name + ", " + Model.Partys.PartyList[index].prefix + " " + Model.Partys.PartyList[index].first_name)</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; color: red;">Insurer:</td>
+                            <td>@Html.EditorFor(model => Model.Insurers.InsurerList[index].last_long_name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                            <td style="text-align: right">Insurance Type:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].policy_type, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>@Html.Raw(Model.Insurers.InsurerList[index].address)</td>
+                            <td style="text-align: right">Agent:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].agent, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>@Html.Raw(Model.Insurers.InsurerList[index].address_2)</td>
+                            <td style="text-align: right">Policy #</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].policy, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>@Html.Raw(Model.Insurers.InsurerList[index].city + ", " + Model.Insurers.InsurerList[index].state + "  " + Model.Insurers.InsurerList[index].zipcode)</td>
+                            <td style="text-align: right">Claim #</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].claim, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">Phone:</td>
+                            <td>@Html.Raw(Model.Insurers.InsurerList[index].work_phone + "    Ext: " + Model.Insurers.InsurerList[index].work_extension)</td>
+                            <td style="text-align: right">Insured:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].insured, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">Fax:</td>
+                            <td>@Html.Raw(Model.Insurers.InsurerList[index].fax_number)</td>
+                            <td style="text-align: right">Limits:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].limits, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">Note:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].comments, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                            <td style="text-align: right">Accept Liability?</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].accept, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; color: red;">Adjuster:</td>
+                            <td>@Html.Raw(Model.Adjusters.AdjusterList[index].last_long_name + ", " + Model.Adjusters.AdjusterList[index].prefix + " " + Model.Adjusters.AdjusterList[index].first_name)</td>
+                            <td style="text-align: right">Work:</td>
+                            <td>
+                                @Html.EditorFor(model => Model.Adjusters.AdjusterList[index].work_phone, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 90px" } }) Ext:
+                                @Html.EditorFor(model => Model.Adjusters.AdjusterList[index].work_extension, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 34px" } }) Fax:
+                                @Html.EditorFor(model => Model.Adjusters.AdjusterList[index].fax_number, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 90px" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">Minimum:</td>
+                            <td>
+                                @Html.EditorFor(model => Model.Insurances.InsuranceList[index].minimum_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 113px" } }) Maximum:
+                                @Html.EditorFor(model => Model.Insurances.InsuranceList[index].maximum_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 112px" } })
+                            </td>
+                            <td style="text-align: right">Actual:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].actual, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">Date Resolved:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].date_settled, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 307px" } })</td>
+                            <td style="text-align: right">How Resolved:</td>
+                            <td>@Html.EditorFor(model => Model.Insurances.InsuranceList[index].how_settled, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width: 306px" } })</td>
+                        </tr>
+                    </table>
+                    <hr />
+                }
+            </div>
+            <div id="notes" style="min-height: 1250px">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <table>
-            <tr style="background-color: black; color: yellow;">
-                <td colspan="2">@Html.Raw(Model.Party.last_long_name + ", " + Model.Party.prefix + " " + Model.Party.first_name)</td>
-                <td style="text-align: right">Case Type:</td>
-                <td>@Html.DisplayFor(model => Model.Case.matcode, new { htmlAttributes = new { @class = "form-control" } })</td>
-                <td style="text-align: right">DOI:</td>
-                <td>@Html.DisplayFor(model => Model.Case.date_of_incident, new { htmlAttributes = new { @class = "form-control" } })</td>
-                <td style="text-align: right">LIM Date:</td>
-                <td>@Html.DisplayFor(model => Model.Case.lim_date, new { htmlAttributes = new { @class = "form-control" } })</td>
-            </tr>
-            <tr style="background-color: black; color: yellow;">
-                <td colspan="2">Case #@Html.DisplayFor(model => Model.Case.casenum, new { htmlAttributes = new { @class = "form-control" } }) ( @Html.DisplayFor(model => Model.Case.alt_case_num, new { htmlAttributes = new { @class = "form-control" } }) )</td>
-                <td style="text-align: right">Class:</td>
-                <td>@Html.DisplayFor(model => Model.Case._class, new { htmlAttributes = new { @class = "form-control" } })</td>
-                <td style="text-align: right">Assigned:</td>
-                <td>@Html.DisplayFor(model => Model.Case.staff_1, new { htmlAttributes = new { @class = "form-control" } })</td>
-                <td style="text-align: right">Opened:</td>
-                <td>@Html.DisplayFor(model => Model.Case.date_opened, new { htmlAttributes = new { @class = "form-control" } })</td>
-            </tr>
-        </table>
-        <div id='jqxWidget2' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
-            <div id="jqxgrid2"></div>
+                <table>
+                    <tr style="background-color: black; color: yellow;">
+                        <td colspan="2">@Html.Raw(Model.Party.last_long_name + ", " + Model.Party.prefix + " " + Model.Party.first_name)</td>
+                        <td style="text-align: right">Case Type:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.matcode, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">DOI:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.date_of_incident, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">LIM Date:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.lim_date, new { htmlAttributes = new { @class = "form-control" } })</td>
+                    </tr>
+                    <tr style="background-color: black; color: yellow;">
+                        <td colspan="2">Case #@Html.DisplayFor(model => Model.Case.casenum, new { htmlAttributes = new { @class = "form-control" } }) ( @Html.DisplayFor(model => Model.Case.alt_case_num, new { htmlAttributes = new { @class = "form-control" } }) )</td>
+                        <td style="text-align: right">Class:</td>
+                        <td>@Html.DisplayFor(model => Model.Case._class, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">Assigned:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.staff_1, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        <td style="text-align: right">Opened:</td>
+                        <td>@Html.DisplayFor(model => Model.Case.date_opened, new { htmlAttributes = new { @class = "form-control" } })</td>
+                    </tr>
+                </table>
+                <div id='jqxWidget2' style="font-size: 13px; font-family: Verdana; float: left; width: 100%; height: 100%;">
+                    <div id="jqxgrid2"></div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 }
 
 <style>

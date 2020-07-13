@@ -5,7 +5,7 @@ namespace FeesPackage.Models
 {
     public class Party
     {
-        public int names_id { get; set; }
+        public int? names_id { get; set; }
         public string first_name { get; set; }
         public string prefix { get; set; }
         public string last_long_name { get; set; }
@@ -22,7 +22,7 @@ namespace FeesPackage.Models
 
 		public Party(DataRow row)
 		{
-            this.names_id = (int)GetValue(row, "names_id");
+            this.names_id = (int?)GetValue(row, "names_id");
             this.first_name = GetValue(row, "first_name")?.ToString();
             this.prefix = GetValue(row, "prefix")?.ToString();
             this.last_long_name = GetValue(row, "last_long_name")?.ToString();

@@ -5,7 +5,7 @@ namespace FeesPackage.Models
 {
     public class Adjuster
     {
-        public int names_id { get; set; }
+        public int? names_id { get; set; }
         public string first_name { get; set; }
         public string prefix { get; set; }
         public string last_long_name { get; set; }
@@ -22,7 +22,7 @@ namespace FeesPackage.Models
 
 		public Adjuster(DataRow row)
 		{
-            this.names_id = (int)GetValue(row, "names_id2");
+            this.names_id = (int?)GetValue(row, "names_id2");
             this.first_name = GetValue(row, "first_name2")?.ToString();
             this.prefix = GetValue(row, "prefix2")?.ToString();
             this.last_long_name = GetValue(row, "last_long_name2")?.ToString();
