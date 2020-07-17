@@ -11,22 +11,46 @@ namespace FeesPackage.Controllers
     public class CheckListController : BaseController
     {
         readonly SAConnection myConnection = new SAConnection(ConfigurationManager.ConnectionStrings["Needles"].ConnectionString);
-        
-        public ActionResult Index()
+
+        public CheckListController()
         {
             myConnection.Open();
+        }
 
-            NeedlesModel model = GetOpenCheckList(myConnection);
-
+        ~CheckListController()
+        {
             myConnection.Close();
+        }
 
-            return View(model);
+        public ActionResult Index()
+        {
+            return View(GetOpenCheckList(myConnection));
+        }
+
+        [HttpPost]
+        public string Note(string note_key)
+        {
+            SACommand myCommand = myConnection.CreateCommand();
+
+            myCommand.CommandText =
+                $@"SELECT note 
+                    FROM case_notes cn
+                    where cn.note_key = {note_key}";
+            SADataReader myDataReader = myCommand.ExecuteReader();
+
+            DataSet ds = new DataSet();
+            ds.EnforceConstraints = false;
+            ds.Tables.Add("CaseNotes");
+
+            ds.Tables[0].Load(myDataReader);
+
+            myDataReader.Close();
+            return ds.Tables[0].Rows[0]["note"].ToString();
         }
 
         [HttpPost]
         public ActionResult Edit(string case_no)
         {
-            myConnection.Open();
             SACommand myCommand = myConnection.CreateCommand();
 
             myCommand.CommandText =
@@ -81,6 +105,7 @@ namespace FeesPackage.Controllers
                         , cn.staff_id
                         , cn.topic
                         , cn.note 
+                        , cn.case_status 
                     FROM case_notes cn
                     where cn.case_num = {case_no}
                     order by cn.note_date desc";
@@ -93,8 +118,6 @@ namespace FeesPackage.Controllers
             model.CaseNotes = JsonConvert.SerializeObject(ds);
 
             myDataReader.Close();
-
-            myConnection.Close();
 
             return PartialView("~/Views/CheckList/_Edit.cshtml", model);
         }

@@ -302,7 +302,7 @@
                     <table>
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td style="text-align: right"><span style="background-color: blue; color: white; font-weight: bold;">Case Status: @Html.Raw(Model.Insurances.InsuranceList[index].case_status)</span></td>
                             <td style="text-align: right">Party:</td>
                             <td>@Html.Raw(Model.Partys.PartyList[index].last_long_name + ", " + Model.Partys.PartyList[index].prefix + " " + Model.Partys.PartyList[index].first_name)</td>
                         </tr>
@@ -449,7 +449,8 @@
             { name: 'note_time', type: 'time' },
             { name: 'staff_id', type: 'string' },
             { name: 'topic', type: 'string' },
-            { name: 'note', type: 'string' }
+            { name: 'note', type: 'string' },
+            { name: 'case_status', type: 'string' }
         ],
         id: 'notes',
         localdata: data
@@ -497,11 +498,33 @@
             { text: 'note_time', datafield: 'note_time', filtertype: 'checkedlist', width: 80, align: 'center' },
             { text: 'staff_id', datafield: 'staff_id', filtertype: 'checkedlist', width: 100, align: 'center' },
             { text: 'topic', datafield: 'topic', filtertype: 'checkedlist', width: 180, align: 'center' },
-            { text: 'note', datafield: 'note', filtertype: 'checkedlist', width: 600, align: 'center' }
+            { text: 'note', datafield: 'note', filtertype: 'checkedlist', width: 600, align: 'center' },
+            { text: 'case_status', datafield: 'case_status', filtertype: 'checkedlist', width: 20, align: 'center' }
         ]
     });
 
     function _setup() {
         //$("#jqxgrid2").jqxGrid('autoresizecolumns');
     }
+
+    $("#jqxgrid2").on("celldoubleclick", function (event) {
+        var args = event.args;
+        var rowBoundIndex = args.rowindex;
+        //var rowVisibleIndex = args.visibleindex;
+        //var rightClick = args.rightclick;
+        //var ev = args.originalEvent;
+        //var columnIndex = args.columnindex;
+        //var dataField = args.datafield;
+        //var value = args.value;
+
+        // get 'id' value of row dblclk'd on
+        var note_key = $("#jqxgrid2").jqxGrid('getcell', rowBoundIndex, 'note_key').value;
+
+        // render view/show dialog
+        $.post('/CheckList/Note', { note_key: note_key }, function (data, status, jqXHR) {
+            alert(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
+    });
 </script>
