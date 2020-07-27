@@ -6,6 +6,8 @@
 {
     @Html.AntiForgeryToken()
 
+    <div>@Html.EditorFor(model => Model.Case.casenum, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "display: none" } })</div>
+
     <div class="form-horizontal">
         <div id="tabs">
             <ul>
@@ -505,6 +507,15 @@
 
     function _setup() {
         //$("#jqxgrid2").jqxGrid('autoresizecolumns');
+    }
+
+    function ClientNew() {
+        // render view/show dialog
+        $.post('/ClientInfo/New', $('form textarea,form input,form select').toArray(), function (data, status, jqXHR) {
+            window.location.href = '/ClientInfo?id=' + data;
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
     }
 
     $("#jqxgrid2").on("celldoubleclick", function (event) {

@@ -67,7 +67,14 @@ namespace FeesPackage.Controllers
         }
 #endif
 
-        // GET: ClientInfo/Create
+        // POST: ClientInfo/New
+        [HttpPost]
+        public string New(FormCollection coll)
+        {
+            string case_no = coll["Case.casenum"];
+            return case_no;
+        }
+
         public ActionResult Create()
         {
             ClientInfoModel model = new ClientInfoModel

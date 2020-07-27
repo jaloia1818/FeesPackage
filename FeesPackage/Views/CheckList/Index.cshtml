@@ -40,6 +40,14 @@
     .disabled {
         background-color: #e0e9f5;
     }
+    .ui-dialog-titlebar-close:after {
+        content: 'X';
+        font-weight: bold;
+    }
+    .dlgButton {
+        background-color: green;
+        color: white;
+    }
 </style>
 
 <script>
@@ -61,7 +69,14 @@
             hide: {
                 effect: "explode",
                 duration: 500
-            }
+            },
+            buttons: [
+                {
+                    text: "Create Client",
+                    class: "dlgButton",
+                    click: function (e) { ClientNew() }
+                }
+            ]
         });
 
         // on close, reload page to refresh
