@@ -12,6 +12,7 @@ namespace FeesPackage.Models
         public User_Case_Data Case_Data { get; set; }
         public Insurances Insurances { get; set; }
         public Party Party { get; set; }
+        public Party Employer { get; set; }
         public Partys Partys { get; set; }
         public Insurers Insurers { get; set; }
         public Adjusters Adjusters { get; set; }

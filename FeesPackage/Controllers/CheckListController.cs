@@ -49,7 +49,7 @@ namespace FeesPackage.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(string case_no)
+        public NeedlesModel GetModel(string case_no)
         {
             SACommand myCommand = myConnection.CreateCommand();
 
@@ -99,6 +99,21 @@ namespace FeesPackage.Controllers
             myDataReader.Close();
 
             myCommand.CommandText =
+                $@"SELECT names.* 
+                    FROM names
+                    inner join party on names.names_id = party.party_id
+                    where case_id = {case_no} and role = 'DEFENDANT'";
+            myDataReader = myCommand.ExecuteReader();
+
+            ds = new DataSet();
+            ds.Tables.Add("Employer");
+            ds.Tables[0].Load(myDataReader);
+
+            model.Employer = new Party(ds.Tables[0].Rows[0]);
+
+            myDataReader.Close();
+
+            myCommand.CommandText =
                 $@"SELECT cn.note_key
                         , cn.note_date
                         , cn.note_time
@@ -118,6 +133,13 @@ namespace FeesPackage.Controllers
             model.CaseNotes = JsonConvert.SerializeObject(ds);
 
             myDataReader.Close();
+
+            return model;
+        }
+
+        public ActionResult Edit(string case_no)
+        {
+            NeedlesModel model = GetModel(case_no);
 
             return PartialView("~/Views/CheckList/_Edit.cshtml", model);
         }

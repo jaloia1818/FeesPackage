@@ -72,7 +72,28 @@ namespace FeesPackage.Controllers
         public string New(FormCollection coll)
         {
             string case_no = coll["Case.casenum"];
-            return case_no;
+            NeedlesModel model = new CheckListController().GetModel(case_no);
+
+            ClientInfoModel clientInfo = new ClientInfoModel
+            {
+                Client = new tblClient
+                {
+                    id = 0,
+                    Client_Name = model.Party.last_long_name + ", " + model.Party.first_name,
+                    Employer_Name = model.Employer.last_long_name,
+                    Escrow = 0f,
+                    //Handling_Atty = model.Case.staff_1,
+                    Handling = 0.67f,
+                    //Credit_Atty = model.Case_Data.CREDIT_ATTY,
+                    Credit = 0.33f,
+                    County = model.Case_Data.County,
+                    Accident_Desc = model.Case.synopsis
+                }
+            };
+
+            Save(clientInfo);
+
+            return clientInfo.Client.id.ToString();
         }
 
         public ActionResult Create()

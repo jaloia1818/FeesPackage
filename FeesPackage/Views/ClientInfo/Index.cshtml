@@ -71,8 +71,8 @@
         });
 
         // on close, reload page to refresh
-        $("#ClientDlg").on( "dialogclose", function(event, ui) {
-            location.reload();
+        $("#ClientDlg").on("dialogclose", function (event, ui) {
+            window.location = '/ClientInfo/Index';;
         });
 
         // prepare the Attorney list dropdown data
@@ -219,6 +219,25 @@
         }
 
         $("#search").typeWatch(options);
+
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+
+        var id = getUrlParameter('id');
+        if (id.length > 0) {
+            // render view/show dialog
+            $.post('/ClientInfo/Edit', { id: id }, function (data, status, jqXHR) {
+                $('#ClientDlg').html(data);
+                $('.ui-dialog-title').html('@ViewBag.Title [' + id + ']');
+                $("#ClientDlg").dialog("open");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+        }
     }
 
     function getCookie(cname) {
