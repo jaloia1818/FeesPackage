@@ -236,17 +236,18 @@
                             $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(data));
                             $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Input_Date', Date.now);
                             inUpdate = false;
-
-                            if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Deposit_Indicator') == '') {
-                                var clmNum = $("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Claim_Number');
-
-                                $.post('/DailyPayments/GetAttyBreakdown', { ClaimNumber: clmNum }, function (data, status, jqXHR) {
-                                    $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Deposit_Indicator', parseInt(data.attyBreakdown));
-                                }).fail(function (jqXHR, textStatus, errorThrown) {
-                                    alert(textStatus + ': ' + errorThrown);
-                                });
-                            }
                         }
+
+                        //if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Deposit_Indicator') == '') {
+                            var clmNum = rowdata.Claim_Number;  //$("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Claim_Number');
+
+                            $.post('/DailyPayments/GetAttyBreakdown', { ClaimNumber: clmNum }, function (data, status, jqXHR) {
+                                $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Deposit_Indicator', parseInt(data.attyBreakdown));
+                            }).fail(function (jqXHR, textStatus, errorThrown) {
+                                alert(textStatus + ': ' + errorThrown);
+                            });
+                        //}
+
                         commit(true);
                     }).fail(function (jqXHR, textStatus, errorThrown) {
                         alert(textStatus + ': ' + errorThrown);
