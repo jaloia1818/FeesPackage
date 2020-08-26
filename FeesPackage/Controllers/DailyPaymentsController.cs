@@ -12,8 +12,7 @@ namespace FeesPackage.Controllers
     [AuthorizeRole(roles = "R/O, OPS, ADMIN")]
     public class DailyPaymentsController : BaseController
     {
-        [HttpPost]
-        public JsonResult GetAttyBreakdown(String ClaimNumber)
+        public int? GetAttyBreakdown(String ClaimNumber)
         {
             var attyBreakdown =
             (from cla in db.tblClaims
@@ -24,7 +23,7 @@ namespace FeesPackage.Controllers
              }
             ).ToList()[0].Attorney_Breakdown;
 
-            return Json(new { attyBreakdown });
+            return attyBreakdown;
         }
 
         private ClientInfoModel GetUnmatchedDepositsModel(DateTime fromDate, DateTime toDate)
@@ -375,9 +374,16 @@ namespace FeesPackage.Controllers
             {
                 if (model.id == 0)
                 {   // insert
+                    model.Input_Date = DateTime.Now.Date;
+                    model.Deposit_Indicator = GetAttyBreakdown(model.Claim_Number);
+
                     // Insert into table
                     db.tblPayments.Add(model);
                     db.SaveChanges();
+
+                    // get original record for unedited fields
+                    tblPayment record = db.tblPayments.Where(x => x.id == model.id).Single();
+                    return Json(record);
                 }
                 else
                 {   // update
@@ -392,22 +398,21 @@ namespace FeesPackage.Controllers
                     record.Amount = model.Amount;
                     record.Input_Date = model.Input_Date;
                     record.Inputter_Name = model.Inputter_Name;
-                    record.Deposit_Indicator = model.Deposit_Indicator;
+                    record.Deposit_Indicator = GetAttyBreakdown(model.Claim_Number);
                     record.Posted_Indicator = model.Posted_Indicator;
                     record.Comment = model.Comment;
 
                     // Update record
                     db.Entry(record).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+
+                    return Json(record);
                 }
             }
             catch (Exception ex)
             {
                 return HandleException(ex);
             }
-
-            // return Status OK
-            return Content(model.id.ToString());
         }
 
         // GET: DailyPayments

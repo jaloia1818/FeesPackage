@@ -231,22 +231,11 @@
             updaterow: function (rowid, rowdata, commit) {
                 if (!inUpdate) {
                     $.post('/DailyPayments', rowdata, function (data, status, jqXHR) {
-                        if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(data)) {
-                            inUpdate = true;
-                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(data));
-                            $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Input_Date', Date.now);
-                            inUpdate = false;
-                        }
-
-                        //if ($("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Deposit_Indicator') == '') {
-                            var clmNum = rowdata.Claim_Number;  //$("#jqxgrid").jqxGrid('getcellvaluebyid', rowid, 'Claim_Number');
-
-                            $.post('/DailyPayments/GetAttyBreakdown', { ClaimNumber: clmNum }, function (data, status, jqXHR) {
-                                $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Deposit_Indicator', parseInt(data.attyBreakdown));
-                            }).fail(function (jqXHR, textStatus, errorThrown) {
-                                alert(textStatus + ': ' + errorThrown);
-                            });
-                        //}
+                        inUpdate = true;
+                        $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'id', data.id);
+                        $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Input_Date', data.Input_Date);
+                        $("#jqxgrid").jqxGrid('setcellvaluebyid', rowid, 'Deposit_Indicator', data.Deposit_Indicator);
+                        inUpdate = false;
 
                         commit(true);
                     }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -351,30 +340,7 @@
                 { text: 'Period To', datafield: 'Period_To', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
                 { text: 'Amount', datafield: 'Amount', filtertype: 'checkedlist', cellsalign: 'right', cellsformat: 'c2', width: 83, align: 'center' },
                 { text: 'Input Date', datafield: 'Input_Date', filtertype: 'checkedlist', cellsalign: 'center', cellsformat: 'MM/dd/yyyy', width: 120, align: 'center', columntype: 'datetimeinput' },
-                { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', width: 65, align: 'center',
-                    columntype: 'combobox',
-                    createeditor: function (row, column, editor) {
-                        editor.jqxComboBox({
-                            autoOpen: true,
-                            dropDownHeight: 350,
-                            dropDownWidth: 150,
-                            searchMode: 'startswithignorecase',
-                            source: locallistaAdapter,
-                            displayMember: 'Name',
-                            valueMember: 'Id',
-                            placeHolder: 'Choose ...',
-                            renderer: function (index, label, value) {
-                                //var item = editor.jqxComboBox('getSelectedItem');
-                                return label + ' - ' + value;
-                            }
-                        });
-                        editor.on('close', function (event) {
-                            //var sel = $('#jqxgrid').jqxGrid('getselectedrowindex');
-                            // this will lose focus on current dropdownlist, firing onChange event on this row
-                            //setTimeout(function () { $("#jqxgrid").jqxGrid('begincelledit', sel, 'id'); }, 10);
-                        });
-                    }
-                },
+                { text: 'Deposit', datafield: 'Deposit_Indicator', filtertype: 'checkedlist', cellsalign: 'center', width: 65, editable: false, align: 'center', columntype: 'combobox' },
                 { text: 'Posted', datafield: 'Posted_Indicator', filtertype: 'checkedlist', align: 'center', columntype: 'checkbox', editable: false, hidden: true },
                 { text: 'Comment', datafield: 'Comment', filtertype: 'checkedlist', align: 'center' },
                 { text: 'X', width: 24, align: 'center', filterable: false, sortable: false,
