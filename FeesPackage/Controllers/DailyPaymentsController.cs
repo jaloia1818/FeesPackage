@@ -406,7 +406,23 @@ namespace FeesPackage.Controllers
                     db.Entry(record).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
-                    return Json(record);
+                    // transfer data
+                    Payments payment = new Payments()
+                    {
+                        id = record.id,
+                        Claim_Number = record.Claim_Number,
+                        Payment_Date = record.Payment_Date.ToString(),
+                        Period_From = record.Period_From.ToString(),
+                        Period_To = record.Period_To.ToString(),
+                        Amount = record.Amount,
+                        Input_Date = record.Input_Date.ToString(),
+                        Inputter_Name = record.Inputter_Name,
+                        Deposit_Indicator = record.Deposit_Indicator,
+                        Posted_Indicator = record.Posted_Indicator,
+                        Comment = record.Comment
+                    };
+
+                    return Json(payment);
                 }
             }
             catch (Exception ex)
