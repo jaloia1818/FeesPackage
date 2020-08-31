@@ -91,7 +91,8 @@ namespace FeesPackage.Controllers
                 }
             };
 
-            Save(clientInfo);
+            ContentResult result = Save(clientInfo) as ContentResult;
+            new CheckListController().Update_Fee_Pkg_No(case_no, result.Content);
 
             return clientInfo.Client.id.ToString();
         }

@@ -17,9 +17,13 @@ namespace FeesPackage.Controllers
             myConnection.Open();
         }
 
-        ~CheckListController()
+        protected override void Dispose(bool disposing)
         {
-            myConnection.Close();
+            if (disposing)
+            {
+                myConnection.Close();
+            }
+            base.Dispose(disposing);
         }
 
         public ActionResult Index()
@@ -46,6 +50,19 @@ namespace FeesPackage.Controllers
 
             myDataReader.Close();
             return ds.Tables[0].Rows[0]["note"].ToString();
+        }
+
+        public int Update_Fee_Pkg_No(string case_no, string feePkgNo)
+        {
+            SACommand myCommand = myConnection.CreateCommand();
+
+            myCommand.CommandText =
+                $@"UPDATE user_case_data
+                    SET Fee_Pkg_No = {feePkgNo}
+                    where casenum = {case_no}";
+            int recordsAffected = myCommand.ExecuteNonQuery();
+
+            return recordsAffected;
         }
 
         [HttpPost]
