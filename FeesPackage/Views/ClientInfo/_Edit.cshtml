@@ -393,7 +393,7 @@
         dataType: "json",
         updaterow: function (rowid, rowdata, commit) {
             if (!inUpdate) {
-                $.post('/ClientInfo/SaveClaim', { data: rowdata, ref_no: id }, function (data, status, jqXHR) {
+                $.post('/ClientInfo/SaveClaim', { data: rowdata, ref_no: $("#Client_id").val() }, function (data, status, jqXHR) {
                     if ($("#claims").jqxGrid('getcellvaluebyid', rowid, 'Reference_Number') != parseInt(data)) {
                         inUpdate = true;
                         $("#claims").jqxGrid('setcellvaluebyid', rowid, 'Reference_Number', parseInt(data));
@@ -701,7 +701,7 @@
         dataType: "json",
         updaterow: function (rowid, rowdata, commit) {
             if (!inUpdate) {
-                $.post('/ClientInfo/SaveClientReferral', { data: rowdata, ref_no: id }, function (data, status, jqXHR) {
+                $.post('/ClientInfo/SaveClientReferral', { data: rowdata, ref_no: $("#Client_id").val() }, function (data, status, jqXHR) {
                     if ($("#clientReferrals").jqxGrid('getcellvaluebyid', rowid, 'id') != parseInt(data)) {
                         inUpdate = true;
                         $("#clientReferrals").jqxGrid('setcellvaluebyid', rowid, 'id', parseInt(data));
